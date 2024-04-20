@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:tubes/pages/cari_reservasi.dart';
-import 'package:tubes/pages/cari_dokter.dart';
-import 'package:tubes/pages/profil_dokter.dart';
-import 'package:tubes/pages/profil_lengkap_dokter.dart';
-import 'package:tubes/pages/pilih_jadwal.dart';
-import 'package:tubes/pages/periksa_janji_temu.dart';
+import 'package:tubes/pages/buat_janji_temu/cari_reservasi.dart';
+import 'package:tubes/pages/buat_janji_temu/cari_dokter.dart';
+import 'package:tubes/pages/buat_janji_temu/profil_dokter.dart';
+import 'package:tubes/pages/buat_janji_temu/profil_lengkap_dokter.dart';
+import 'package:tubes/pages/buat_janji_temu/pilih_jadwal.dart';
+import 'package:tubes/pages/buat_janji_temu/periksa_janji_temu.dart';
 
 import 'package:intl/date_symbol_data_local.dart';
 
