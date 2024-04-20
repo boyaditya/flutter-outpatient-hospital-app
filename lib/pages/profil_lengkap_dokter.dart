@@ -56,7 +56,8 @@ class _ProfilDokterLengkapState extends State<ProfilLengkapDokter> {
                   padding: const EdgeInsets.all(10),
                   child: const CircleAvatar(
                     radius: 60,
-                    backgroundImage: AssetImage('assets/images/doctor.jpg'),
+                    backgroundImage:
+                        AssetImage('assets/images/dokter/dummy-doctor.jpg'),
                   ),
                 ),
               ),
