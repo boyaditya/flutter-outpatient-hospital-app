@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:calendar_date_picker2/calendar_date_picker2.dart';
-import 'package:time_slot/model/time_slot_Interval.dart';
-import 'package:time_slot/time_slot_from_interval.dart';
 
 class PilihJadwal extends StatefulWidget {
   const PilihJadwal({super.key, required this.title});
@@ -13,9 +11,8 @@ class PilihJadwal extends StatefulWidget {
 }
 
 class _PilihJadwalState extends State<PilihJadwal> {
-  DateTime _dates = DateTime.now();
+  DateTime _dates = DateTime(0);
   DateTime now = DateTime.now();
-  DateTime selectTime = DateTime(0);
 
   @override
   Widget build(BuildContext context) {
@@ -48,6 +45,10 @@ class _PilihJadwalState extends State<PilihJadwal> {
                     config: CalendarDatePicker2Config(
                       selectedDayHighlightColor: Colors.blue,
                       firstDate: DateTime.now(),
+                      selectableDayPredicate: (date) {
+                        // Senin adalah hari ke-1 dan Rabu adalah hari ke-3
+                        return date.weekday == 1 || date.weekday == 3;
+                      },
                     ),
                     value: [_dates],
                     onValueChanged: (dates) {
@@ -60,30 +61,33 @@ class _PilihJadwalState extends State<PilihJadwal> {
                   ),
                 ),
                 const SizedBox(height: 20),
-                TimesSlotGridViewFromInterval(
-                  locale: "en",
-                  initTime: selectTime,
-                  crossAxisCount: 4,
-                  unSelectedColor: Colors.grey[200],
-                  selectedColor: Colors.blue,
-                  timeSlotInterval: const TimeSlotInterval(
-                    start: TimeOfDay(hour: 14, minute: 00),
-                    end: TimeOfDay(hour: 16, minute: 30),
-                    interval: Duration(hours: 0, minutes: 15),
+                Container(
+                  padding: const EdgeInsets.all(20),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: Colors.white,
+                    boxShadow: const [
+                      BoxShadow(
+                        color: Colors.grey,
+                        blurRadius: 4.0,
+                        offset: Offset(-2, 2),
+                      ),
+                    ],
                   ),
-                  onChange: (value) {
-                    setState(() {
-                      selectTime = DateTime(
-                        _dates.year,
-                        _dates.month,
-                        _dates.day,
-                        value.hour,
-                        value.minute,
-                      );
-                    });
-                  },
+                  child: const Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(height: 6),
+                      Text(
+                        "Jadwal Regular\n",
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      ScheduleItem(day: "Senin", time: "14:00 - 16:30"),
+                      ScheduleItem(day: "Rabu", time: "14:00 - 16:30"),
+                    ],
+                  ),
                 ),
-                const SizedBox(height: 40),
+                const SizedBox(height: 20),
                 const CustomContainer2(
                   dokter: "dr. John Doe, MARS, SpAk",
                   spesialis: "Andrologi - Spesialis Andrologi",
@@ -91,16 +95,10 @@ class _PilihJadwalState extends State<PilihJadwal> {
                 ),
                 const SizedBox(height: 90),
                 ElevatedButton(
-                  onPressed: selectTime == DateTime(0)
+                  onPressed: _dates == DateTime(0)
                       ? null
                       : () {
-                          Navigator.pushNamed(
-                            context,
-                            '/periksa_janji_temu',
-                            arguments: {
-                              'selectTime': selectTime,
-                            },
-                          );
+                          Navigator.pushNamed(context, '/periksa_janji_temu');
                         },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.blue,
@@ -113,7 +111,7 @@ class _PilihJadwalState extends State<PilihJadwal> {
                   ),
                   child: const Text('Selanjutnya',
                       style: TextStyle(color: Colors.white)),
-                )
+                ),
               ],
             ),
           ),
@@ -197,7 +195,7 @@ class CustomContainer2 extends StatelessWidget {
         ],
       ),
       child: Row(
-        children: <Widget>[
+        children: [
           Container(
             padding: const EdgeInsets.all(8),
             child: CircleAvatar(
@@ -228,6 +226,36 @@ class CustomContainer2 extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+class ScheduleItem extends StatelessWidget {
+  final String day;
+  final String time;
+
+  const ScheduleItem({
+    super.key,
+    required this.day,
+    required this.time,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Container(
+          padding: const EdgeInsets.fromLTRB(8, 2, 8, 2),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(day),
+              Text(time),
+            ],
+          ),
+        ),
+        const Divider(color: Colors.black),
+      ],
     );
   }
 }

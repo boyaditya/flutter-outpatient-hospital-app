@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 class PeriksaJanjiTemu extends StatefulWidget {
   const PeriksaJanjiTemu({super.key, required this.title});
@@ -22,10 +21,6 @@ class _PeriksaJanjiTemuState extends State<PeriksaJanjiTemu> {
 
   @override
   Widget build(BuildContext context) {
-    final Map<dynamic, dynamic> data =
-        ModalRoute.of(context)?.settings.arguments as Map<dynamic, dynamic>;
-    String selectTimeString =
-        DateFormat('dd MMMM yyyy – kk:mm').format(data['selectTime']!);
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -110,18 +105,18 @@ class _PeriksaJanjiTemuState extends State<PeriksaJanjiTemu> {
                   ),
                   width: double.infinity,
                   padding: const EdgeInsets.all(20),
-                  child: Column(
+                  child: const Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       InfoItem(
                         label: "TANGGAL DAN WAKTU JANJI TEMU",
-                        value: selectTimeString,
+                        value: "12 Januari 2022, 10:00 WIB",
                       ),
-                      const InfoItem(
+                      InfoItem(
                         label: "DOKTER",
                         value: "dr. John Doe",
                       ),
-                      const InfoItem(
+                      InfoItem(
                         label: "SPESIALIS",
                         value: "Spesialis Akupuntur",
                       ),
