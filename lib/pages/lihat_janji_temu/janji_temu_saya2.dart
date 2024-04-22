@@ -38,8 +38,6 @@ class JanjiTemuSaya2 extends StatefulWidget {
 class _JanjiTemuSaya2State extends State<JanjiTemuSaya2> {
   int _selectedTabIndex = 0; // Menyimpan indeks teks yang dipilih
 
-  int _currentIndex = 0;
-
   int _selectedIndex = 1;
 
   void _onItemTapped(int index) {
@@ -97,7 +95,7 @@ class _JanjiTemuSaya2State extends State<JanjiTemuSaya2> {
                             400, // Add this line to set the width of the Container
                         padding: const EdgeInsets.all(20),
                         decoration: BoxDecoration(
-                          color: Color.fromRGBO(96, 192, 227, 1),
+                          color: const Color.fromRGBO(96, 192, 227, 1),
                           borderRadius: BorderRadius.circular(20),
                         ),
                         child: Center(
@@ -114,7 +112,7 @@ class _JanjiTemuSaya2State extends State<JanjiTemuSaya2> {
                     ),
                   ],
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 _buildIsian()
               ],
             ),
@@ -164,7 +162,7 @@ class _JanjiTemuSaya2State extends State<JanjiTemuSaya2> {
           fontSize: 17,
           color: _selectedTabIndex == index
               ? Colors.white
-              : Color.fromARGB(255, 98, 97, 97),
+              : const Color.fromARGB(255, 98, 97, 97),
         ),
       ),
     );
@@ -172,16 +170,16 @@ class _JanjiTemuSaya2State extends State<JanjiTemuSaya2> {
 
   Widget _buildIsian() {
     return Container(
-      padding: EdgeInsets.only(top: 10, left: 20, right: 20),
+      padding: const EdgeInsets.only(top: 10, left: 20, right: 20),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
+          const Text(
             "Janji temu yang akan datang",
             style: TextStyle(fontSize: 17, color: Colors.blue),
             textAlign: TextAlign.left,
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           GestureDetector(
             onTap: () {
               Navigator.pushNamed(context, '/rincian_janji');
@@ -204,7 +202,7 @@ class _JanjiTemuSaya2State extends State<JanjiTemuSaya2> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
+                  const Row(
                     children: [
                       Icon(
                         Icons.person_4_outlined,
@@ -220,8 +218,8 @@ class _JanjiTemuSaya2State extends State<JanjiTemuSaya2> {
                       ),
                     ],
                   ),
-                  SizedBox(height: 10),
-                  Text(
+                  const SizedBox(height: 10),
+                  const Text(
                     "John Hendrick\n11 Mar 2024, 11:00-11.30\ndr. Alvin H Hardjawinata, MARS, SpAk",
                     style: TextStyle(
                         fontSize: 15,
@@ -229,17 +227,17 @@ class _JanjiTemuSaya2State extends State<JanjiTemuSaya2> {
                         fontWeight: FontWeight.bold),
                     textAlign: TextAlign.left,
                   ),
-                  Text(
+                  const Text(
                     "Spesialis akupuntur",
                     style: TextStyle(fontSize: 15, color: Colors.black),
                     textAlign: TextAlign.left,
                   ),
-                  SizedBox(
+                  const SizedBox(
                       height:
                           10), // Jarak antara teks "Spesialis akupuntur" dan icon
                   Container(
                     width: 300,
-                    padding: EdgeInsets.symmetric(
+                    padding: const EdgeInsets.symmetric(
                         vertical: 8,
                         horizontal: 12), // Atur padding sesuai kebutuhan
                     decoration: BoxDecoration(
@@ -247,9 +245,9 @@ class _JanjiTemuSaya2State extends State<JanjiTemuSaya2> {
                       borderRadius: BorderRadius.circular(
                           8), // Atur border radius sesuai keinginan
                     ),
-                    child: Row(
+                    child: const Row(
                       children: [
-                        Icon(
+                        const Icon(
                           Icons.info_outline,
                           color: Colors.black,
                         ),
@@ -268,12 +266,12 @@ class _JanjiTemuSaya2State extends State<JanjiTemuSaya2> {
               ),
             ),
           ),
-          SizedBox(height: 15),
+          const SizedBox(height: 15),
           GestureDetector(
             onTap: () {
               Navigator.pushNamed(context, '/histori_janji');
             },
-            child: Text(
+            child: const Text(
               "LIHAT HISTORI JANJI TEMU",
               style: TextStyle(
                 fontSize: 16,

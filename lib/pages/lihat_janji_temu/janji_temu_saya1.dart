@@ -38,7 +38,6 @@ class JanjiTemuSaya1 extends StatefulWidget {
 class _JanjiTemuSaya1State extends State<JanjiTemuSaya1> {
   int _selectedTabIndex = 0; // Menyimpan indeks teks yang dipilih
 
-  int _currentIndex = 0;
 
   int _selectedIndex = 1;
 
@@ -97,7 +96,7 @@ class _JanjiTemuSaya1State extends State<JanjiTemuSaya1> {
                             400, // Add this line to set the width of the Container
                         padding: const EdgeInsets.all(20),
                         decoration: BoxDecoration(
-                          color: Color.fromRGBO(96, 192, 227, 1),
+                          color: const Color.fromRGBO(96, 192, 227, 1),
                           borderRadius: BorderRadius.circular(20),
                         ),
                         child: Center(
@@ -114,7 +113,7 @@ class _JanjiTemuSaya1State extends State<JanjiTemuSaya1> {
                     ),
                   ],
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 Center(child: _buildCalendarSection()),
               ],
             ),
@@ -164,7 +163,7 @@ class _JanjiTemuSaya1State extends State<JanjiTemuSaya1> {
           fontSize: 17,
           color: _selectedTabIndex == index
               ? Colors.white
-              : Color.fromARGB(255, 98, 97, 97),
+              : const Color.fromARGB(255, 98, 97, 97),
         ),
       ),
     );
@@ -172,28 +171,28 @@ class _JanjiTemuSaya1State extends State<JanjiTemuSaya1> {
 
   Widget _buildCalendarSection() {
     return Container(
-      padding: EdgeInsets.only(top: 80),
+      padding: const EdgeInsets.only(top: 80),
       child: Column(
         children: [
-          Icon(
+          const Icon(
             Icons.edit_calendar,
             size: 40,
             color: Colors.blue,
           ),
-          SizedBox(height: 10),
-          Center(
+          const SizedBox(height: 10),
+          const Center(
             child: Text(
               "Anda tidak memiliki janji\nyang akan datang",
               style: TextStyle(fontSize: 17, color: Colors.blue),
               textAlign: TextAlign.center,
             ),
           ),
-          SizedBox(height: 15),
+          const SizedBox(height: 15),
           GestureDetector(
             onTap: () {
               Navigator.pushNamed(context, '/histori_janji');
             },
-            child: Text(
+            child: const Text(
               "LIHAT HISTORI JANJI TEMU",
               style: TextStyle(
                 fontSize: 16,
