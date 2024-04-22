@@ -4,13 +4,7 @@ import 'package:tubes/pages/lihat_janji_temu/janji_temu_saya1.dart';
 import 'package:tubes/pages/lihat_janji_temu/janji_temu_saya2.dart';
 import 'package:tubes/pages/lihat_janji_temu/rincian_janji_temu.dart';
 
-import 'package:intl/date_symbol_data_local.dart';
-
 void main() {
-  WidgetsFlutterBinding.ensureInitialized();
-
-  initializeDateFormatting('ar', '').then((value) => null);
-  initializeDateFormatting('en', '').then((value) => null);
   runApp(const MyApp());
 }
 

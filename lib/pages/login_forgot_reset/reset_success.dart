@@ -52,6 +52,7 @@ class _ResetSuccessState extends State<ResetSuccess> {
             Center(
               child: ElevatedButton(
                 onPressed: () {
+                  Navigator.pushNamed(context, '/');
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.blue[700],

@@ -134,7 +134,9 @@ class _PeriksaJanjiTemuState extends State<PeriksaJanjiTemu> {
                     initialSelection: spesialisasiValue),
                 const SizedBox(height: 120),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/rincian_janji');
+                  },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.blue,
                     shape: const RoundedRectangleBorder(

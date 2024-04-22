@@ -1,42 +1,34 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+// import 'package:flutter/widgets.dart';
 
-void main() {
-  runApp(_MyApp());
-}
+// void main() {
+//   runApp(_MyApp());
+// }
 
-class _MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      title: 'Rekam Medis',
-      home: RekamMedis(),
-    );
-  }
-}
+// class _MyApp extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return const MaterialApp(
+//       title: 'Rekam Medis',
+//       home: RekamMedis(),
+//     );
+//   }
+// }
 
-class RekamMedis extends StatefulWidget{
+class RekamMedis extends StatefulWidget {
   const RekamMedis({super.key});
 
   @override
   State<RekamMedis> createState() => _RekamMedisState();
 }
 
-
-class _RekamMedisState extends State<RekamMedis>{
+class _RekamMedisState extends State<RekamMedis> {
   // int _currentIndex = 0;
 
-  int _selectedIndex = 0;
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
 
   String? _selectedDay;
   String? _selectedPoli;
-  List<Map<String, String>> _medicalRecords = [
+  final List<Map<String, String>> _medicalRecords = [
     {
       'doctorName': 'dr. Medina Gozali',
       'dateTime': '27 Januari 2024, 09:00 WIB',
@@ -59,10 +51,11 @@ class _RekamMedisState extends State<RekamMedis>{
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_outlined),
-          onPressed: (){},
-        ),
+        automaticallyImplyLeading: false,
+        // leading: IconButton(
+        //   icon: const Icon(Icons.arrow_back_ios_outlined),
+        //   onPressed: () {},
+        // ),
         title: const Text('Rekam Medis'),
       ),
       body: Padding(
@@ -145,11 +138,15 @@ class _RekamMedisState extends State<RekamMedis>{
                 itemCount: _medicalRecords.length,
                 itemBuilder: (context, index) {
                   return Card(
-                    color: Colors.white, // Mengubah warna background Card menjadi putih
+                    color: Colors
+                        .white, // Mengubah warna background Card menjadi putih
                     elevation: 2, // Menambahkan sedikit bayangan pada Card
                     shape: RoundedRectangleBorder(
-                      side: const BorderSide(color: Colors.black), // Mengubah warna border menjadi hitam
-                      borderRadius: BorderRadius.circular(8.0), // Mengatur radius sudut Card
+                      side: const BorderSide(
+                          color: Colors
+                              .black), // Mengubah warna border menjadi hitam
+                      borderRadius: BorderRadius.circular(
+                          8.0), // Mengatur radius sudut Card
                     ),
                     child: Padding(
                       padding: const EdgeInsets.all(16.0),
@@ -191,15 +188,21 @@ class _RekamMedisState extends State<RekamMedis>{
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
                               ElevatedButton(
-                                onPressed: () {
+                                onPressed: (
+                                ) {
+                                    Navigator.pushNamed(context, '/detail_rm');
                                   // Aksi tombol lihat detail
                                 },
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: Colors.blue[700],
                                   shape: const RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.all(Radius.circular(15))),
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(15))),
                                 ),
-                                child: const Text('Lihat Detail', style: TextStyle(color: Colors.white),),
+                                child: const Text(
+                                  'Lihat Detail',
+                                  style: TextStyle(color: Colors.white),
+                                ),
                               ),
                             ],
                           ),
@@ -213,35 +216,6 @@ class _RekamMedisState extends State<RekamMedis>{
           ],
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-							items: const <BottomNavigationBarItem>[
-								BottomNavigationBarItem(
-									icon: Icon(Icons.home),
-									label: 'Beranda',
-								),
-								BottomNavigationBarItem(
-									icon: Icon(Icons.edit_calendar),
-									label: 'Janji Temu',
-								),
-								BottomNavigationBarItem(
-									icon: Icon(Icons.medical_information),
-									label: 'Rekam Medis',
-								),
-								BottomNavigationBarItem(
-									icon: Icon(Icons.account_circle),
-									label: 'Profil',
-								),
-							],
-							currentIndex: _selectedIndex,
-							selectedItemColor: const Color.fromARGB(255, 108, 176, 255),
-							unselectedItemColor: const Color.fromARGB(255, 121, 121, 121),
-							unselectedLabelStyle: const TextStyle(
-								color: Color.fromARGB(255, 121, 121, 121), // Warna abu-abu untuk label yang tidak terpilih
-							),
-							showUnselectedLabels: true, // Menampilkan label yang tidak terpilih
-							onTap: _onItemTapped,
-						)
     );
   }
 }
-

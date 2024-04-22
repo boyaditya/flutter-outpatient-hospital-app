@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'detail_spesialisasi.dart';
 
 void main() {
   runApp(const MyApp());
@@ -27,10 +26,10 @@ class Spesialisasi extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_outlined),
-          onPressed: () {},
-        ),
+        // leading: IconButton(
+        //   icon: const Icon(Icons.arrow_back_ios_outlined),
+        //   onPressed: () {},
+        // ),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -71,10 +70,9 @@ class Spesialisasi extends StatelessWidget {
                 CustomButton(
                   icon: Icons.remove_red_eye,
                   text: 'Oftalmologi',
-                  onPressed: () {Navigator.push(
-															context,
-															MaterialPageRoute(builder: (context) => OphthalmologyPage()),
-														);},
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/detail_spesialisasi');
+                  },
                 ),
                 CustomButton(
                   icon: Icons.remove_red_eye,
@@ -120,7 +118,7 @@ class CustomButton extends StatelessWidget {
               decoration: const BoxDecoration(
                 color: Color.fromARGB(255, 190, 227, 255),
                 shape: BoxShape.rectangle,
-								borderRadius: BorderRadius.all(Radius.circular(10)),
+                borderRadius: BorderRadius.all(Radius.circular(10)),
               ),
               child: Icon(
                 icon,

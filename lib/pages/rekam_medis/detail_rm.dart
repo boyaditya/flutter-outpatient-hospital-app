@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+// import 'package:flutter/widgets.dart';
 
-void main() {
-  runApp(_MyApp());
-}
+// void main() {
+//   runApp(_MyApp());
+// }
 
-class _MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      title: 'Rekam Medis',
-      home: DetailRekamMedis(),
-    );
-  }
-}
+// class _MyApp extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return const MaterialApp(
+//       title: 'Rekam Medis',
+//       home: DetailRekamMedis(),
+//     );
+//   }
+// }
 
 class DetailRekamMedis extends StatefulWidget{
   const DetailRekamMedis({super.key});
@@ -29,10 +29,10 @@ class _DetailRekamMedisState extends State<DetailRekamMedis>{
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_outlined),
-          onPressed: (){},
-        ),
+        // leading: IconButton(
+        //   icon: const Icon(Icons.arrow_back_ios_outlined),
+        //   onPressed: (){},
+        // ),
         title: const Text('Detail Rekam Medis'),
       ),
       body: Padding(

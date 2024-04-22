@@ -38,115 +38,80 @@ class JanjiTemuSaya2 extends StatefulWidget {
 class _JanjiTemuSaya2State extends State<JanjiTemuSaya2> {
   int _selectedTabIndex = 0; // Menyimpan indeks teks yang dipilih
 
-  int _selectedIndex = 1;
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          elevation: 0,
-          backgroundColor: Colors.blue,
-        ),
-        body: ListView(
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Stack(
-                  children: [
-                    Container(
-                      height: 120,
-                      padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
-                      decoration: const BoxDecoration(
-                        color: Colors.blue,
-                        borderRadius: BorderRadius.vertical(
-                          bottom: Radius.elliptical(230, 30),
-                        ),
-                      ),
-                      child: const Row(
-                        children: [
-                          SizedBox(height: 80),
-                        ],
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        elevation: 0,
+        backgroundColor: Colors.blue,
+      ),
+      body: ListView(
+        children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Stack(
+                children: [
+                  Container(
+                    height: 120,
+                    padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
+                    decoration: const BoxDecoration(
+                      color: Colors.blue,
+                      borderRadius: BorderRadius.vertical(
+                        bottom: Radius.elliptical(230, 30),
                       ),
                     ),
-                    const Padding(
-                      padding: EdgeInsets.only(left: 20),
-                      child: Text(
-                        "Janji Temu Saya",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 24,
-                          color: Colors.white,
+                    child: const Row(
+                      children: [
+                        SizedBox(height: 80),
+                      ],
+                    ),
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.only(left: 20),
+                    child: Text(
+                      "Janji Temu Saya",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 24,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    left: 20,
+                    top: 56,
+                    right: 20,
+                    child: Container(
+                      width:
+                          400, // Add this line to set the width of the Container
+                      padding: const EdgeInsets.all(20),
+                      decoration: BoxDecoration(
+                        color: const Color.fromRGBO(96, 192, 227, 1),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: Center(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            _buildText("Semua", 0),
+                            _buildText("Saya Sendiri", 1),
+                            _buildText("Orang Lain", 2),
+                          ],
                         ),
                       ),
                     ),
-                    Positioned(
-                      left: 20,
-                      top: 56,
-                      right: 20,
-                      child: Container(
-                        width:
-                            400, // Add this line to set the width of the Container
-                        padding: const EdgeInsets.all(20),
-                        decoration: BoxDecoration(
-                          color: const Color.fromRGBO(96, 192, 227, 1),
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        child: Center(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              _buildText("Semua", 0),
-                              _buildText("Saya Sendiri", 1),
-                              _buildText("Orang Lain", 2),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 20),
-                _buildIsian()
-              ],
-            ),
-          ],
-        ),
-        bottomNavigationBar: BottomNavigationBar(
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              label: 'Beranda',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.edit_calendar),
-              label: 'Janji Temu',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.medical_information),
-              label: 'Rekam Medis',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.account_circle),
-              label: 'Profil',
-            ),
-          ],
-          currentIndex: _selectedIndex,
-          selectedItemColor: const Color.fromARGB(255, 108, 176, 255),
-          unselectedItemColor: const Color.fromARGB(255, 121, 121, 121),
-          unselectedLabelStyle: const TextStyle(
-            color: Color.fromARGB(255, 121, 121,
-                121), // Warna abu-abu untuk label yang tidak terpilih
+                  ),
+                ],
+              ),
+              const SizedBox(height: 20),
+              _buildIsian()
+            ],
           ),
-          showUnselectedLabels: true, // Menampilkan label yang tidak terpilih
-          onTap: _onItemTapped,
-        ));
+        ],
+      ),
+    );
   }
 
   Widget _buildText(String text, int index) {
@@ -247,7 +212,7 @@ class _JanjiTemuSaya2State extends State<JanjiTemuSaya2> {
                     ),
                     child: const Row(
                       children: [
-                        const Icon(
+                        Icon(
                           Icons.info_outline,
                           color: Colors.black,
                         ),

@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(_MyApp());
-}
+// void main() {
+//   runApp(_MyApp());
+// }
 
-class _MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      title: 'Buat Akun',
-      home: BuatAkun(),
-    );
-  }
-}
+// class _MyApp extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return const MaterialApp(
+//       title: 'Buat Akun',
+//       home: BuatAkun(),
+//     );
+//   }
+// }
 
 class BuatAkun extends StatefulWidget{
   const BuatAkun({super.key});
@@ -33,13 +33,9 @@ class _BuatAkunState extends State<BuatAkun>{
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_outlined),
-          onPressed: (){},
-        ),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(20.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -100,12 +96,14 @@ class _BuatAkunState extends State<BuatAkun>{
             const SizedBox(height: 24.0),
             const Text(
               'Dengan menekan "Selanjutnya", Anda menyetujui Syarat & Ketentuan dan Kebijakan Privasi kami.',
-              style: TextStyle(fontSize: 16.0),
+              style: TextStyle(fontSize: 12.0),
             ),
             const SizedBox(height: 16.0),
             Center(
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushNamed(context, '/konfirm_email');
+                },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.blue[700],
                   shape: const RoundedRectangleBorder(

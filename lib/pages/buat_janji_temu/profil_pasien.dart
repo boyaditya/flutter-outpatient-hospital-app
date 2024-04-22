@@ -1,37 +1,15 @@
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Quiz UI Flutter',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home: const Dashboard(title: 'Quiz UI Flutter'),
-    );
-  }
-}
-
-class Dashboard extends StatefulWidget {
-  const Dashboard({super.key, required this.title});
+class ProfilPasien extends StatefulWidget {
+  const ProfilPasien({super.key, required this.title});
 
   final String title;
 
   @override
-  State<Dashboard> createState() => _DashboardState();
+  State<ProfilPasien> createState() => _ProfilPasienState();
 }
 
-class _DashboardState extends State<Dashboard> {
+class _ProfilPasienState extends State<ProfilPasien> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -84,7 +62,9 @@ class _DashboardState extends State<Dashboard> {
                 ),
                 const SizedBox(height: 120),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/periksa_janji_temu');
+                  },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.blue,
                     shape: const RoundedRectangleBorder(

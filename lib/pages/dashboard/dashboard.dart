@@ -1,50 +1,181 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dots_indicator/dots_indicator.dart';
+// import 'package:tubes/pages/lihat_janji_temu/janji_temu_saya1.dart';
+import 'package:tubes/pages/lihat_janji_temu/janji_temu_saya2.dart';
+import 'package:tubes/pages/rekam_medis/rekam_medis.dart';
 
-void main() {
-  runApp(const MyApp());
-}
+// void main() {
+//   runApp(const MyApp());
+// }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+// class MyApp extends StatelessWidget {
+//   const MyApp({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Dashboard',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home: const MyHomePage(title: 'Dashboard'),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       title: 'Dashboard',
+//       theme: ThemeData(
+//         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+//         useMaterial3: true,
+//       ),
+//       home: const Dashboard(title: 'Dashboard'),
+//     );
+//   }
+// }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
+class Dashboard extends StatefulWidget {
+  const Dashboard({super.key, required this.title});
   final String title;
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<Dashboard> createState() => _DashboardState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _DashboardState extends State<Dashboard> {
   int _currentIndex = 0;
 
-  int _selectedIndex = 0;
+  // int _selectedIndex = 0;
+
+  final List<Widget> _children = [
+    const Dashboard1(
+      title: "Dashboard",
+    ),
+    const JanjiTemuSaya2(title: "Janji Temu Saya 2"),
+    const RekamMedis(),
+  ];
 
   void _onItemTapped(int index) {
     setState(() {
-      _selectedIndex = index;
+      _currentIndex = index;
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      body: _children[_currentIndex],
+      bottomNavigationBar: BottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Beranda',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.edit_calendar),
+            label: 'Janji Temu',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.medical_information),
+            label: 'Rekam Medis',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.account_circle),
+            label: 'Profil',
+          ),
+        ],
+        currentIndex: _currentIndex,
+        selectedItemColor: const Color.fromARGB(255, 108, 176, 255),
+        unselectedItemColor: const Color.fromARGB(255, 121, 121, 121),
+        unselectedLabelStyle: const TextStyle(
+          color: Color.fromARGB(255, 121, 121,
+              121), // Warna abu-abu untuk label yang tidak terpilih
+        ),
+        showUnselectedLabels: true, // Menampilkan label yang tidak terpilih
+        onTap: _onItemTapped,
+      ),
+    );
+  }
+}
+
+class CustomButton extends StatelessWidget {
+  final IconData icon;
+  final String text1;
+  final String text2;
+  final VoidCallback onPressed;
+
+  const CustomButton({
+    super.key,
+    required this.icon,
+    required this.text1,
+    required this.text2,
+    required this.onPressed,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: onPressed,
+      child: Container(
+        margin: const EdgeInsets.all(10),
+        child: Column(
+          children: <Widget>[
+            Container(
+              padding: const EdgeInsets.all(12),
+              decoration: const BoxDecoration(
+                color: Color.fromARGB(255, 190, 227, 255),
+                shape: BoxShape.circle,
+              ),
+              child: Icon(
+                icon,
+                color: Colors.blue,
+                size: 30,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
+              child: Column(
+                children: [
+                  Text(
+                    text1,
+                    style: const TextStyle(
+                      fontSize: 12,
+                      color: Colors.black,
+                    ),
+                  ),
+                  Text(
+                    text2,
+                    style: const TextStyle(
+                      fontSize: 12,
+                      color: Colors.black,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class Dashboard1 extends StatefulWidget {
+  const Dashboard1({super.key, required this.title});
+  final String title;
+
+  @override
+  State<Dashboard1> createState() => _Dashboard1State();
+}
+
+class _Dashboard1State extends State<Dashboard1> {
+  int _currentIndex = 0;
+
+  // int _selectedIndex = 0;
+
+  // final List<Widget> _children = [
+  //   const Dashboard1(
+  //     title: "Dashboard",
+  //   ),
+  //   const JanjiTemuSaya2(title: "Janji Temu Saya 2"),
+  // ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: Row(
           children: [
             Image.asset(
@@ -135,19 +266,25 @@ class _MyHomePageState extends State<MyHomePage> {
                 icon: Icons.edit_calendar_rounded,
                 text1: "Buat",
                 text2: "Janji Temu",
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushNamed(context, '/cari_reservasi');
+                },
               ),
               CustomButton(
                 icon: Icons.calendar_month_outlined,
                 text1: "Jadwal",
                 text2: "Dokter",
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushNamed(context, '/cari_dokter');
+                },
               ),
               CustomButton(
                 icon: Icons.medical_information_rounded,
                 text1: "Informasi",
                 text2: "Rumah Sakit",
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushNamed(context, '/informasi_rumah_sakit');
+                },
               ),
               CustomButton(
                 icon: Icons.account_circle,
@@ -158,96 +295,6 @@ class _MyHomePageState extends State<MyHomePage> {
             ],
           ),
         ],
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-							items: const <BottomNavigationBarItem>[
-								BottomNavigationBarItem(
-									icon: Icon(Icons.home),
-									label: 'Beranda',
-								),
-								BottomNavigationBarItem(
-									icon: Icon(Icons.edit_calendar),
-									label: 'Janji Temu',
-								),
-								BottomNavigationBarItem(
-									icon: Icon(Icons.medical_information),
-									label: 'Rekam Medis',
-								),
-								BottomNavigationBarItem(
-									icon: Icon(Icons.account_circle),
-									label: 'Profil',
-								),
-							],
-							currentIndex: _selectedIndex,
-							selectedItemColor: const Color.fromARGB(255, 108, 176, 255),
-							unselectedItemColor: const Color.fromARGB(255, 121, 121, 121),
-							unselectedLabelStyle: const TextStyle(
-								color: Color.fromARGB(255, 121, 121, 121), // Warna abu-abu untuk label yang tidak terpilih
-							),
-							showUnselectedLabels: true, // Menampilkan label yang tidak terpilih
-							onTap: _onItemTapped,
-						)
-    );
-  }
-}
-
-class CustomButton extends StatelessWidget {
-  final IconData icon;
-  final String text1;
-  final String text2;
-  final VoidCallback onPressed;
-
-  const CustomButton({
-    super.key,
-    required this.icon,
-    required this.text1,
-    required this.text2,
-    required this.onPressed,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onPressed,
-      child: Container(
-        margin: const EdgeInsets.all(10),
-        child: Column(
-          children: <Widget>[
-            Container(
-              padding: const EdgeInsets.all(12),
-              decoration: const BoxDecoration(
-                color: Color.fromARGB(255, 190, 227, 255),
-                shape: BoxShape.circle,
-              ),
-              child: Icon(
-                icon,
-                color: Colors.blue,
-                size: 30,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
-              child: Column(
-                children: [
-                  Text(
-                    text1,
-                    style: const TextStyle(
-                      fontSize: 12,
-                      color: Colors.black,
-                    ),
-                  ),
-                  Text(
-                    text2,
-                    style: const TextStyle(
-                      fontSize: 12,
-                      color: Colors.black,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
       ),
     );
   }

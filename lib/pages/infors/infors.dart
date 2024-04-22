@@ -1,24 +1,24 @@
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(const MyApp());
-}
+// void main() {
+//   runApp(const MyApp());
+// }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+// class MyApp extends StatelessWidget {
+//   const MyApp({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Informasi Rumah Sakit',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home: const InformasiRumahSakit(title: 'Informasi Rumah Saki'),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       title: 'Informasi Rumah Sakit',
+//       theme: ThemeData(
+//         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+//         useMaterial3: true,
+//       ),
+//       home: const InformasiRumahSakit(title: 'Informasi Rumah Saki'),
+//     );
+//   }
+// }
 
 class InformasiRumahSakit extends StatefulWidget {
   const InformasiRumahSakit({super.key, required this.title});
@@ -39,10 +39,10 @@ class _InformasiRumahSakitState extends State<InformasiRumahSakit> {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.blue,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_outlined),
-          onPressed: () {},
-        ),
+        // leading: IconButton(
+        //   icon: const Icon(Icons.arrow_back_ios_outlined),
+        //   onPressed: () {},
+        // ),
       ),
       body: ListView(
         children: [
@@ -102,7 +102,9 @@ class _InformasiRumahSakitState extends State<InformasiRumahSakit> {
                         icon: Icons.favorite,
                         text: 'Spesialisasi Kami',
                         subText: 'Lihat daftar spesialisasi kami',
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/spesialisasi');
+                        },
                       ),
                     ),
                     const SizedBox(height: 20),
@@ -112,7 +114,9 @@ class _InformasiRumahSakitState extends State<InformasiRumahSakit> {
                         icon: Icons.medical_services,
                         text: 'Dokter Kami',
                         subText: 'Kenalilah dokter-dokter kami',
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/cari_dokter');
+                        },
                       ),
                     ),
                   ],

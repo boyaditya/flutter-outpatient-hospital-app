@@ -98,7 +98,7 @@ class _PilihJadwalState extends State<PilihJadwal> {
                   onPressed: _dates == DateTime(0)
                       ? null
                       : () {
-                          Navigator.pushNamed(context, '/periksa_janji_temu');
+                          Navigator.pushNamed(context, '/profil_pasien');
                         },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.blue,

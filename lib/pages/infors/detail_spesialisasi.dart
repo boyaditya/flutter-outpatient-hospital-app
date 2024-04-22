@@ -1,56 +1,59 @@
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(MyApp());
-}
+// void main() {
+//   runApp(MyApp());
+// }
 
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Ophthalmology',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: OphthalmologyPage(),
-    );
-  }
-}
+// class MyApp extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       title: 'Ophthalmology',
+//       theme: ThemeData(
+//         primarySwatch: Colors.blue,
+//       ),
+//       home: DetailSpesialisasi(),
+//     );
+//   }
+// }
 
-class OphthalmologyPage extends StatelessWidget {
+class DetailSpesialisasi extends StatelessWidget {
+  const DetailSpesialisasi({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_outlined),
-          onPressed: () {},
-        ),
+        // leading: IconButton(
+        //   icon: const Icon(Icons.arrow_back_ios_outlined),
+        //   onPressed: () {},
+        // ),
         title: const Text('Ophthalmology'),
         bottom: const PreferredSize(
           preferredSize: Size.fromHeight(1.0),
           child: Divider(
-            color: Color.fromARGB(255, 0, 0, 0),
-            height: 1.0,
+            color: Colors.grey,
+            height: 0.3,
           ),
         ),
       ),
       body: SingleChildScrollView(
         child: Column(
           children: [
-						const SizedBox(height: 20),
+            const SizedBox(height: 20),
             Container(
-							width: double.infinity,
-							height: 200,
-							margin: const EdgeInsets.symmetric(horizontal: 16.0), // Menambahkan margin kanan dan kiri
-							decoration: BoxDecoration(
-								image: const DecorationImage(
-									image: AssetImage('assets/images/oftalmologi.jpeg'),
-									fit: BoxFit.cover,
-								),
-								borderRadius: BorderRadius.circular(16.0),
-							),
-						),
+              width: double.infinity,
+              height: 200,
+              margin: const EdgeInsets.symmetric(
+                  horizontal: 16.0), // Menambahkan margin kanan dan kiri
+              decoration: BoxDecoration(
+                image: const DecorationImage(
+                  image: AssetImage('assets/images/oftalmologi.jpeg'),
+                  fit: BoxFit.cover,
+                ),
+                borderRadius: BorderRadius.circular(16.0),
+              ),
+            ),
             const Padding(
               padding: EdgeInsets.all(16.0),
               child: Column(
@@ -127,15 +130,19 @@ class OphthalmologyPage extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: ElevatedButton(
                 onPressed: () {
+                  Navigator.pushNamed(context, '/cari_reservasi');
                   // handle the button tap
                 },
-                child: const Text('Cari Spesialis', style: TextStyle(color: Colors.white),),
                 style: ElevatedButton.styleFrom(
-									backgroundColor: Colors.blue,
+                  backgroundColor: Colors.blue,
                   minimumSize: const Size(double.infinity, 50),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
+                ),
+                child: const Text(
+                  'Cari Spesialis',
+                  style: TextStyle(color: Colors.white),
                 ),
               ),
             ),

@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 
-void main() => runApp(const MaterialApp(
-  home: ForgetPass(),
-));
+// void main() => runApp(const MaterialApp(
+//   home: ForgetPass(),
+// ));
 
-class ForgetPass extends StatefulWidget {
-  const ForgetPass({super.key});
+class DataDiri extends StatefulWidget {
+  const DataDiri({super.key});
 
   @override
-  State<ForgetPass> createState() => _ForgetPassState();
+  State<DataDiri> createState() => _DataDiriState();
 }
 
-class _ForgetPassState extends State<ForgetPass> {
+class _DataDiriState extends State<DataDiri> {
   late DateTime _selectedDate;
   TextEditingController _dateController = TextEditingController();
   TextEditingController _nameController = TextEditingController();
@@ -61,10 +61,12 @@ class _ForgetPassState extends State<ForgetPass> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new_rounded, color: Colors.black),
-          onPressed: () {},
-        ),
+        // leading: IconButton(
+        //   icon: const Icon(Icons.arrow_back_ios_new_rounded, color: Colors.black),
+        //   onPressed: () {
+        //     Navigator.pop(context);
+        //   },
+        // ),
       ),
       body: Padding(
         padding: const EdgeInsets.fromLTRB(38.0, 10.0, 38.0, 0),
@@ -82,7 +84,7 @@ class _ForgetPassState extends State<ForgetPass> {
             const Text(
               'Harap  masukkan nama Anda sesuai dengan yang tertera pada dokumen resmi dan kartu identitas Anda.',
               style: TextStyle(
-                fontSize: 18,
+                fontSize: 16,
               ),
             ),
             const SizedBox(height: 20),
@@ -105,7 +107,7 @@ class _ForgetPassState extends State<ForgetPass> {
                 border: OutlineInputBorder(),
                 hintText: 'Pilih salah satu',
               ),
-              items: <String>['Laki-laki', 'Perempuan', 'Lainnya']
+              items: <String>['Laki-laki', 'Perempuan']
                   .map((String value) {
                 return DropdownMenuItem<String>(
                   value: value,
@@ -152,7 +154,9 @@ class _ForgetPassState extends State<ForgetPass> {
                 fixedSize: Size(MediaQuery.of(context).size.width,
                     40), // 50% of screen width
               ),
-              onPressed: _isButtonEnabled ? () {} : null,
+              onPressed: _isButtonEnabled ? () {
+                Navigator.pushNamed(context, '/konfirm_email');
+              } : null,
               child: const Text('Selanjutnya', style: TextStyle(color: Colors.white)),
             ),
           ],

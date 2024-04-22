@@ -27,7 +27,7 @@ import 'package:flutter/material.dart';
 // }
 
 class RincianJanjiTemu extends StatefulWidget {
-  const RincianJanjiTemu({Key? key, required this.title}) : super(key: key);
+  const RincianJanjiTemu({super.key, required this.title});
 
   final String title;
 
@@ -41,7 +41,7 @@ class _RincianJanjiTemuState extends State<RincianJanjiTemu> {
       context: context,
       builder: (context) {
         return Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             color: Color.fromRGBO(187, 222, 251, 1),
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(20),
@@ -55,7 +55,7 @@ class _RincianJanjiTemuState extends State<RincianJanjiTemu> {
               return Column(
                 children: [
                   ListTile(
-                    contentPadding: EdgeInsets.symmetric(vertical: 15),
+                    contentPadding: const EdgeInsets.symmetric(vertical: 15),
                     title: Text(
                       options[index],
                       textAlign: TextAlign.center,
@@ -66,7 +66,7 @@ class _RincianJanjiTemuState extends State<RincianJanjiTemu> {
                     ),
                   ),
                   if (index != options.length - 1)
-                    Divider(
+                    const Divider(
                       color: Colors.black,
                       thickness: 1.0,
                       height: 0,
@@ -88,16 +88,17 @@ class _RincianJanjiTemuState extends State<RincianJanjiTemu> {
           'Rincian Janji Temu',
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
         ),
+
         actions: [
           IconButton(
             onPressed: () {
               // Logika ketika tombol butuh bantuan diklik
             },
-            icon: Icon(Icons.help),
+            icon: const Icon(Icons.help),
           ),
           // Teks di sebelah kanan ikon
-          Padding(
-            padding: const EdgeInsets.only(right: 16.0),
+          const Padding(
+            padding: EdgeInsets.only(right: 16.0),
             child: Text(
               'Butuh\nBantuan?',
               style: TextStyle(fontSize: 16),
@@ -137,31 +138,31 @@ class _RincianJanjiTemuState extends State<RincianJanjiTemu> {
                     ),
                   ),
                 ),
-                SizedBox(height: 8), // Berikan jarak antara teks berikutnya
+                const SizedBox(height: 8), // Berikan jarak antara teks berikutnya
                 // Teks
-                Text(
+                const Text(
                   'Nomor Antrian',
                   style: TextStyle(fontSize: 16),
                 ),
-                SizedBox(height: 8), // Berikan jarak antara teks berikutnya
+                const SizedBox(height: 8), // Berikan jarak antara teks berikutnya
                 // Teks bold
-                Text(
+                const Text(
                   '16', // Ganti dengan ID Janji Temu yang sesuai
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
                 // Teks
-                Text(
+                const Text(
                   'Kode Booking',
                   style: TextStyle(fontSize: 16),
                 ),
-                SizedBox(height: 8), // Berikan jarak antara teks berikutnya
+                const SizedBox(height: 8), // Berikan jarak antara teks berikutnya
                 // Teks bold
-                Text(
+                const Text(
                   'T6NWHR', // Ganti dengan Nomor Antrian yang sesuai
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
-                SizedBox(height: 8), // Berikan jarak antara teks berikutnya
-                Text(
+                const SizedBox(height: 8), // Berikan jarak antara teks berikutnya
+                const Text(
                   'Pindai kode QR di Kios untuk Check In',
                   style: TextStyle(fontSize: 16),
                 ),
@@ -171,7 +172,7 @@ class _RincianJanjiTemuState extends State<RincianJanjiTemu> {
                       .start, // Mengubah crossAxisAlignment menjadi start
                   children: [
                     // Teks INFO STATUS
-                    Text(
+                    const Text(
                       "INFO STATUS",
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
@@ -180,7 +181,7 @@ class _RincianJanjiTemuState extends State<RincianJanjiTemu> {
                     Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
-                        color: Color.fromARGB(255, 245, 225, 10),
+                        color: const Color.fromARGB(255, 245, 225, 10),
                         boxShadow: const [
                           BoxShadow(
                             color: Colors.grey,
@@ -192,7 +193,7 @@ class _RincianJanjiTemuState extends State<RincianJanjiTemu> {
                       width: double.infinity,
                       padding: const EdgeInsets.all(20),
                       // Kolom untuk konten info status
-                      child: Column(
+                      child: const Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           // Teks pertama
@@ -213,7 +214,7 @@ class _RincianJanjiTemuState extends State<RincianJanjiTemu> {
                       ),
                     ),
                     const SizedBox(height: 20),
-                    Text(
+                    const Text(
                       "INFO PASIEN",
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
@@ -318,9 +319,11 @@ class _RincianJanjiTemuState extends State<RincianJanjiTemu> {
                     ),
                     const SizedBox(height: 35),
                     ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.pushNamed(context, '/histori_janji');
+                      },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Color.fromRGBO(16, 52, 116, 1),
+                        backgroundColor: const Color.fromRGBO(16, 52, 116, 1),
                         shape: const RoundedRectangleBorder(
                             borderRadius: BorderRadius.all(Radius.circular(8))),
                         fixedSize: Size(
@@ -328,7 +331,7 @@ class _RincianJanjiTemuState extends State<RincianJanjiTemu> {
                           40,
                         ),
                       ),
-                      child: const Text('TAMBAHKAN KE KALENDER SAYA',
+                      child: const Text('Lihat Histori Janji Temu',
                           style: TextStyle(color: Colors.white)),
                     ),
                     const SizedBox(height: 20),
@@ -346,7 +349,7 @@ class _RincianJanjiTemuState extends State<RincianJanjiTemu> {
                       child: const Text('CHECK IN',
                           style: TextStyle(color: Colors.white)),
                     ),
-                    SizedBox(height: 15),
+                    const SizedBox(height: 15),
                     Center(
                       child: GestureDetector(
                         onTap: () {
@@ -356,7 +359,7 @@ class _RincianJanjiTemuState extends State<RincianJanjiTemu> {
                             'Cancel'
                           ]);
                         },
-                        child: Text(
+                        child: const Text(
                           "PILIHAN LAIN",
                           style: TextStyle(
                             fontSize: 16,
@@ -382,10 +385,10 @@ class InfoItem extends StatelessWidget {
   final String value;
 
   const InfoItem({
-    Key? key,
+    super.key,
     required this.label,
     required this.value,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

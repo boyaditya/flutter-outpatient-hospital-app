@@ -2,51 +2,51 @@
 
 import 'package:flutter/material.dart';
 
-import 'lupa_kata_sandi.dart';
-import 'cek_email.dart';
-import 'kata_sandi_baru.dart';
-import 'reset_success.dart';
+// import 'lupa_kata_sandi.dart';
+// import 'cek_email.dart';
+// import 'kata_sandi_baru.dart';
+// import 'reset_success.dart';
 
-void main() {
-  runApp(const MyApp());
-}
+// void main() {
+//   runApp(const MyApp());
+// }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+// class MyApp extends StatelessWidget {
+//   const MyApp({super.key});
 
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      onGenerateTitle: (BuildContext context) {
-        final routeName = ModalRoute.of(context)?.settings.name;
+//   // This widget is the root of your application.
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       debugShowCheckedModeBanner: false,
+//       onGenerateTitle: (BuildContext context) {
+//         final routeName = ModalRoute.of(context)?.settings.name;
 
-        switch (routeName) {
-          case '/':
-            return 'Login';
-          // Add more cases for other routes
-          default:
-            return 'Login';
-        }
-      },
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
-        useMaterial3: true,
-      ),
-      initialRoute: '/',
-      routes: {
-        '/': (context) => const Login(title: 'Login'),
-        '/lupa_kata_sandi': (context) => const LupaKataSandi(title: 'Lupa Kata Sandi'),
-        '/cek_email': (context) => const CekEmail(title: 'Cek Email'),
-        '/kata_sandi_baru': (context) => const KataSandiBaru(title: 'Kata Sandi Baru'),
-        '/reset_success': (context) => const ResetSuccess(title: 'Reset Success'),
-        
-        // Add more routes here
-      },
-    );
-  }
-}
+//         switch (routeName) {
+//           case '/':
+//             return 'Login';
+//           // Add more cases for other routes
+//           default:
+//             return 'Login';
+//         }
+//       },
+//       theme: ThemeData(
+//         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
+//         useMaterial3: true,
+//       ),
+//       initialRoute: '/',
+//       routes: {
+//         '/': (context) => const Login(title: 'Login'),
+//         '/lupa_kata_sandi': (context) => const LupaKataSandi(title: 'Lupa Kata Sandi'),
+//         '/cek_email': (context) => const CekEmail(title: 'Cek Email'),
+//         '/kata_sandi_baru': (context) => const KataSandiBaru(title: 'Kata Sandi Baru'),
+//         '/reset_success': (context) => const ResetSuccess(title: 'Reset Success'),
+
+//         // Add more routes here
+//       },
+//     );
+//   }
+// }
 
 class Login extends StatefulWidget {
   const Login({super.key, required String title});
@@ -150,10 +150,14 @@ class _LoginState extends State<Login> {
                 ),
               ),
             ),
-            const SizedBox(height: 80.0),
+            const SizedBox(height: 40.0),
             Center(
               child: ElevatedButton(
-                onPressed: isButtonEnabled ? () {} : null,
+                onPressed: isButtonEnabled
+                    ? () {
+                        Navigator.pushNamed(context, '/dashboard');
+                      }
+                    : null,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.blue[700],
                   shape: const RoundedRectangleBorder(
@@ -173,7 +177,27 @@ class _LoginState extends State<Login> {
                 child: const Text('Lupa Kata Sandi?',
                     style: TextStyle(color: Colors.blue)),
               ),
-            )
+            ),
+            const SizedBox(height: 40.0),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Text(
+                  'Belum punya akun?',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 14,
+                  ),
+                ),
+                TextButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/buat_akun');
+                  },
+                  child: const Text('Daftar Sekarang',
+                      style: TextStyle(color: Colors.blue)),
+                )
+              ],
+            ),
           ],
         ),
       ),
