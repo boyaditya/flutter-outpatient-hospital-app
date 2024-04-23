@@ -1,30 +1,31 @@
 import 'package:flutter/material.dart';
-import 'package:tubes/keluar.dart';
-import 'package:tubes/syarat_ketentuan.dart';
+import 'package:tubes/pages/profile/keluar.dart';
+import 'package:tubes/pages/profile/syarat_ketentuan.dart';
 import 'hapus_akun.dart';
 import 'profil_pasien.dart';
 import 'berikan_penilaian.dart';
 import 'pusat_bantuan.dart';
 
-void main() {
-  runApp(MyApp());
-}
+// void main() {
+//   runApp(MyApp());
+// }
 
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Profil',
-      home: ProfilScreen(),
-    );
-  }
-}
+// class MyApp extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       title: 'Profil',
+//       home: ProfilScreen(),
+//     );
+//   }
+// }
 
 class ProfilScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: Text('Profil'),
       ),
       body: Column(
@@ -158,30 +159,30 @@ class ProfilScreen extends StatelessWidget {
           ),
         ],
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Beranda',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.search),
-            label: 'Cari',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.photo_library),
-            label: 'Media',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.menu),
-            label: 'Menu',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Profil',
-          ),
-        ],
-      ),
+      // bottomNavigationBar: BottomNavigationBar(
+      //   items: [
+      //     BottomNavigationBarItem(
+      //       icon: Icon(Icons.home),
+      //       label: 'Beranda',
+      //     ),
+      //     BottomNavigationBarItem(
+      //       icon: Icon(Icons.search),
+      //       label: 'Cari',
+      //     ),
+      //     BottomNavigationBarItem(
+      //       icon: Icon(Icons.photo_library),
+      //       label: 'Media',
+      //     ),
+      //     BottomNavigationBarItem(
+      //       icon: Icon(Icons.menu),
+      //       label: 'Menu',
+      //     ),
+      //     BottomNavigationBarItem(
+      //       icon: Icon(Icons.person),
+      //       label: 'Profil',
+      //     ),
+      //   ],
+      // ),
     );
   }
 }

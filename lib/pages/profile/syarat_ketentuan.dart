@@ -15,7 +15,7 @@ class SyaratKetentuanScreen extends StatelessWidget {
           children: [
             Center(
               child: Image.asset(
-                'assets/athena_bg1.png',
+                'assets/images/athena_bg1.png',
                 width: 120.0, // Sesuaikan ukuran logo sesuai kebutuhan
                 height: 120.0,
                 // Jika perlu, tambahkan properti fit untuk menyesuaikan tata letak gambar

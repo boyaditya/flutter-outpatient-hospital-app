@@ -34,7 +34,7 @@ class _OnBoarding2State extends State<OnBoarding2>{
           crossAxisAlignment: CrossAxisAlignment.center,
           children:[
             Image.asset(
-              'assets/onboard2.jpeg',
+              'assets/images/onboard2.jpeg',
               height: 250,
             ),
             const SizedBox(height: 20),

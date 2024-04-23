@@ -34,18 +34,20 @@ class _OnBoarding1State extends State<OnBoarding1>{
           crossAxisAlignment: CrossAxisAlignment.center,
           children:[
             Image.asset(
-              'assets/athena_bg1.png',
+              'assets/images/athena_bg1.png',
               height: 60,
             ),
             const SizedBox(height: 30),
             Image.asset(
-              'assets/onboard1.jpeg',
+              'assets/images/onboard1.jpeg',
               height: 250,
             ),
             const SizedBox(height: 30),
             Center(
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushNamed(context, '/');
+                },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.blue[700],
                   shape: const RoundedRectangleBorder(
@@ -60,7 +62,9 @@ class _OnBoarding1State extends State<OnBoarding1>{
             const SizedBox(height: 10),
             Center(
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushNamed(context, '/buat_akun');
+                },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.white,
                   shape: const RoundedRectangleBorder(

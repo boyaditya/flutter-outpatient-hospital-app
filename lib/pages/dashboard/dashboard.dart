@@ -4,6 +4,7 @@ import 'package:dots_indicator/dots_indicator.dart';
 // import 'package:tubes/pages/lihat_janji_temu/janji_temu_saya1.dart';
 import 'package:tubes/pages/lihat_janji_temu/janji_temu_saya2.dart';
 import 'package:tubes/pages/rekam_medis/rekam_medis.dart';
+import 'package:tubes/pages/profile/profile.dart';
 
 // void main() {
 //   runApp(const MyApp());
@@ -44,6 +45,7 @@ class _DashboardState extends State<Dashboard> {
     ),
     const JanjiTemuSaya2(title: "Janji Temu Saya 2"),
     const RekamMedis(),
+    ProfilScreen(),
   ];
 
   void _onItemTapped(int index) {
