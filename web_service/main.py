@@ -7,7 +7,7 @@ from fastapi import Depends, Request, FastAPI, HTTPException, status
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi import FastAPI
 
-from typing import Annotated
+from typing import Annotated, List
 from sqlalchemy.orm import Session
 
 import crud, models, schemas
@@ -51,3 +51,9 @@ async def create_user(user: schemas.UserCreate, db: db_dependency):
     if db_user:
         raise HTTPException(status_code=400, detail="Email already registered")
     return crud.create_user(db=db, user=user)
+
+
+@app.get("/doctors/", response_model=List[schemas.Doctor])
+async def read_doctors(db: db_dependency):
+    return crud.get_doctors(db)
+
