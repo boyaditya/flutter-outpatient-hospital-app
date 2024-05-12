@@ -4,6 +4,7 @@ import 'package:dots_indicator/dots_indicator.dart';
 import 'package:tubes/pages/lihat_janji_temu/janji_temu_saya2.dart';
 import 'package:tubes/pages/rekam_medis/rekam_medis.dart';
 import 'package:tubes/pages/profile/profile.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({super.key, required this.title});
@@ -167,156 +168,155 @@ class _Dashboard1State extends State<Dashboard1> {
           ],
         ),
       ),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text(
-                  'Hi, User',
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                IconButton(
-                  icon: const Icon(Icons.notifications_active),
-                  onPressed: () {
-                    // Action when notification icon is pressed
-                  },
-                ),
-              ],
-            ),
-          ),
-          CarouselSlider(
-            options: CarouselOptions(
-              height: 200.0,
-              autoPlay: true,
-              autoPlayInterval: const Duration(seconds: 3),
-              autoPlayAnimationDuration: const Duration(milliseconds: 800),
-              autoPlayCurve: Curves.fastOutSlowIn,
-              pauseAutoPlayOnTouch: true,
-              enlargeCenterPage: true,
-              onPageChanged: (index, reason) {
-                setState(() {
-                  _currentIndex = index;
-                });
-              },
-            ),
-            items: [
-                Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8.0),
-                  image: const DecorationImage(
-                    image: AssetImage(
-                        'assets/images/dokter.jpg'), // Replace with your image path
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ),
-              Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8.0),
-                  color: Colors.blue,
-                ),
-              ),
-              Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8.0),
-                  color: Colors.blue,
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 8.0),
-          DotsIndicator(
-            dotsCount: 3,
-            position: _currentIndex.toDouble(),
-            decorator: DotsDecorator(
-              activeColor: Colors.blue,
-              spacing: const EdgeInsets.all(2.0),
-              activeSize: const Size(80.0, 8.0),
-              activeShape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(5.0),
-              ),
-            ),
-          ),
-          const SizedBox(height: 30.0),
-          Wrap(
-            alignment: WrapAlignment.spaceEvenly,
-            children: [
-              CustomButton(
-                icon: Icons.calendar_month_outlined,
-                text1: "Buat",
-                text2: "Janji Temu",
-                onPressed: () {
-                  Navigator.pushNamed(context, '/cari_dokter');
-                },
-              ),
-              CustomButton(
-                icon: Icons.medical_information_rounded,
-                text1: "Informasi",
-                text2: "Rumah Sakit",
-                onPressed: () {
-                  Navigator.pushNamed(context, '/informasi_rumah_sakit');
-                },
-              ),
-              CustomButton(
-                icon: Icons.account_circle,
-                text1: "Registrasi",
-                text2: "Pasien Baru",
-                onPressed: () {
-                  Navigator.pushNamed(context, '/registrasi_pasien');
-                },
-              ),
-            ],
-          ),
-          const SizedBox(height: 10.0),
-          const Align(
-            alignment: Alignment.centerLeft,
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    'Registrasi Akun',
+                  const Text(
+                    'Hi, User',
                     style: TextStyle(
-                      fontSize: 16,
+                      fontSize: 18,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  SizedBox(height: 8.0),
-                  Text(
-                    'Daftarkan akun Anda sekarang untuk mendapatkan akses penuh ke layanan kami dan mengatur janji temu dengan praktisi kesehatan.',
-                    style: TextStyle(
-                      fontSize: 14,
-                    ),
+                  IconButton(
+                    icon: const Icon(Icons.notifications_active),
+                    onPressed: () {
+                      // Action when notification icon is pressed
+                    },
                   ),
                 ],
               ),
             ),
-          ),
-					SizedBox(height: 20),
-            // Card(
-            //   shape: RoundedRectangleBorder(
-            //     borderRadius: BorderRadius.circular(15.0),
-            //   ),
-            //   elevation: 5,
-            //   child: Padding(
-            //     padding: const EdgeInsets.all(20.0),
-            //     child: Image.asset(
-            //       'assets/images/registrasi.png', // Ubah dengan path gambar registrasi.png sesuai dengan struktur proyek Anda
-            //       width: 150,
-            //       height: 150,
-            //       fit: BoxFit.cover,
-            //     ),
-            //   ),
-            // ),
-
-        ],
+            CarouselSlider(
+              // CarouselSlider widget remains as it is
+              options: CarouselOptions(
+                height: 200.0,
+                autoPlay: true,
+                autoPlayInterval: const Duration(seconds: 3),
+                autoPlayAnimationDuration: const Duration(milliseconds: 800),
+                autoPlayCurve: Curves.fastOutSlowIn,
+                pauseAutoPlayOnTouch: true,
+                enlargeCenterPage: true,
+                onPageChanged: (index, reason) {
+                  setState(() {
+                    _currentIndex = index;
+                  });
+                },
+              ),
+              items: [
+                Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8.0),
+                    color: Colors.blue,
+                  ),
+                ),
+                Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8.0),
+                    color: Colors.blue,
+                  ),
+                ),
+                Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8.0),
+                    color: Colors.blue,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 8.0),
+            DotsIndicator(
+              // DotsIndicator widget remains as it is
+              dotsCount: 3,
+              position: _currentIndex.toDouble(),
+              decorator: DotsDecorator(
+                activeColor: Colors.blue,
+                spacing: const EdgeInsets.all(2.0),
+                activeSize: const Size(80.0, 8.0),
+                activeShape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(5.0),
+                ),
+              ),
+            ),
+            const SizedBox(height: 30.0),
+            // CustomButton widgets and other widgets remain as they are
+            Wrap(
+              alignment: WrapAlignment.spaceEvenly,
+              children: [
+                CustomButton(
+                  icon: Icons.calendar_month_outlined,
+                  text1: "Buat",
+                  text2: "Janji Temu",
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/cari_dokter');
+                  },
+                ),
+                CustomButton(
+                  icon: Icons.medical_information_rounded,
+                  text1: "Informasi",
+                  text2: "Rumah Sakit",
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/informasi_rumah_sakit');
+                  },
+                ),
+              ],
+            ),
+            const SizedBox(height: 10.0),
+            const Align(
+              alignment: Alignment.centerLeft,
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Registrasi Akun',
+                      // style: GoogleFonts.dmSans,
+                    ),
+                    SizedBox(height: 8.0),
+                    Text(
+                      'Daftarkan akun Anda sekarang untuk mendapatkan akses penuh ke layanan kami dan mengatur janji temu dengan praktisi kesehatan.',
+                      style: TextStyle(
+                        fontSize: 14,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            const SizedBox(height: 20),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0), // Add horizontal padding
+              child: InkWell(
+                onTap: () {
+                  Navigator.pushNamed(context, '/registrasi_pasien');
+                },
+                child: Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15.0),
+                  ),
+                  elevation: 5,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(15.0),
+                    child: AspectRatio(
+                      aspectRatio: 16 / 8, // Set aspect ratio based on the original image
+                      child: Image.asset(
+                        'assets/images/registrasi.png', // Path to your registration image
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(height: 20), // Extra space added at the end
+          ],
+        ),
       ),
     );
   }

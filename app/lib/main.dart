@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:tubes/pages/authentication/buat_akun.dart';
 import 'package:tubes/pages/authentication/data_diri.dart';
 import 'package:tubes/pages/authentication/konfirm_email.dart';
@@ -25,6 +26,7 @@ import 'package:tubes/pages/login_forgot_reset/reset_success.dart';
 import 'package:tubes/pages/lihat_janji_temu/histori_janji_temu.dart';
 import 'package:tubes/pages/lihat_janji_temu/rincian_janji_temu.dart';
 import 'package:tubes/pages/lihat_janji_temu/janji_temu_saya2.dart';
+import 'package:tubes/pages/registrasi_pasien/registrasi_pasien.dart';
 import 'package:tubes/pages/rekam_medis/rekam_medis.dart';
 import 'package:tubes/pages/rekam_medis/detail_rm.dart';
 import 'package:tubes/pages/onboarding/onboard1.dart';
