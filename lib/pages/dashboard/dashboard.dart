@@ -288,21 +288,22 @@ class _Dashboard1State extends State<Dashboard1> {
             ),
           ),
 					SizedBox(height: 20),
-            Card(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(15.0),
-              ),
-              elevation: 5,
-              child: Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Image.asset(
-                  'assets/images/registrasi.png', // Ubah dengan path gambar registrasi.png sesuai dengan struktur proyek Anda
-                  width: 150,
-                  height: 150,
-                  fit: BoxFit.cover,
-                ),
-              ),
-            ),
+            // Card(
+            //   shape: RoundedRectangleBorder(
+            //     borderRadius: BorderRadius.circular(15.0),
+            //   ),
+            //   elevation: 5,
+            //   child: Padding(
+            //     padding: const EdgeInsets.all(20.0),
+            //     child: Image.asset(
+            //       'assets/images/registrasi.png', // Ubah dengan path gambar registrasi.png sesuai dengan struktur proyek Anda
+            //       width: 150,
+            //       height: 150,
+            //       fit: BoxFit.cover,
+            //     ),
+            //   ),
+            // ),
+
         ],
       ),
     );
