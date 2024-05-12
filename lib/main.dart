@@ -119,11 +119,17 @@ class MyApp extends StatelessWidget {
         '/detail_spesialisasi': (context) => const DetailSpesialisasi(),
         '/rekam_medis': (context) => const RekamMedis(),
         '/detail_rm': (context) => const DetailRekamMedis(),
+<<<<<<< HEAD
         '/onboard1': (context) => const OnBoarding1(),
         '/onboard2': (context) => const OnBoarding2(),
         '/onboard3': (context) => const Onboarding3(),
         '/registrasi_pasien': (context) => RegistrationScreen(),
 
+=======
+				'/onboard1': (context) => const OnBoarding1(),
+				'/onboard2': (context) => const OnBoarding2(),
+				'/onboard3': (context) => const Onboarding3(),
+>>>>>>> 649f3c6af2e91d0cd77b1c362483bf55ecbef33e
         // Add more routes here
       },
     );

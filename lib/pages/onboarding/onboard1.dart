@@ -39,7 +39,7 @@ class _OnBoarding1State extends State<OnBoarding1>{
             ),
             const SizedBox(height: 30),
             Image.asset(
-              'assets/images/onboard1.jpeg',
+              'assets/images/onboard1.png',
               height: 250,
             ),
             const SizedBox(height: 30),
