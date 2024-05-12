@@ -1,30 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dots_indicator/dots_indicator.dart';
-// import 'package:tubes/pages/lihat_janji_temu/janji_temu_saya1.dart';
 import 'package:tubes/pages/lihat_janji_temu/janji_temu_saya2.dart';
 import 'package:tubes/pages/rekam_medis/rekam_medis.dart';
 import 'package:tubes/pages/profile/profile.dart';
-
-// void main() {
-//   runApp(const MyApp());
-// }
-
-// class MyApp extends StatelessWidget {
-//   const MyApp({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       title: 'Dashboard',
-//       theme: ThemeData(
-//         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-//         useMaterial3: true,
-//       ),
-//       home: const Dashboard(title: 'Dashboard'),
-//     );
-//   }
-// }
 
 class Dashboard extends StatefulWidget {
   const Dashboard({super.key, required this.title});
@@ -265,17 +244,9 @@ class _Dashboard1State extends State<Dashboard1> {
             alignment: WrapAlignment.spaceEvenly,
             children: [
               CustomButton(
-                icon: Icons.edit_calendar_rounded,
+                icon: Icons.calendar_month_outlined,
                 text1: "Buat",
                 text2: "Janji Temu",
-                onPressed: () {
-                  Navigator.pushNamed(context, '/cari_reservasi');
-                },
-              ),
-              CustomButton(
-                icon: Icons.calendar_month_outlined,
-                text1: "Jadwal",
-                text2: "Dokter",
                 onPressed: () {
                   Navigator.pushNamed(context, '/cari_dokter');
                 },
@@ -288,14 +259,50 @@ class _Dashboard1State extends State<Dashboard1> {
                   Navigator.pushNamed(context, '/informasi_rumah_sakit');
                 },
               ),
-              CustomButton(
-                icon: Icons.account_circle,
-                text1: "Registrasi",
-                text2: "Pasien Baru",
-                onPressed: () {},
-              ),
             ],
           ),
+          const SizedBox(height: 10.0),
+          const Align(
+            alignment: Alignment.centerLeft,
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Registrasi Akun',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  SizedBox(height: 8.0),
+                  Text(
+                    'Daftarkan akun Anda sekarang untuk mendapatkan akses penuh ke layanan kami dan mengatur janji temu dengan praktisi kesehatan.',
+                    style: TextStyle(
+                      fontSize: 14,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+					SizedBox(height: 20),
+            Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15.0),
+              ),
+              elevation: 5,
+              child: Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Image.asset(
+                  'assets/images/registrasi.png', // Ubah dengan path gambar registrasi.png sesuai dengan struktur proyek Anda
+                  width: 150,
+                  height: 150,
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
         ],
       ),
     );
