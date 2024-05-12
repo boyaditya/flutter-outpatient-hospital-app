@@ -30,6 +30,7 @@ import 'package:tubes/pages/rekam_medis/detail_rm.dart';
 import 'package:tubes/pages/onboarding/onboard1.dart';
 import 'package:tubes/pages/onboarding/onboard2.dart';
 import 'package:tubes/pages/onboarding/onboard3.dart';
+import 'package:tubes/pages/registrasi_pasien/registrasi_pasien.dart';
 
 import 'package:intl/date_symbol_data_local.dart';
 
@@ -76,7 +77,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
         useMaterial3: true,
       ),
-      initialRoute: '/',
+      initialRoute: '/onboard2',
       routes: {
         '/': (context) => const Login(title: 'Login'),
         '/lupa_kata_sandi': (context) =>
@@ -118,6 +119,10 @@ class MyApp extends StatelessWidget {
         '/detail_spesialisasi': (context) => const DetailSpesialisasi(),
         '/rekam_medis': (context) => const RekamMedis(),
         '/detail_rm': (context) => const DetailRekamMedis(),
+        '/onboard1': (context) => const OnBoarding1(),
+        '/onboard2': (context) => const OnBoarding2(),
+        '/onboard3': (context) => const Onboarding3(),
+        '/registrasi_pasien': (context) => RegistrationScreen(),
 
         // Add more routes here
       },

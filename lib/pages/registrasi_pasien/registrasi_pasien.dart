@@ -1,20 +1,22 @@
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(MyApp());
-}
+// void main() {
+//   runApp(MyApp());
+// }
 
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Registrasi Pasien Baru',
-      home: RegistrationScreen(),
-    );
-  }
-}
+// class MyApp extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       title: 'Registrasi Pasien Baru',
+//       home: RegistrationScreen(),
+//     );
+//   }
+// }
 
 class RegistrationScreen extends StatefulWidget {
+  const RegistrationScreen({super.key});
+
   @override
   _RegistrationScreenState createState() => _RegistrationScreenState();
 }
@@ -32,24 +34,18 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () {
-            // Tambahkan logika untuk kembali ke halaman sebelumnya
-          },
-        ),
-        title: Text('Registrasi Pasien Baru'),
+        title: const Text('Registrasi Pasien Baru'),
       ),
-      body: SingleChildScrollView (
+      body: SingleChildScrollView(
         child: Padding(
-        padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(20.0),
           key: _formKey,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Harap isi data Anda yang sebenarnya.'),
-              SizedBox(height: 16.0),
-              Text('Nama Lengkap'),
+              const Text('Harap isi data Anda yang sebenarnya.'),
+              const SizedBox(height: 16.0),
+              const Text('Nama Lengkap'),
               Container(
                 decoration: BoxDecoration(
                   border: Border.all(color: Colors.grey),
@@ -59,15 +55,15 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   padding: const EdgeInsets.all(0.2),
                   child: TextFormField(
                     controller: _nameController,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       hintText: '  Masukkan Nama Lengkap Anda',
                       border: InputBorder.none,
                     ),
                   ),
                 ),
               ),
-              SizedBox(height: 16.0),
-              Text('Tanggal Lahir'),
+              const SizedBox(height: 16.0),
+              const Text('Tanggal Lahir'),
               Container(
                 decoration: BoxDecoration(
                   border: Border.all(color: Colors.grey),
@@ -77,15 +73,15 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   padding: const EdgeInsets.all(0.2),
                   child: TextFormField(
                     controller: _dobController,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       hintText: '  DD/MM/YY',
                       border: InputBorder.none,
                     ),
                   ),
                 ),
               ),
-              SizedBox(height: 16.0),
-              Text('Nomor Telepon'),
+              const SizedBox(height: 16.0),
+              const Text('Nomor Telepon'),
               Container(
                 decoration: BoxDecoration(
                   border: Border.all(color: Colors.grey),
@@ -95,15 +91,15 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   padding: const EdgeInsets.all(0.2),
                   child: TextFormField(
                     controller: _phoneController,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       hintText: '  +62000000000000',
                       border: InputBorder.none,
                     ),
                   ),
                 ),
               ),
-              SizedBox(height: 16.0),
-              Text('Alamat Email'),
+              const SizedBox(height: 16.0),
+              const Text('Alamat Email'),
               Container(
                 decoration: BoxDecoration(
                   border: Border.all(color: Colors.grey),
@@ -113,15 +109,15 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   padding: const EdgeInsets.all(0.2),
                   child: TextFormField(
                     controller: _emailController,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       hintText: '  test@email.com',
                       border: InputBorder.none,
                     ),
                   ),
                 ),
               ),
-              SizedBox(height: 16.0),
-              Text('Nomor Induk Kependudukan'),
+              const SizedBox(height: 16.0),
+              const Text('Nomor Induk Kependudukan'),
               Container(
                 decoration: BoxDecoration(
                   border: Border.all(color: Colors.grey),
@@ -131,14 +127,14 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   padding: const EdgeInsets.all(0.2),
                   child: TextFormField(
                     controller: _idController,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       hintText: '  XXXXXXXXXXXXXXX',
                       border: InputBorder.none,
                     ),
                   ),
                 ),
               ),
-              SizedBox(height: 50.0),
+              const SizedBox(height: 50.0),
               Row(
                 children: [
                   Checkbox(
@@ -149,25 +145,29 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       });
                     },
                   ),
-                  Expanded(
+                  const Expanded(
                     child: Text(
                       'Dengan ini saya menyatakan bahwa data yang saya berikan adalah benar dan saya menyetujui semua syarat dan ketentuan yang berlaku.',
+                      style: TextStyle(
+                        fontSize: 12.0,
+                      ),
                     ),
                   ),
                 ],
               ),
-              SizedBox(height: 25.0),
+              const SizedBox(height: 25.0),
               Center(
                 child: SizedBox(
                   width: MediaQuery.of(context).size.width * 0.8,
                   child: ElevatedButton(
                     onPressed: () {
                       // Tambahkan logika untuk mengirim data registrasi
-                    },style: ElevatedButton.styleFrom(
+                    },
+                    style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.blue,
                       foregroundColor: Colors.white,
                     ),
-                    child: Text('Kirim'),
+                    child: const Text('Kirim'),
                   ),
                 ),
               ),

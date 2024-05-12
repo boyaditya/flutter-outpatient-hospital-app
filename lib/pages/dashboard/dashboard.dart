@@ -6,26 +6,6 @@ import 'package:tubes/pages/lihat_janji_temu/janji_temu_saya2.dart';
 import 'package:tubes/pages/rekam_medis/rekam_medis.dart';
 import 'package:tubes/pages/profile/profile.dart';
 
-// void main() {
-//   runApp(const MyApp());
-// }
-
-// class MyApp extends StatelessWidget {
-//   const MyApp({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       title: 'Dashboard',
-//       theme: ThemeData(
-//         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-//         useMaterial3: true,
-//       ),
-//       home: const Dashboard(title: 'Dashboard'),
-//     );
-//   }
-// }
-
 class Dashboard extends StatefulWidget {
   const Dashboard({super.key, required this.title});
   final String title;
@@ -227,10 +207,14 @@ class _Dashboard1State extends State<Dashboard1> {
               },
             ),
             items: [
-              Container(
+                Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(8.0),
-                  color: Colors.blue,
+                  image: const DecorationImage(
+                    image: AssetImage(
+                        'assets/images/dokter.jpg'), // Replace with your image path
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
               Container(
@@ -292,7 +276,9 @@ class _Dashboard1State extends State<Dashboard1> {
                 icon: Icons.account_circle,
                 text1: "Registrasi",
                 text2: "Pasien Baru",
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushNamed(context, '/registrasi_pasien');
+                },
               ),
             ],
           ),

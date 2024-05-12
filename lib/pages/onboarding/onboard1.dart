@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(_MyApp());
-}
+// void main() {
+//   runApp(_MyApp());
+// }
 
-class _MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      title: 'Athena Hospital',
-      home: OnBoarding1(),
-    );
-  }
-}
+// class _MyApp extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return const MaterialApp(
+//       title: 'Athena Hospital',
+//       home: OnBoarding1(),
+//     );
+//   }
+// }
 
 class OnBoarding1 extends StatefulWidget{
   const OnBoarding1({super.key});

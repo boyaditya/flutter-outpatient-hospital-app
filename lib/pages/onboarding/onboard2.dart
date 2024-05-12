@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(_MyApp());
-}
+// void main() {
+//   runApp(_MyApp());
+// }
 
-class _MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      title: 'Athena Hospital',
-      home: OnBoarding2(),
-    );
-  }
-}
+// class _MyApp extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return const MaterialApp(
+//       title: 'Athena Hospital',
+//       home: OnBoarding2(),
+//     );
+//   }
+// }
 
 class OnBoarding2 extends StatefulWidget{
   const OnBoarding2({super.key});
@@ -27,6 +27,7 @@ class _OnBoarding2State extends State<OnBoarding2>{
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -79,14 +80,18 @@ class _OnBoarding2State extends State<OnBoarding2>{
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 TextButton(
-                  onPressed: (){},
+                  onPressed: (){
+                    Navigator.pushNamed(context, '/onboard1');
+                  },
                   child: const  Text(
                     'Lewati',
                     style: TextStyle(color: Colors.blue)
                   ),
                 ),
                 ElevatedButton(
-                  onPressed: (){},
+                  onPressed: (){
+                    Navigator.pushNamed(context, '/onboard3');
+                  },
                   style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.blue[700],
                   shape: const RoundedRectangleBorder(

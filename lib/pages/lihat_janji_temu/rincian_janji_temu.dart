@@ -280,7 +280,7 @@ class _RincianJanjiTemuState extends State<RincianJanjiTemu> {
                         children: <Widget>[
                           InfoItem(
                             label: "TANGGAL DAN WAKTU JANJI TEMU",
-                            value: "12 Januari 2022, 10:00 WIB",
+                            value: "24 April 2024, 14:00 - 16:30",
                           ),
                           InfoItem(
                             label: "DOKTER",
@@ -320,7 +320,7 @@ class _RincianJanjiTemuState extends State<RincianJanjiTemu> {
                     const SizedBox(height: 35),
                     ElevatedButton(
                       onPressed: () {
-                        Navigator.pushNamed(context, '/histori_janji');
+                        Navigator.pushNamed(context, '/janji_temu_saya2');
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: const Color.fromRGBO(16, 52, 116, 1),
@@ -331,24 +331,24 @@ class _RincianJanjiTemuState extends State<RincianJanjiTemu> {
                           40,
                         ),
                       ),
-                      child: const Text('Lihat Histori Janji Temu',
+                      child: const Text('Lihat Halaman Janji Temu',
                           style: TextStyle(color: Colors.white)),
                     ),
                     const SizedBox(height: 20),
-                    ElevatedButton(
-                      onPressed: () {},
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.blue,
-                        shape: const RoundedRectangleBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(8))),
-                        fixedSize: Size(
-                          MediaQuery.of(context).size.width,
-                          40,
-                        ),
-                      ),
-                      child: const Text('CHECK IN',
-                          style: TextStyle(color: Colors.white)),
-                    ),
+                    // ElevatedButton(
+                    //   onPressed: () {},
+                    //   style: ElevatedButton.styleFrom(
+                    //     backgroundColor: Colors.blue,
+                    //     shape: const RoundedRectangleBorder(
+                    //         borderRadius: BorderRadius.all(Radius.circular(8))),
+                    //     fixedSize: Size(
+                    //       MediaQuery.of(context).size.width,
+                    //       40,
+                    //     ),
+                    //   ),
+                    //   child: const Text('CHECK IN',
+                    //       style: TextStyle(color: Colors.white)),
+                    // ),
                     const SizedBox(height: 15),
                     Center(
                       child: GestureDetector(

@@ -110,7 +110,7 @@ class _PeriksaJanjiTemuState extends State<PeriksaJanjiTemu> {
                     children: <Widget>[
                       InfoItem(
                         label: "TANGGAL DAN WAKTU JANJI TEMU",
-                        value: "12 Januari 2022, 10:00 WIB",
+                        value: "24 April 2024, 14:00 - 16:30",
                       ),
                       InfoItem(
                         label: "DOKTER",

@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(_MyApp());
-}
+// void main() {
+//   runApp(_MyApp());
+// }
 
-class _MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      title: 'Athena Hospital',
-      home: Onboarding3(),
-    );
-  }
-}
+// class _MyApp extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return const MaterialApp(
+//       title: 'Athena Hospital',
+//       home: Onboarding3(),
+//     );
+//   }
+// }
 
 class Onboarding3 extends StatefulWidget{
   const Onboarding3({super.key});
@@ -27,6 +27,7 @@ class _Onboarding3State extends State<Onboarding3>{
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -34,7 +35,7 @@ class _Onboarding3State extends State<Onboarding3>{
           crossAxisAlignment: CrossAxisAlignment.center,
           children:[
             Image.asset(
-              'assets/onboard3.jpeg',
+              'assets/images/onboard3.jpeg',
               height: 250,
             ),
             const SizedBox(height: 20),
@@ -80,7 +81,9 @@ class _Onboarding3State extends State<Onboarding3>{
               children: [
                 const Spacer(),
                 ElevatedButton(
-                  onPressed: (){},
+                  onPressed: (){
+                    Navigator.pushNamed(context, '/onboard1');
+                  },
                   style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.blue[700],
                   shape: const RoundedRectangleBorder(
