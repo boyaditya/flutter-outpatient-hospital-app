@@ -80,7 +80,9 @@ class _Onboarding3State extends State<Onboarding3>{
               children: [
                 const Spacer(),
                 ElevatedButton(
-                  onPressed: (){},
+                  onPressed: (){
+										Navigator.pushNamed(context, '/onboard1');
+									},
                   style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.blue[700],
                   shape: const RoundedRectangleBorder(
