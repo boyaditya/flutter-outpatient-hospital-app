@@ -28,36 +28,6 @@ class _OnBoarding2State extends State<OnBoarding2> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-<<<<<<< HEAD
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children:[
-            Image.asset(
-              'assets/images/onboard2.jpeg',
-              height: 250,
-            ),
-            const SizedBox(height: 20),
-            const Text(
-              'Buat Janji Temu',
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const Text(
-              'Dengan Aplikasi Rumah Sakit kami, Anda dapat dengan mudah membuat janji temu untuk pemeriksaan kesehatan Anda. Tidak perlu lagi antri di loket pendaftaran. Cukup buka aplikasi, pilih waktu yang sesuai, dan janji temu Anda akan segera terdaftar!',
-              style: TextStyle(fontSize: 16),
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: 20),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-=======
       appBar: AppBar(),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -70,7 +40,6 @@ class _OnBoarding2State extends State<OnBoarding2> {
                   _currentPage = page;
                 });
               },
->>>>>>> 649f3c6af2e91d0cd77b1c362483bf55ecbef33e
               children: [
                 const OnBoardingSlide(
                   image: 'assets/images/janjitemu.png',
@@ -100,21 +69,6 @@ class _OnBoarding2State extends State<OnBoarding2> {
             children: [
               if (_currentPage != 0 && _currentPage == 1) // hanya menampilkan tombol "Kembali" pada slide pertama saja
                 TextButton(
-<<<<<<< HEAD
-                  onPressed: (){
-                    Navigator.pushNamed(context, '/onboard1');
-                  },
-                  child: const  Text(
-                    'Lewati',
-                    style: TextStyle(color: Colors.blue)
-                  ),
-                ),
-                ElevatedButton(
-                  onPressed: (){
-                    Navigator.pushNamed(context, '/onboard3');
-                  },
-                  style: ElevatedButton.styleFrom(
-=======
                   onPressed: () {
                     _pageController.previousPage(
                         duration: const Duration(milliseconds: 300),
@@ -146,7 +100,6 @@ class _OnBoarding2State extends State<OnBoarding2> {
                   }
                 },
                 style: ElevatedButton.styleFrom(
->>>>>>> 649f3c6af2e91d0cd77b1c362483bf55ecbef33e
                   backgroundColor: Colors.blue[700],
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(15),
