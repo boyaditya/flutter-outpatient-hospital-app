@@ -24,7 +24,7 @@ class Appointment(AppointmentBase):
     timestamp: datetime
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 # ========== Doctor ==========
@@ -46,7 +46,7 @@ class Doctor(DoctorBase):
     id: int
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 # ========== Patient ==========
@@ -69,7 +69,7 @@ class Patient(PatientBase):
     id: int
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 # ========== DoctorSchedule ==========
@@ -89,7 +89,7 @@ class DoctorSchedule(DoctorScheduleBase):
     id: int
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 # ========== MedicalRecord ==========
@@ -111,7 +111,7 @@ class MedicalRecord(MedicalRecordBase):
     id: int
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 # ========== Rating ==========
@@ -132,7 +132,7 @@ class Rating(RatingBase):
     id: int
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 # ========== Specialization ==========
@@ -152,7 +152,7 @@ class Specialization(SpecializationBase):
     id: int
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 # ========== User ==========
@@ -170,4 +170,4 @@ class User(UserBase):
     id: int
 
     class Config:
-        orm_mode = True
+        from_attributes = True

@@ -19,6 +19,7 @@ class Appointment(Base):
 
     doctor = relationship("Doctor", back_populates="appointments")
     patient = relationship("Patient", back_populates="appointments")
+    medical_records = relationship("MedicalRecord", back_populates="appointment")
 
 
 class Doctor(Base):
@@ -33,6 +34,7 @@ class Doctor(Base):
 
     appointments = relationship("Appointment", back_populates="doctor")
     specialization = relationship("Specialization", back_populates="doctors")
+    schedules = relationship("DoctorSchedule", back_populates="doctor")
 
 
 class Patient(Base):
@@ -48,6 +50,7 @@ class Patient(Base):
 
     appointments = relationship("Appointment", back_populates="patient")
     user = relationship("User", back_populates="patients")
+    ratings = relationship("Rating", back_populates="patient")
 
 
 class DoctorSchedule(Base):
