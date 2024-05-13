@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dots_indicator/dots_indicator.dart';
+import 'package:tubes/pages/buat_janji_temu/cari_dokter.dart';
+import 'package:tubes/pages/infors/infors.dart';
 import 'package:tubes/pages/lihat_janji_temu/janji_temu_saya2.dart';
+import 'package:tubes/pages/registrasi_pasien/registrasi_pasien.dart';
 import 'package:tubes/pages/rekam_medis/rekam_medis.dart';
 import 'package:tubes/pages/profile/profile.dart';
 
@@ -261,7 +264,12 @@ class _Dashboard1State extends State<Dashboard1> {
                   text1: "Buat",
                   text2: "Janji Temu",
                   onPressed: () {
-                    Navigator.pushNamed(context, '/cari_dokter');
+                    Navigator.push(
+												context,
+												MaterialPageRoute(
+													builder: (context) => const CariDokter(title: 'Cari Dokter'),
+												),
+											);
                   },
                 ),
                 CustomButton(
@@ -269,7 +277,12 @@ class _Dashboard1State extends State<Dashboard1> {
                   text1: "Informasi",
                   text2: "Rumah Sakit",
                   onPressed: () {
-                    Navigator.pushNamed(context, '/informasi_rumah_sakit');
+                    Navigator.push(
+												context,
+												MaterialPageRoute(
+													builder: (context) => const InformasiRumahSakit(title: 'Informasi Rumah Sakit'),
+												),
+											);
                   },
                 ),
               ],
@@ -305,7 +318,12 @@ class _Dashboard1State extends State<Dashboard1> {
               padding: const EdgeInsets.symmetric(horizontal: 16.0), // Add horizontal padding
               child: InkWell(
                 onTap: () {
-                  Navigator.pushNamed(context, '/registrasi_pasien');
+                  Navigator.push(
+												context,
+												MaterialPageRoute(
+													builder: (context) => RegistrationScreen(),
+												),
+											);
                 },
                 child: Card(
                   shape: RoundedRectangleBorder(

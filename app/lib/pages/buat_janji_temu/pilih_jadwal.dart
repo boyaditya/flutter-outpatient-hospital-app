@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:calendar_date_picker2/calendar_date_picker2.dart';
+import 'package:tubes/pages/buat_janji_temu/profil_dokter.dart';
+import 'package:tubes/pages/buat_janji_temu/profil_pasien.dart';
 
 class PilihJadwal extends StatefulWidget {
   const PilihJadwal({super.key, required this.title});
@@ -98,7 +100,12 @@ class _PilihJadwalState extends State<PilihJadwal> {
                   onPressed: _dates == DateTime(0)
                       ? null
                       : () {
-                          Navigator.pushNamed(context, '/profil_pasien');
+                          Navigator.push(
+														context,
+														MaterialPageRoute(
+															builder: (context) => const ProfilPasien(title: 'Profil Pasien'),
+														),
+													);
                         },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.blue,

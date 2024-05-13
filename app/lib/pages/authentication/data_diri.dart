@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tubes/pages/authentication/konfirm_email.dart';
 
 // void main() => runApp(const MaterialApp(
 //   home: ForgetPass(),
@@ -155,7 +156,12 @@ class _DataDiriState extends State<DataDiri> {
                     40), // 50% of screen width
               ),
               onPressed: _isButtonEnabled ? () {
-                Navigator.pushNamed(context, '/konfirm_email');
+                Navigator.push(
+												context,
+												MaterialPageRoute(
+													builder: (context) => const KonfirmasiEmail(),
+												),
+											);
               } : null,
               child: const Text('Selanjutnya', style: TextStyle(color: Colors.white)),
             ),

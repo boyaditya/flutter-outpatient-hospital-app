@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tubes/pages/authentication/konfirm_email.dart';
 
 // void main() {
 //   runApp(_MyApp());
@@ -102,7 +103,12 @@ class _BuatAkunState extends State<BuatAkun>{
             Center(
               child: ElevatedButton(
                 onPressed: () {
-                  Navigator.pushNamed(context, '/konfirm_email');
+                  Navigator.push(
+												context,
+												MaterialPageRoute(
+													builder: (context) => const KonfirmasiEmail(),
+												),
+											);
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.blue[700],

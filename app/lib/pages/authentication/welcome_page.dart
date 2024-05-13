@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:tubes/pages/login_forgot_reset/login.dart';
 
 // void main() {
 //   runApp(_MyApp());
@@ -60,7 +61,12 @@ class _SelamatDatangState extends State<SelamatDatang>{
             Center(
               child: ElevatedButton(
                 onPressed: () {
-                  Navigator.pushNamed(context, '/');
+                  Navigator.push(
+												context,
+												MaterialPageRoute(
+													builder: (context) => const Login(title: 'Login',),
+												),
+											);
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.blue[700],

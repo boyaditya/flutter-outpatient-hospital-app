@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:tubes/pages/authentication/konfirm_email.dart';
+import 'package:tubes/pages/authentication/konfirm_telp.dart';
 
 // void main() {
 //   runApp(_MyApp());
@@ -58,7 +60,12 @@ class _NoTelpState extends State<NoTelp> {
                 Center(
                   child: ElevatedButton(
                     onPressed: () {
-                      Navigator.pushNamed(context, '/konfirm_telp');
+                      Navigator.push(
+												context,
+												MaterialPageRoute(
+													builder: (context) => const KonfirmasiTelp(),
+												),
+											);
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.blue[700],
