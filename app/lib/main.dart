@@ -133,7 +133,7 @@ class MyApp extends StatelessWidget {
           '/onboard1': (context) => const OnBoarding1(),
           '/onboard2': (context) => const OnBoarding2(),
           '/onboard3': (context) => const Onboarding3(),
-          '/registrasi_pasien': (context) => const RegistrationScreen(),
+          '/registrasi_pasien': (context) => RegistrationScreen(),
 
           // Add more routes here
         },
