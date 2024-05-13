@@ -146,17 +146,17 @@ class ProfilScreen extends StatelessWidget {
               );
             },
           ),
-          ListTile(
-            leading: const Icon(Icons.delete, color: Colors.blue, size: 40),
-            title: const Text('Hapus Akun'),
-            trailing: const Icon(Icons.chevron_right),
-            onTap: () {
-             Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => HapusAkunScreen()),
-              );
-            },
-          ),
+          // ListTile(
+          //   leading: const Icon(Icons.delete, color: Colors.blue, size: 40),
+          //   title: const Text('Hapus Akun'),
+          //   trailing: const Icon(Icons.chevron_right),
+          //   onTap: () {
+          //    Navigator.push(
+          //       context,
+          //       MaterialPageRoute(builder: (context) => HapusAkunScreen()),
+          //     );
+          //   },
+          // ),
         ],
       ),
       // bottomNavigationBar: BottomNavigationBar(

@@ -211,19 +211,28 @@ class _Dashboard1State extends State<Dashboard1> {
                 Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8.0),
-                    color: Colors.blue,
+                    image: const DecorationImage(
+											image: AssetImage('assets/images/carousel/1.png'),
+											fit: BoxFit.cover,
+										),
                   ),
                 ),
                 Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8.0),
-                    color: Colors.blue,
+                    image: const DecorationImage(
+											image: AssetImage('assets/images/carousel/2.png'),
+											fit: BoxFit.cover,
+										),
                   ),
                 ),
                 Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8.0),
-                    color: Colors.blue,
+                    image: const DecorationImage(
+											image: AssetImage('assets/images/carousel/3.png'),
+											fit: BoxFit.cover,
+										),
                   ),
                 ),
               ],
