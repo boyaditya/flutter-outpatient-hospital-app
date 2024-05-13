@@ -70,7 +70,7 @@ class _CariReservasiState extends State<CariReservasi> {
                           "Cari & Buat Reservasi",
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
-                            fontSize: 24,
+                            fontSize: 22,
                             color: Colors.white,
                           ),
                         ),
@@ -78,7 +78,7 @@ class _CariReservasiState extends State<CariReservasi> {
                           "Cari dokter atau spesialisasi",
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
-                            fontSize: 16,
+                            fontSize: 15,
                             color: Colors.white,
                           ),
                         ),
@@ -96,7 +96,7 @@ class _CariReservasiState extends State<CariReservasi> {
                       'Cari nama dokter atau spesialisasi',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
-                        fontSize: 16,
+                        fontSize: 15,
                       ),
                     ),
                     const SizedBox(height: 4),
@@ -127,7 +127,7 @@ class _CariReservasiState extends State<CariReservasi> {
                       'Spesialisasi',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
-                        fontSize: 16,
+                        fontSize: 15,
                       ),
                     ),
                     CustomDropdownMenu(
@@ -140,7 +140,7 @@ class _CariReservasiState extends State<CariReservasi> {
                       'Hari',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
-                        fontSize: 16,
+                        fontSize: 15,
                       ),
                     ),
                     CustomDropdownMenu(

@@ -39,7 +39,7 @@ class _CariDokterState extends State<CariDokter> {
       appBar: AppBar(
           title: const Text(
         'Cari Dokter',
-        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
       )),
       body: ListView(
         children: [
@@ -71,7 +71,7 @@ class _CariDokterState extends State<CariDokter> {
                     initialValue: data['namaDokter'],
                     decoration: const InputDecoration(
                       hintText: 'Cari nama dokter atau spesialisasi',
-                      hintStyle: TextStyle(fontSize: 14),
+                      hintStyle: TextStyle(fontSize: 13),
                       suffixIcon: Icon(Icons.search),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.all(
@@ -89,7 +89,7 @@ class _CariDokterState extends State<CariDokter> {
                   'Dokter',
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
-                    fontSize: 16,
+                    fontSize: 15,
                   ),
                 ),
                 const SizedBox(height: 20),
@@ -169,7 +169,7 @@ class CustomButton extends StatelessWidget {
             Text(
               text,
               style: const TextStyle(
-                fontSize: 12,
+                fontSize: 11,
                 color: Colors.black,
               ),
             ),
@@ -228,7 +228,7 @@ class CustomButton2 extends StatelessWidget {
               Text(
                 dokter,
                 style: const TextStyle(
-                  fontSize: 14,
+                  fontSize: 13,
                   color: Colors.black,
                   fontWeight: FontWeight.bold,
                 ),
@@ -237,7 +237,7 @@ class CustomButton2 extends StatelessWidget {
               Text(
                 spesialis,
                 style: const TextStyle(
-                  fontSize: 12,
+                  fontSize: 11,
                   color: Colors.black,
                 ),
               ),
@@ -253,7 +253,7 @@ class CustomButton2 extends StatelessWidget {
                   Text(
                     availability,
                     style: const TextStyle(
-                      fontSize: 12,
+                      fontSize: 11,
                       color: Colors.black,
                     ),
                   ),

@@ -76,7 +76,7 @@ class _DataDiriState extends State<DataDiri> {
             const Text(
               'Beritahu kami tentang diri Anda',
               style: TextStyle(
-                fontSize: 20,
+                fontSize: 18,
                 fontWeight: FontWeight.w600,
               ),
             ),
@@ -84,7 +84,7 @@ class _DataDiriState extends State<DataDiri> {
             const Text(
               'Harap  masukkan nama Anda sesuai dengan yang tertera pada dokumen resmi dan kartu identitas Anda.',
               style: TextStyle(
-                fontSize: 16,
+                fontSize: 15,
               ),
             ),
             const SizedBox(height: 20),
@@ -138,7 +138,7 @@ class _DataDiriState extends State<DataDiri> {
                     hintText: 'DD/MM/YYYY',
                     hintStyle: TextStyle(
                       color: Colors.grey,
-                      fontSize: 16,
+                      fontSize: 15,
                     ),
                     suffixIcon: Icon(Icons.calendar_today),
                   ),

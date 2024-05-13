@@ -4,7 +4,6 @@ import 'package:dots_indicator/dots_indicator.dart';
 import 'package:tubes/pages/lihat_janji_temu/janji_temu_saya2.dart';
 import 'package:tubes/pages/rekam_medis/rekam_medis.dart';
 import 'package:tubes/pages/profile/profile.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({super.key, required this.title});
@@ -212,19 +211,28 @@ class _Dashboard1State extends State<Dashboard1> {
                 Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8.0),
-                    color: Colors.blue,
+                    image: const DecorationImage(
+											image: AssetImage('assets/images/carousel/1.png'),
+											fit: BoxFit.cover,
+										),
                   ),
                 ),
                 Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8.0),
-                    color: Colors.blue,
+                    image: const DecorationImage(
+											image: AssetImage('assets/images/carousel/2.png'),
+											fit: BoxFit.cover,
+										),
                   ),
                 ),
                 Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8.0),
-                    color: Colors.blue,
+                    image: const DecorationImage(
+											image: AssetImage('assets/images/carousel/3.png'),
+											fit: BoxFit.cover,
+										),
                   ),
                 ),
               ],
@@ -276,7 +284,10 @@ class _Dashboard1State extends State<Dashboard1> {
                   children: [
                     Text(
                       'Registrasi Akun',
-                      // style: GoogleFonts.dmSans,
+                      style: TextStyle(
+												fontSize: 18,
+												fontWeight: FontWeight.bold,
+											),
                     ),
                     SizedBox(height: 8.0),
                     Text(

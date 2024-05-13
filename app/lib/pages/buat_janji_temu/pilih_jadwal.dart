@@ -20,7 +20,7 @@ class _PilihJadwalState extends State<PilihJadwal> {
       appBar: AppBar(
           title: const Text(
         'Pilih Jadwal',
-        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
       )),
       body: ListView(
         children: [
@@ -155,7 +155,7 @@ class CustomButton extends StatelessWidget {
             Text(
               text,
               style: const TextStyle(
-                fontSize: 12,
+                fontSize: 10,
                 color: Colors.black,
               ),
             ),
@@ -209,7 +209,7 @@ class CustomContainer2 extends StatelessWidget {
               Text(
                 dokter,
                 style: const TextStyle(
-                  fontSize: 14,
+                  fontSize: 13,
                   color: Colors.black,
                   fontWeight: FontWeight.bold,
                 ),
@@ -218,7 +218,7 @@ class CustomContainer2 extends StatelessWidget {
               Text(
                 spesialis,
                 style: const TextStyle(
-                  fontSize: 12,
+                  fontSize: 11,
                   color: Colors.black,
                 ),
               ),

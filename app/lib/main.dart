@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:tubes/cubits/doctors_cubit.dart';
 import 'package:tubes/pages/authentication/buat_akun.dart';
 import 'package:tubes/pages/authentication/data_diri.dart';
@@ -83,10 +84,14 @@ class MyApp extends StatelessWidget {
               return 'Cari & Buat Reservasi';
           }
         },
-        theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
-          useMaterial3: true,
+				theme: ThemeData(
+        // Atur font default menggunakan GoogleFonts
+        textTheme: GoogleFonts.poppinsTextTheme(
+          Theme.of(context).textTheme,
         ),
+				colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
+          useMaterial3: true,
+      ),
         initialRoute: '/onboard2',
         routes: {
           '/': (context) => const Login(title: 'Login'),

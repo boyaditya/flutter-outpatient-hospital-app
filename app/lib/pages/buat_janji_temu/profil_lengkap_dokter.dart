@@ -18,7 +18,7 @@ class _ProfilDokterLengkapState extends State<ProfilLengkapDokter> {
           'Profil Lengkap Dokter',
           style: TextStyle(
             fontWeight: FontWeight.bold,
-            fontSize: 20,
+            fontSize: 18,
             color: Colors.white,
           ),
         ),
@@ -70,7 +70,7 @@ class _ProfilDokterLengkapState extends State<ProfilLengkapDokter> {
                 children: [
                   Text(
                     'dr. John Doe, MARS, SpAk',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                   ),
                   Text(
                     'Andrologi - Spesialis Andrologi',
@@ -108,7 +108,7 @@ class _ProfilDokterLengkapState extends State<ProfilLengkapDokter> {
                         Text(
                           'Kondisi & Minat Klinis',
                           style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 20),
+                              fontWeight: FontWeight.bold, fontSize: 18),
                         ),
                       ],
                     ),
@@ -144,7 +144,7 @@ class _ProfilDokterLengkapState extends State<ProfilLengkapDokter> {
                         Text(
                           'Pendidikan',
                           style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 20),
+                              fontWeight: FontWeight.bold, fontSize: 18),
                         ),
                       ],
                     ),

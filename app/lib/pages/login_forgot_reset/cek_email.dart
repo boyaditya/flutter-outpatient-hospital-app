@@ -34,7 +34,7 @@ class _CekEmailState extends State<CekEmail> {
                 'Cek Email Anda',
                 style: TextStyle(
                   color: Colors.black,
-                  fontSize: 20,
+                  fontSize: 18,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -44,7 +44,7 @@ class _CekEmailState extends State<CekEmail> {
               'Kami telah mengirimkan instruksi untuk mengatur ulang kata sandi ke alamat email Anda.',
               style: TextStyle(
                 color: Colors.black,
-                fontSize: 14,
+                fontSize: 12,
               ),
             ),
             const SizedBox(height: 50.0),

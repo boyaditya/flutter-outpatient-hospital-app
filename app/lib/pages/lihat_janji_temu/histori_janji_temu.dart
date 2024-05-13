@@ -73,14 +73,14 @@ class _HistoriJanjiTemuState extends State<HistoriJanjiTemu> {
                       "Histori Janji Temu",
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
-                        fontSize: 24,
+                        fontSize: 22,
                         color: Colors.white,
                       ),
                     ),
                   ),
                   Positioned(
                     left: 20,
-                    top: 56,
+                    top: 60,
                     right: 20,
                     child: Container(
                       width:
@@ -128,13 +128,13 @@ class _HistoriJanjiTemuState extends State<HistoriJanjiTemu> {
                 ],
               ),
               SizedBox(height: 20),
-              Center(
+              const Center(
                 child: Padding(
                   padding: EdgeInsets.only(top: 220),
                   child: Text(
                     "Tidak ada data.",
                     style: TextStyle(
-                        fontSize: 20,
+                        fontSize: 18,
                         color: Color.fromARGB(255, 13, 73, 126),
                         fontWeight:
                             FontWeight.bold), // Menentukan tebalnya teks),
@@ -159,7 +159,7 @@ class _HistoriJanjiTemuState extends State<HistoriJanjiTemu> {
       child: Text(
         text,
         style: TextStyle(
-          fontSize: 17,
+          fontSize: 15,
           color: _selectedTabIndex == index
               ? Colors.white
               : Color.fromARGB(255, 98, 97, 97),

@@ -48,13 +48,13 @@ class _SelamatDatangState extends State<SelamatDatang>{
             const Text(
               'Selamat Datang',
               style: TextStyle(
-                fontSize: 24,
+                fontSize: 22,
                 fontWeight: FontWeight.bold,
               ),
             ),
             const Text(
               'Anda telah berhasil membuat akun',
-              style: TextStyle(fontSize: 16),
+              style: TextStyle(fontSize: 15),
             ),
             const SizedBox(height: 100.0),
             Center(

@@ -37,7 +37,7 @@ class _LupaKataSandiState extends State<LupaKataSandi> {
               'Lupa Kata Sandi Anda?',
               style: TextStyle(
                 color: Colors.black,
-                fontSize: 20,
+                fontSize: 18,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -46,7 +46,7 @@ class _LupaKataSandiState extends State<LupaKataSandi> {
               'Masukkan email yang terkait dengan akun Anda dan kami akan mengirimkan email berisi instruksi untuk mengatur ulang kata sandi Anda.',
               style: TextStyle(
                 color: Colors.black,
-                fontSize: 14,
+                fontSize: 12,
               ),
             ),
             const SizedBox(height: 20.0),
@@ -54,7 +54,7 @@ class _LupaKataSandiState extends State<LupaKataSandi> {
               'Alamat Email',
               style: TextStyle(
                 color: Colors.black,
-                fontSize: 14,
+                fontSize: 12,
               ),
             ),
             TextField(

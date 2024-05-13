@@ -42,14 +42,14 @@ class _BuatAkunState extends State<BuatAkun>{
             const Text(
               'Buat Akun',
               style: TextStyle(
-                fontSize: 24.0,
+                fontSize: 23.0,
                 fontWeight: FontWeight.bold,
               ),
             ),
             const SizedBox(height: 16.0),
             const Text(
               'Silakan isi data di bawah ini untuk membuat akun baru. Password harus mengandung minimal 8 karakter termasuk huruf dan nomor.',
-              style: TextStyle(fontSize: 16.0),
+              style: TextStyle(fontSize: 15.0),
             ),
             const SizedBox(height: 24.0),
             const Text('Alamat Email'),
@@ -96,7 +96,7 @@ class _BuatAkunState extends State<BuatAkun>{
             const SizedBox(height: 24.0),
             const Text(
               'Dengan menekan "Selanjutnya", Anda menyetujui Syarat & Ketentuan dan Kebijakan Privasi kami.',
-              style: TextStyle(fontSize: 12.0),
+              style: TextStyle(fontSize: 11.0),
             ),
             const SizedBox(height: 16.0),
             Center(

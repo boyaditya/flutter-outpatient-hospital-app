@@ -33,7 +33,7 @@ class _ResetSuccessState extends State<ResetSuccess> {
                 'Atur Ulang Kata Sandi Berhasil',
                 style: TextStyle(
                   color: Colors.black,
-                  fontSize: 20,
+                  fontSize: 18,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -44,7 +44,7 @@ class _ResetSuccessState extends State<ResetSuccess> {
                 'Anda telah berhasil mengatur ulang kata sandi Anda',
                 style: TextStyle(
                   color: Colors.black,
-                  fontSize: 14,
+                  fontSize: 12,
                 ),
               ),
             ),

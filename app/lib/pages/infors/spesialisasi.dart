@@ -39,7 +39,7 @@ class Spesialisasi extends StatelessWidget {
               'Spesialisasi',
               textAlign: TextAlign.left,
               style: TextStyle(
-                fontSize: 24,
+                fontSize: 22,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -133,7 +133,7 @@ class CustomButton extends StatelessWidget {
                   Text(
                     text,
                     style: const TextStyle(
-                      fontSize: 12,
+                      fontSize: 10,
                       color: Colors.black,
                     ),
                   ),

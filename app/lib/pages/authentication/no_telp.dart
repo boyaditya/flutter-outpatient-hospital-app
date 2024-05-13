@@ -41,7 +41,7 @@ class _NoTelpState extends State<NoTelp> {
                 const Text(
                   'Masukkan Nomor Telepon',
                   style: TextStyle(
-                    fontSize: 24.0,
+                    fontSize: 22.0,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
