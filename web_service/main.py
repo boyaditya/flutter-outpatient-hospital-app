@@ -58,6 +58,27 @@ async def read_doctors(db: db_dependency):
     return crud.get_doctors(db)
 
 
+@app.get("/doctors/{doctors_id}", response_model=schemas.Doctor)
+async def read_doctors(doctors_id: int, db: db_dependency):
+    doctors = crud.get_doctors_by_id(db, doctors_id)
+    if doctors is None:
+        raise HTTPException(status_code=404, detail="Doctor not found")
+    return doctors
+
+
+path_doctor_img = "../img/"
+@app.get("/doctors/image/{doctor_id}")
+async def read_doctor_image(doctor_id: int):
+    doctor = crud.get_doctor_by_id(db, doctor_id)
+    if not doctor:
+        raise HTTPException(status_code=404, detail="Doctor not found")
+    img_name = doctor.img_name
+    img_path = path_doctor_img + img_name
+    if not path.exists(img_path):
+        raise HTTPException(status_code=404, detail="Image file not found")
+    return FileResponse(img_path)
+
+
 @app.get("/users/{user_id}", response_model=schemas.User)
 async def read_user(user_id: int, db: db_dependency):
     user = crud.get_user_by_id(db, user_id)
@@ -71,3 +92,53 @@ async def delete_user(user_id: int, db: db_dependency):
     deleted_user = crud.delete_user_by_id(db, user_id)
     if deleted_user is None:
         raise HTTPException(status_code=404, detail="User not found")
+    
+
+@app.get("/specializations/{specialization_id}", response_model=schemas.Specialization)
+async def read_specialization(specialization_id: int, db: db_dependency):
+    specialization = crud.get_specialization_by_id(db, specialization_id)
+    if specialization is None:
+        raise HTTPException(status_code=404, detail="Specialization not found")
+    return specialization    
+
+
+path_specialization_img = "../img/" 
+@app.get("/specializations/image/{specialization_id}")
+async def read_specialization_image(specialization_id: int):
+    specialization = crud.get_specialization_by_id(db, specialization_id)
+    if not specialization:
+        raise HTTPException(status_code=404, detail="Specialization not found")
+    img_name = specialization.img_name
+    img_path = path_specialization_img + img_name
+    if not path.exists(img_path):
+        raise HTTPException(status_code=404, detail="Image file not found")
+    return FileResponse(img_path)
+
+
+@app.get("/doctor_schedules/{doctor_id}", response_model=schemas.DoctorSchedule)
+async def read_doctor_schedules(doctor_id: int, db: Session = Depends(get_db)):
+    schedule = crud.get_doctor_schedules_by_doctor_id(db, doctor_id)
+    if not schedule:
+        raise HTTPException(status_code=404, detail="Doctor schedules not found")
+    return schedule
+
+
+@app.get("/medical_records/{record_id}", response_model=schemas.MedicalRecord)
+async def read_medical_record(record_id: int, db: Session = Depends(get_db)):
+    record = crud.get_medical_record_by_id(db, record_id)
+    if record is None:
+        raise HTTPException(status_code=404, detail="Medical record not found")
+    return record
+
+
+@app.get("/medical_records/patient/{patient_id}", response_model=schemas.MedicalRecord)
+async def read_medical_records_by_patient_id(patient_id: int, db: Session = Depends(get_db)):
+    medical_record = crud.get_medical_record_by_patient_id(db, patient_id)
+    if not medical_record:
+        raise HTTPException(status_code=404, detail="Medical record not found for this patient")
+    return medical_record
+
+
+@app.post("/ratings/"  ) 
+def create_rating(ratings: schemas.RatingCreate, db: Session = Depends(get_db)):   
+    return crud.create_rating(db=db, ratings=ratings)    
