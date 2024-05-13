@@ -40,15 +40,15 @@ class _OnBoarding2State extends State<OnBoarding2> {
                   _currentPage = page;
                 });
               },
-              children: [
-                const OnBoardingSlide(
+              children: const [
+                OnBoardingSlide(
                   image: 'assets/images/janjitemu.png',
                   title: 'Buat Janji Temu',
                   description:
                       'Dengan Aplikasi Rumah Sakit kami, Anda dapat dengan mudah membuat janji temu untuk pemeriksaan kesehatan Anda. Tidak perlu lagi antri di loket pendaftaran. Cukup buka aplikasi, pilih waktu yang sesuai, dan janji temu Anda akan segera terdaftar!',
                   showSkipButton: true, // Menampilkan tombol "Lewati" pada slide pertama
                 ),
-                const OnBoardingSlide(
+                OnBoardingSlide(
                   image: 'assets/images/tanyadokter.png',
                   title: 'Tanya Dokter',
                   description:
@@ -165,14 +165,14 @@ class OnBoardingSlide extends StatelessWidget {
           Text(
             title,
             style: const TextStyle(
-              fontSize: 24,
+              fontSize: 22,
               fontWeight: FontWeight.bold,
             ),
           ),
           const SizedBox(height: 10),
           Text(
             description,
-            style: const TextStyle(fontSize: 16),
+            style: const TextStyle(fontSize: 14),
             textAlign: TextAlign.center,
           ),
         ],

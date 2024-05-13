@@ -14,7 +14,7 @@ class _HapusAkunScreenState extends State<HapusAkunScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Hapus Akun', style: TextStyle(fontWeight: FontWeight.bold)),
+        title: const Text('Hapus Akun', style: TextStyle(fontWeight: FontWeight.bold)),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -22,13 +22,13 @@ class _HapusAkunScreenState extends State<HapusAkunScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
+              const Text(
                 'Mengapa Anda ingin menghapus\nUser?',
-                style: TextStyle(fontSize: 16.0),
+                style: TextStyle(fontSize: 14.0),
               ),
-              SizedBox(height: 16.0),
+              const SizedBox(height: 16.0),
               RadioListTile<int>(
-                title: Text('Aplikasi ini mengganggu'),
+                title: const Text('Aplikasi ini mengganggu'),
                 value: 1,
                 groupValue: _selectedOption,
                 onChanged: (value) {
@@ -38,7 +38,7 @@ class _HapusAkunScreenState extends State<HapusAkunScreen> {
                 },
               ),
               RadioListTile<int>(
-                title: Text('Ingin membuat akun baru'),
+                title: const Text('Ingin membuat akun baru'),
                 value: 2,
                 groupValue: _selectedOption,
                 onChanged: (value) {
@@ -48,7 +48,7 @@ class _HapusAkunScreenState extends State<HapusAkunScreen> {
                 },
               ),
               RadioListTile<int>(
-                title: Text('Tidak ingin menggunakan aplikasi ini lagi.'),
+                title: const Text('Tidak ingin menggunakan aplikasi ini lagi.'),
                 value: 3,
                 groupValue: _selectedOption,
                 onChanged: (value) {
@@ -57,13 +57,13 @@ class _HapusAkunScreenState extends State<HapusAkunScreen> {
                   });
                 },
               ),
-              SizedBox(height: 80.0),
-              Text('Masukkan ulang kata sandi Anda'),
+              const SizedBox(height: 80.0),
+              const Text('Masukkan ulang kata sandi Anda'),
               TextField(
                 controller: _passwordController,
                 obscureText: _isObscure,
                 decoration: InputDecoration(
-                  border: OutlineInputBorder(),
+                  border: const OutlineInputBorder(),
                   hintText: '••••••••',
                   suffixIcon: IconButton(
                     icon: Icon(
@@ -78,7 +78,7 @@ class _HapusAkunScreenState extends State<HapusAkunScreen> {
                   ),
                 ),
               ),
-              SizedBox(height: 200.0),
+              const SizedBox(height: 200.0),
               Center(
                 child: SizedBox(
                   width: MediaQuery.of(context).size.width * 0.8,
@@ -93,7 +93,7 @@ class _HapusAkunScreenState extends State<HapusAkunScreen> {
                         borderRadius: BorderRadius.circular(8.0),
                       ),
                     ),
-                    child: Text('KIRIM'),
+                    child: const Text('KIRIM'),
                   ),
                 ),
               ),

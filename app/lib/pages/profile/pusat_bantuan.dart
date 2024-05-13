@@ -5,9 +5,9 @@ class PusatBantuan extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Pusat Bantuan', style: TextStyle(fontWeight: FontWeight.bold)),
+        title: const Text('Pusat Bantuan', style: TextStyle(fontWeight: FontWeight.bold)),
       ),
-      body: SingleChildScrollView(
+      body: const SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.all(16.0),
           child: Column(
@@ -16,7 +16,7 @@ class PusatBantuan extends StatelessWidget {
               Center(
                 child: Text(
                   'Halo, ada yang bisa kami bantu?',
-                  style: TextStyle(fontSize: 18.0),
+                  style: TextStyle(fontSize: 16.0),
                 ),
               ),
               SizedBox(height: 16.0),
@@ -27,7 +27,7 @@ class PusatBantuan extends StatelessWidget {
               SizedBox(height: 16.0),
               Text(
                 'FAQ',
-                style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: 22.0, fontWeight: FontWeight.bold),
                 textAlign: TextAlign.left,
               ),
               SizedBox(height: 8.0),
@@ -87,11 +87,11 @@ class PusatBantuan extends StatelessWidget {
                     children: [
                       Text(
                         'Email',
-                        style: TextStyle(fontSize: 16.0),
+                        style: TextStyle(fontSize: 14.0),
                       ),
                       Text(
                         'admin@pusat.co.id',
-                        style: TextStyle(fontSize: 14.0),
+                        style: TextStyle(fontSize: 12.0),
                       ),
                     ],
                   ),
@@ -107,11 +107,11 @@ class PusatBantuan extends StatelessWidget {
                     children: [
                       Text(
                         'Telepon',
-                        style: TextStyle(fontSize: 16.0),
+                        style: TextStyle(fontSize: 14.0),
                       ),
                       Text(
                         '0812345678',
-                        style: TextStyle(fontSize: 14.0),
+                        style: TextStyle(fontSize: 12.0),
                       ),
                     ],
                   ),

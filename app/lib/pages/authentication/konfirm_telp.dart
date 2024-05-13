@@ -26,19 +26,19 @@ class _KonfirmasiTelpState extends State<KonfirmasiTelp> {
                 const Text(
                   'Konfirmasi Nomor Telepon',
                   style: TextStyle(
-                    fontSize: 24.0,
+                    fontSize: 22.0,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 const SizedBox(height: 16.0),
                 const Text(
                   'Kami akan mengirimkan kode ke nomor telepon yang Anda masukkan.',
-                  style: TextStyle(fontSize: 16.0),
+                  style: TextStyle(fontSize: 15.0),
                 ),
                 const SizedBox(height: 30.0),
                 const Text('(+62) 81234567890',
                     style:
-                        TextStyle(fontSize: 28.0, fontWeight: FontWeight.bold)),
+                        TextStyle(fontSize: 26.0, fontWeight: FontWeight.bold)),
                 const SizedBox(height: 24.0),
                 const SizedBox(height: 12.0),
                 const Text('Kode verifikasi'),
@@ -63,7 +63,7 @@ class _KonfirmasiTelpState extends State<KonfirmasiTelp> {
                   child: Text(
                     'Kirim Ulang Kode',
                     style: TextStyle(
-                      fontSize: 16.0,
+                      fontSize: 15.0,
                       color: Colors.purple,
                     ),
                   ),
@@ -73,7 +73,7 @@ class _KonfirmasiTelpState extends State<KonfirmasiTelp> {
                   child: Text(
                     'Kirim Ulang dalam 59 Detik.',
                     style: TextStyle(
-                      fontSize: 16.0,
+                      fontSize: 15.0,
                       color: Colors.green,
                     ),
                   ),

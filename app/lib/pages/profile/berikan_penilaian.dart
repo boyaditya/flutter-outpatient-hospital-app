@@ -15,7 +15,7 @@ class _BerikanPenilaianScreenState extends State<BerikanPenilaianScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Berikan Penilaian', style: TextStyle(fontWeight: FontWeight.bold)),
+        title: const Text('Berikan Penilaian', style: TextStyle(fontWeight: FontWeight.bold)),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -25,14 +25,14 @@ class _BerikanPenilaianScreenState extends State<BerikanPenilaianScreen> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Center(
+                const Center(
                   child: Text(
                     'Bagaimana pengalaman kunjungan anda di Athena Hospitals?',
-                    style: TextStyle(fontSize: 16.0),
+                    style: TextStyle(fontSize: 14.0),
                     textAlign: TextAlign.center,
                   ),
                 ),
-                SizedBox(height: 16.0),
+                const SizedBox(height: 16.0),
                 Center(
                   child: RatingBar.builder(
                     initialRating: _rating,
@@ -40,8 +40,8 @@ class _BerikanPenilaianScreenState extends State<BerikanPenilaianScreen> {
                     direction: Axis.horizontal,
                     allowHalfRating: true,
                     itemCount: 5,
-                    itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
-                    itemBuilder: (context, _) => Icon(
+                    itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
+                    itemBuilder: (context, _) => const Icon(
                       Icons.star,
                       color: Colors.amber,
                     ),
@@ -52,29 +52,29 @@ class _BerikanPenilaianScreenState extends State<BerikanPenilaianScreen> {
                     },
                   ),
                 ),
-                Divider(
+                const Divider(
                   color: Colors.blue,  // Warna garis divider
                   thickness: 2.0,       // Ketebalan garis divider
                 ),
-                SizedBox(height: 25.0),
-                Text(
+                const SizedBox(height: 25.0),
+                const Text(
                   'Mohon berikan komentar untuk peningkatan layanan kami',
                   style: TextStyle(
-                    fontSize: 16.0,
+                    fontSize: 14.0,
                     fontWeight: FontWeight.bold, // Teks menjadi tebal
                   ),
                 ),
-                SizedBox(height: 25.0),
+                const SizedBox(height: 25.0),
                 TextField(
                   controller: _commentController,
                   maxLines: 6,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     hintText: 'Ketikkan Komentar Anda di sini',
                     border: OutlineInputBorder(),
                   ),
                 ),
-                SizedBox(height: 16.0),
-                Text('Kategori Penilaian:'),
+                const SizedBox(height: 16.0),
+                const Text('Kategori Penilaian:'),
                 DropdownButton<String>(
                   value: _selectedCategory,
                   onChanged: (newValue) {
@@ -108,7 +108,7 @@ class _BerikanPenilaianScreenState extends State<BerikanPenilaianScreen> {
                       borderRadius: BorderRadius.circular(8.0),
                     ),
                   ),
-                  child: Text('KIRIM'),
+                  child: const Text('KIRIM'),
                 ),
               ),
             ),

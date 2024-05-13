@@ -16,7 +16,7 @@ class _ProfilPasienState extends State<ProfilPasien> {
       appBar: AppBar(
         title: const Text(
           'Profil Pasien',
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
         ),
       ),
       body: ListView(
@@ -138,7 +138,7 @@ class _CustomContainerState extends State<CustomContainer> {
             Text(
               widget.nama,
               style: const TextStyle(
-                fontSize: 14,
+                fontSize: 10,
                 color: Colors.black,
                 fontWeight: FontWeight.bold,
               ),
@@ -147,7 +147,7 @@ class _CustomContainerState extends State<CustomContainer> {
             Text(
               widget.birthday,
               style: const TextStyle(
-                fontSize: 12,
+                fontSize: 10,
                 color: Colors.black,
               ),
             ),
@@ -155,7 +155,7 @@ class _CustomContainerState extends State<CustomContainer> {
             Text(
               widget.email,
               style: const TextStyle(
-                fontSize: 12,
+                fontSize: 10,
                 color: Colors.black,
               ),
             ),
@@ -163,7 +163,7 @@ class _CustomContainerState extends State<CustomContainer> {
             Text(
               widget.noHP,
               style: const TextStyle(
-                fontSize: 12,
+                fontSize: 10,
                 color: Colors.black,
               ),
             ),

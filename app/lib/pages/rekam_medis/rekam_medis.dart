@@ -63,75 +63,6 @@ class _RekamMedisState extends State<RekamMedis> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 5.0),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: DropdownButtonFormField<String>(
-                      value: _selectedDay,
-                      onChanged: (value) {
-                        setState(() {
-                          _selectedDay = value;
-                        });
-                      },
-                      iconSize: 15.0,
-                      decoration: const InputDecoration(
-                        labelText: 'Pilih Hari',
-                        border: OutlineInputBorder(),
-                      ),
-                      items: <String>[
-                        'Hari Ini',
-                        'Kemarin',
-                        'Minggu Ini',
-                        'Bulan Ini',
-                        'Bulan Lalu',
-                        'Tahun Ini',
-                        'Semua'
-                      ].map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(
-                            value,
-                            style: const TextStyle(fontSize: 12),
-                          ),
-                        );
-                      }).toList(),
-                    ),
-                  ),
-                  const SizedBox(width: 5.0),
-                  Expanded(
-                    child: DropdownButtonFormField<String>(
-                      value: _selectedPoli,
-                      onChanged: (value) {
-                        setState(() {
-                          _selectedPoli = value;
-                        });
-                      },
-                      iconSize: 15.0,
-                      decoration: const InputDecoration(
-                        labelText: 'Pilih Poli',
-                        border: OutlineInputBorder(),
-                      ),
-                      items: <String>[
-                        'Poli Umum',
-                        'Poli Penyakit Dalam',
-                        'Poli Anak',
-                        'Poli Gigi',
-                      ].map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(
-                            value,
-                            style: const TextStyle(fontSize: 12),
-                          ),
-                        );
-                      }).toList(),
-                    ),
-                  ),
-                ],
-              ),
-            ),
             const SizedBox(height: 16.0),
             Expanded(
               child: ListView.builder(
@@ -157,7 +88,7 @@ class _RekamMedisState extends State<RekamMedis> {
                             _medicalRecords[index]['doctorName']!,
                             style: const TextStyle(
                               fontWeight: FontWeight.bold,
-                              fontSize: 16.0,
+                              fontSize: 14.0,
                             ),
                           ),
                           const SizedBox(height: 8.0),

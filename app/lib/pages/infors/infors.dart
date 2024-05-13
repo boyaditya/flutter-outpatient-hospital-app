@@ -74,7 +74,7 @@ class _InformasiRumahSakitState extends State<InformasiRumahSakit> {
                           "Informasi Rumah Sakit",
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
-                            fontSize: 24,
+                            fontSize: 22,
                             color: Colors.white,
                           ),
                         ),
@@ -82,7 +82,7 @@ class _InformasiRumahSakitState extends State<InformasiRumahSakit> {
                         Text(
                           "25+ Spesialisasi, 70+ Dokter Spesialis,\n433+ fasilitas tempat tidur",
                           style: TextStyle(
-                            fontSize: 16,
+                            fontSize: 14,
                             color: Colors.white,
                           ),
                         ),
@@ -170,14 +170,14 @@ class CustomButton extends StatelessWidget {
                     text,
                     style: const TextStyle(
                       fontWeight: FontWeight.bold,
-                      fontSize: 16,
+                      fontSize: 14,
                     ),
                   ),
                   Text(
                     subText,
                     style: TextStyle(
                       color: Colors.grey.shade600,
-                      fontSize: 14,
+                      fontSize: 12,
                     ),
                   ),
                 ],

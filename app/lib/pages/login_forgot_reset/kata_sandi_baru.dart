@@ -59,7 +59,7 @@ class _KataSandiBaruState extends State<KataSandiBaru> {
               'Buat Kata Sandi Baru',
               style: TextStyle(
                 color: Colors.black,
-                fontSize: 20,
+                fontSize: 18,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -68,7 +68,7 @@ class _KataSandiBaruState extends State<KataSandiBaru> {
               'Kata sandi baru Anda harus berbeda dari kata sandi sebelumnya.',
               style: TextStyle(
                 color: Colors.black,
-                fontSize: 14,
+                fontSize: 12,
               ),
             ),
             const SizedBox(height: 20.0),
@@ -76,7 +76,7 @@ class _KataSandiBaruState extends State<KataSandiBaru> {
               'Kata Sandi',
               style: TextStyle(
                 color: Colors.black,
-                fontSize: 14,
+                fontSize: 12,
               ),
             ),
             TextField(
@@ -98,7 +98,7 @@ class _KataSandiBaruState extends State<KataSandiBaru> {
               'Konfirmasi Kata Sandi',
               style: TextStyle(
                 color: Colors.black,
-                fontSize: 14,
+                fontSize: 12,
               ),
             ),
             TextField(

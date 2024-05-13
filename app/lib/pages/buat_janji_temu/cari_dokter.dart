@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'package:tubes/cubits/doctors_cubit.dart';
 
 class CariDokter extends StatefulWidget {
   const CariDokter({super.key, required this.title});
@@ -11,7 +15,23 @@ class CariDokter extends StatefulWidget {
 
 class _CariDokterState extends State<CariDokter> {
   @override
+  void initState() {
+    super.initState();
+    context.read<DoctorListCubit>().fetchDoctors();
+    print("test aja sih2");
+  }
+
+  // int count = 0;
+
+  // void increment(){
+  //   setState(() {
+  //     count++;
+  //   });
+  // }
+
+  @override
   Widget build(BuildContext context) {
+    print("test aja sih");
     final Map<String, String> data =
         (ModalRoute.of(context)?.settings.arguments as Map<String, String>?) ??
             {};
@@ -19,7 +39,7 @@ class _CariDokterState extends State<CariDokter> {
       appBar: AppBar(
           title: const Text(
         'Cari Dokter',
-        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
       )),
       body: ListView(
         children: [
@@ -27,6 +47,13 @@ class _CariDokterState extends State<CariDokter> {
             color: Colors.black,
             thickness: 0.2,
           ),
+          ElevatedButton(
+            onPressed: () {
+              context.read<DoctorListCubit>().fetchDoctors();
+            },
+            child: Text('Fetch Doctors'),
+          ),
+          // Text(count.toString()),
           Padding(
             padding: const EdgeInsets.all(20.0),
             child: Column(
@@ -44,7 +71,7 @@ class _CariDokterState extends State<CariDokter> {
                     initialValue: data['namaDokter'],
                     decoration: const InputDecoration(
                       hintText: 'Cari nama dokter atau spesialisasi',
-                      hintStyle: TextStyle(fontSize: 14),
+                      hintStyle: TextStyle(fontSize: 13),
                       suffixIcon: Icon(Icons.search),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.all(
@@ -62,29 +89,36 @@ class _CariDokterState extends State<CariDokter> {
                   'Dokter',
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
-                    fontSize: 16,
+                    fontSize: 15,
                   ),
                 ),
                 const SizedBox(height: 20),
-                CustomButton2(
-                  icon: Icons.filter_alt,
-                  dokter: "dr. John Doe, MARS, SpAk",
-                  spesialis: "Andrologi - Spesialis Andrologi",
-                  availability: "Tersedia hari ini",
-                  imagePath: 'assets/images/dokter/dummy-doctor.jpg',
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/profil_dokter');
-                  },
-                ),
-                const SizedBox(height: 10),
-                CustomButton2(
-                  icon: Icons.filter_alt,
-                  dokter: "dr. John Doe, MARS, SpAk",
-                  spesialis: "Andrologi - Spesialis Andrologi",
-                  availability: "Tersedia hari ini",
-                  imagePath: 'assets/images/dokter/dummy-doctor.jpg',
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/profil_dokter');
+                BlocBuilder<DoctorListCubit, List<DoctorModel>>(
+                  builder: (context, state) {
+                    return Column(
+                      children: state
+                          .map((doctor) => CustomButton2(
+                                icon: Icons.person,
+                                dokter: doctor.name,
+                                spesialis: doctor.idSpecialization.toString(),
+                                availability: 'Available',
+                                imagePath:
+                                    "assets/images/dokter/dummy-doctor.jpg",
+                                onPressed: () {
+                                  print(doctor.name);
+                                  Navigator.pushNamed(
+                                    context,
+                                    '/profil_dokter',
+                                    arguments: {
+                                      'namaDokter': doctor.name,
+                                      'spesialis': doctor.interest,
+                                      'imgName': doctor.imgName,
+                                    },
+                                  );
+                                },
+                              ))
+                          .toList(),
+                    );
                   },
                 ),
               ],
@@ -92,6 +126,11 @@ class _CariDokterState extends State<CariDokter> {
           ),
         ],
       ),
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: increment,
+      //   tooltip: 'Increment',
+      //   child: const Icon(Icons.add),
+      // ),
     );
   }
 }
@@ -130,7 +169,7 @@ class CustomButton extends StatelessWidget {
             Text(
               text,
               style: const TextStyle(
-                fontSize: 12,
+                fontSize: 11,
                 color: Colors.black,
               ),
             ),
@@ -189,7 +228,7 @@ class CustomButton2 extends StatelessWidget {
               Text(
                 dokter,
                 style: const TextStyle(
-                  fontSize: 14,
+                  fontSize: 13,
                   color: Colors.black,
                   fontWeight: FontWeight.bold,
                 ),
@@ -198,7 +237,7 @@ class CustomButton2 extends StatelessWidget {
               Text(
                 spesialis,
                 style: const TextStyle(
-                  fontSize: 12,
+                  fontSize: 11,
                   color: Colors.black,
                 ),
               ),
@@ -214,7 +253,7 @@ class CustomButton2 extends StatelessWidget {
                   Text(
                     availability,
                     style: const TextStyle(
-                      fontSize: 12,
+                      fontSize: 11,
                       color: Colors.black,
                     ),
                   ),

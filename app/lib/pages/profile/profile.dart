@@ -26,11 +26,11 @@ class ProfilScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: Text('Profil'),
+        title: const Text('Profil'),
       ),
       body: Column(
         children: [
-          ListTile(
+          const ListTile(
             title: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -58,7 +58,7 @@ class ProfilScreen extends StatelessWidget {
                   'Amelia Zalfa',
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
-                    fontSize: 16.0,
+                    fontSize: 14.0,
                   ),
                 ),
                 SizedBox(width: 23.0),
@@ -66,7 +66,7 @@ class ProfilScreen extends StatelessWidget {
                   'Tambah',
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
-                    fontSize: 16.0,
+                    fontSize: 14.0,
                   ),
                 ),
               ],
@@ -74,27 +74,27 @@ class ProfilScreen extends StatelessWidget {
               ],
             ),
           ),
-          Divider(),
-          Padding(
+          const Divider(),
+          const Padding(
            padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
             child: Text(
               'Pengaturan Akun',
               style: TextStyle(
                 fontWeight: FontWeight.bold, // Membuat teks menjadi bold
-                fontSize: 16.0, // Ukuran teks
+                fontSize: 14.0, // Ukuran teks
               ),
             ),
           ),
           ListTile(
-          leading: CircleAvatar(
+          leading: const CircleAvatar(
             backgroundColor: Colors.blue, // Warna latar belakang lingkaran
             child: Icon(
               Icons.person,
               color: Colors.white, // Warna ikon di dalam lingkaran
             ),
           ),
-          title: Text('Profil Pasien'),
-            trailing: Icon(Icons.chevron_right),
+          title: const Text('Profil Pasien'),
+            trailing: const Icon(Icons.chevron_right),
             onTap: () {
               Navigator.push(
                 context,
@@ -103,9 +103,9 @@ class ProfilScreen extends StatelessWidget {
             },
       ),
           ListTile(
-            leading: Icon(Icons.thumb_up, color: Colors.blue, size: 40),
-            title: Text('Berikan Penilaian'),
-            trailing: Icon(Icons.chevron_right),
+            leading: const Icon(Icons.thumb_up, color: Colors.blue, size: 40),
+            title: const Text('Berikan Penilaian'),
+            trailing: const Icon(Icons.chevron_right),
             onTap: () {
               Navigator.push(
                 context,
@@ -114,9 +114,9 @@ class ProfilScreen extends StatelessWidget {
             },
           ),
           ListTile(
-            leading: Icon(Icons.description, color: Colors.blue, size: 40),
-            title: Text('Syarat & Ketentuan'),
-            trailing: Icon(Icons.chevron_right),
+            leading: const Icon(Icons.description, color: Colors.blue, size: 40),
+            title: const Text('Syarat & Ketentuan'),
+            trailing: const Icon(Icons.chevron_right),
             onTap: () {
               Navigator.push(
                 context,
@@ -125,9 +125,9 @@ class ProfilScreen extends StatelessWidget {
             },
           ),
           ListTile(
-            leading: Icon(Icons.help, color: Colors.blue, size: 40),
-            title: Text('Pusat Bantuan'),
-            trailing: Icon(Icons.chevron_right),
+            leading: const Icon(Icons.help, color: Colors.blue, size: 40),
+            title: const Text('Pusat Bantuan'),
+            trailing: const Icon(Icons.chevron_right),
             onTap: () {
               Navigator.push(
                 context,
@@ -136,9 +136,9 @@ class ProfilScreen extends StatelessWidget {
             },
           ),
           ListTile(
-            leading: Icon(Icons.exit_to_app, color: Colors.blue, size: 40),
-            title: Text('Keluar'),
-            trailing: Icon(Icons.chevron_right),
+            leading: const Icon(Icons.exit_to_app, color: Colors.blue, size: 40),
+            title: const Text('Keluar'),
+            trailing: const Icon(Icons.chevron_right),
             onTap: () {
               Navigator.push(
                 context,
@@ -146,17 +146,17 @@ class ProfilScreen extends StatelessWidget {
               );
             },
           ),
-          ListTile(
-            leading: Icon(Icons.delete, color: Colors.blue, size: 40),
-            title: Text('Hapus Akun'),
-            trailing: Icon(Icons.chevron_right),
-            onTap: () {
-             Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => HapusAkunScreen()),
-              );
-            },
-          ),
+          // ListTile(
+          //   leading: const Icon(Icons.delete, color: Colors.blue, size: 40),
+          //   title: const Text('Hapus Akun'),
+          //   trailing: const Icon(Icons.chevron_right),
+          //   onTap: () {
+          //    Navigator.push(
+          //       context,
+          //       MaterialPageRoute(builder: (context) => HapusAkunScreen()),
+          //     );
+          //   },
+          // ),
         ],
       ),
       // bottomNavigationBar: BottomNavigationBar(

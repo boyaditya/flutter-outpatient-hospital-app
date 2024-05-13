@@ -16,18 +16,18 @@ class _ProfilPasienScreenState extends State<ProfilPasienScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Profil Pasien', style: TextStyle(fontWeight: FontWeight.bold)),
+        title: const Text('Profil Pasien', style: TextStyle(fontWeight: FontWeight.bold)),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Padding(
+          const Padding(
             padding: EdgeInsets.all(16.0),
             child: Text(
               'SAYA SENDIRI',
               style: TextStyle(
                 color: Colors.grey,
-                fontSize: 16.0,
+                fontSize: 14.0,
               ),
             ),
           ),
@@ -35,7 +35,7 @@ class _ProfilPasienScreenState extends State<ProfilPasienScreen> {
           Center(
             child: Container(
               width: containerWidth,
-              padding: EdgeInsets.all(16.0),
+              padding: const EdgeInsets.all(16.0),
               decoration: BoxDecoration(
                 color: Colors.blue,
                 borderRadius: BorderRadius.circular(8.0),
@@ -43,29 +43,29 @@ class _ProfilPasienScreenState extends State<ProfilPasienScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
+                  const Text(
                     'John Hendrick',
                     style: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  SizedBox(height: 4.0),
-                  Text(
+                  const SizedBox(height: 4.0),
+                  const Text(
                     '22 Feb 2003',
                     style: TextStyle(color: Colors.white),
                   ),
-                  SizedBox(height: 4.0),
-                  Text(
+                  const SizedBox(height: 4.0),
+                  const Text(
                     'john.hendrick@gmail.com',
                     style: TextStyle(color: Colors.white),
                   ),
-                  SizedBox(height: 4.0),
-                  Text(
+                  const SizedBox(height: 4.0),
+                  const Text(
                     '08000000000',
                     style: TextStyle(color: Colors.white),
                   ),
-                  SizedBox(height: 8.0),
+                  const SizedBox(height: 8.0),
                   GestureDetector(
                     onTap: () {
                       // Mengubah state untuk menampilkan pesan status
@@ -77,11 +77,11 @@ class _ProfilPasienScreenState extends State<ProfilPasienScreen> {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
                           content: Text(statusMessage),
-                          duration: Duration(seconds: 2), // Durasi tampilan snackbar
+                          duration: const Duration(seconds: 2), // Durasi tampilan snackbar
                         ),
                       );
                     },
-                    child: Text(
+                    child: const Text(
                       'PERMINTAAN PERUBAHAN DATA',
                       style: TextStyle(
                         color: Colors.black,
@@ -94,17 +94,17 @@ class _ProfilPasienScreenState extends State<ProfilPasienScreen> {
               ),
             ),
           ),
-          Padding(
+          const Padding(
             padding: EdgeInsets.all(16.0),
             child: Text(
               'Orang Lain',
               style: TextStyle(
                 color: Colors.grey,
-                fontSize: 16.0,
+                fontSize: 14.0,
               ),
             ),
           ),
-           Expanded(
+           const Expanded(
                 child: Center(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -137,7 +137,7 @@ class _ProfilPasienScreenState extends State<ProfilPasienScreen> {
                         borderRadius: BorderRadius.circular(8.0),
                       ),
                     ),
-                    child: Text('TAMBAH PROFIL LAIN'),
+                    child: const Text('TAMBAH PROFIL LAIN'),
                   ),
                 ),
               ),
