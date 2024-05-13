@@ -1,38 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:tubes/pages/authentication/konfirm_email.dart';
 import 'package:tubes/pages/authentication/konfirm_telp.dart';
 
-// void main() {
-//   runApp(_MyApp());
-// }
-
-// class _MyApp extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return const MaterialApp(
-//       title: 'Masukkan Nomor Telepon',
-//       home: NoTelp(),
-//     );
-//   }
-// }
-
 class NoTelp extends StatefulWidget {
-  const NoTelp({super.key});
+  const NoTelp({Key? key}) : super(key: key);
 
   @override
   State<NoTelp> createState() => _NoTelpState();
 }
 
 class _NoTelpState extends State<NoTelp> {
+  bool _isButtonEnabled = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        // leading: IconButton(
-        //   icon: const Icon(Icons.arrow_back_ios_outlined),
-        //   onPressed: () {},
-        // ),
-      ),
+      appBar: AppBar(),
       body: ListView(
         children: [
           Padding(
@@ -50,25 +32,34 @@ class _NoTelpState extends State<NoTelp> {
                 const SizedBox(height: 16.0),
                 const Text('Nomor Telepon'),
                 const SizedBox(height: 10),
-                const TextField(
+                TextField(
+                  onChanged: (value) {
+                    setState(() {
+                      _isButtonEnabled = value.isNotEmpty;
+                    });
+                  },
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
-                    hintText: '08000000000000',
+                    hintText: '085123456789',
                   ),
                 ),
                 const SizedBox(height: 400.0),
                 Center(
                   child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-												context,
-												MaterialPageRoute(
-													builder: (context) => const KonfirmasiTelp(),
-												),
-											);
-                    },
+                    onPressed: _isButtonEnabled
+                        ? () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const KonfirmasiTelp(),
+                              ),
+                            );
+                          }
+                        : null,
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blue[700],
+                      backgroundColor: _isButtonEnabled
+                          ? Colors.blue[700]
+                          : Colors.grey,
                       shape: const RoundedRectangleBorder(
                           borderRadius: BorderRadius.all(Radius.circular(8))),
                       fixedSize: Size(MediaQuery.of(context).size.width,
