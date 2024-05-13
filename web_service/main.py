@@ -91,7 +91,7 @@ path_img = "../images/doctor/"
 
 
 @app.get("/doctors/image/{doctor_id}")
-async def read_doctor_image(doctor_id: int):
+async def read_doctor_image(doctor_id: int, db: db_dependency):
     doctor = crud.get_doctors_by_id(db, doctor_id)
     if not (doctor):
         raise HTTPException(status_code=404, detail="id tidak valid")
@@ -132,7 +132,7 @@ path_specialization_img = "../images/specialization/"
 
 
 @app.get("/specializations/image/{specialization_id}")
-async def read_specialization_image(specialization_id: int):
+async def read_specialization_image(specialization_id: int, db: db_dependency):
     specialization = crud.get_specialization_by_id(db, specialization_id)
     if not specialization:
         raise HTTPException(status_code=404, detail="Specialization not found")
