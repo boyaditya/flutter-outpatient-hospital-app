@@ -34,7 +34,7 @@ class _RincianJanjiTemuState extends State<RincianJanjiTemu> {
                       options[index],
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        fontSize: 16,
+                        fontSize: 14,
                         color: index == 1 ? Colors.red : Colors.black,
                       ),
                     ),
@@ -60,7 +60,7 @@ class _RincianJanjiTemuState extends State<RincianJanjiTemu> {
       appBar: AppBar(
         title: const Text(
           'Rincian Janji Temu',
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
         ),
 
         actions: [
@@ -75,7 +75,7 @@ class _RincianJanjiTemuState extends State<RincianJanjiTemu> {
             padding: EdgeInsets.only(right: 16.0),
             child: Text(
               'Butuh\nBantuan?',
-              style: TextStyle(fontSize: 16),
+              style: TextStyle(fontSize: 14),
             ),
           ),
         ],
@@ -116,18 +116,18 @@ class _RincianJanjiTemuState extends State<RincianJanjiTemu> {
                 // Teks
                 const Text(
                   'Nomor Antrian',
-                  style: TextStyle(fontSize: 16),
+                  style: TextStyle(fontSize: 14),
                 ),
                 const SizedBox(height: 8), // Berikan jarak antara teks berikutnya
                 // Teks bold
                 const Text(
                   '16', // Ganti dengan ID Janji Temu yang sesuai
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 8), // Berikan jarak antara teks berikutnya
                 const Text(
                   'Pindai kode QR di Kios untuk Check In',
-                  style: TextStyle(fontSize: 16),
+                  style: TextStyle(fontSize: 14),
                 ),
                 const SizedBox(height: 20),
                 Column(
@@ -163,7 +163,7 @@ class _RincianJanjiTemuState extends State<RincianJanjiTemu> {
                           Text(
                             "Silahkan menuju ke front office",
                             style: TextStyle(
-                                fontSize: 18, fontWeight: FontWeight.bold),
+                                fontSize: 16, fontWeight: FontWeight.bold),
                           ),
                           SizedBox(
                               height:
@@ -171,7 +171,7 @@ class _RincianJanjiTemuState extends State<RincianJanjiTemu> {
                           // Teks kedua
                           Text(
                             "Menunggu verifikasi pasien",
-                            style: TextStyle(fontSize: 14),
+                            style: TextStyle(fontSize: 12),
                           ),
                         ],
                       ),
@@ -363,7 +363,7 @@ class InfoItem extends StatelessWidget {
         Text(
           label,
           style: TextStyle(
-            fontSize: 9,
+            fontSize: 8,
             color: Colors.grey[600],
             fontWeight: FontWeight.bold,
           ),
@@ -371,7 +371,7 @@ class InfoItem extends StatelessWidget {
         Text(
           value,
           style: const TextStyle(
-            fontSize: 14,
+            fontSize: 12,
             color: Colors.black,
             fontWeight: FontWeight.bold,
           ),

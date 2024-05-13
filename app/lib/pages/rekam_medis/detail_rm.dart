@@ -59,7 +59,7 @@ class _DetailRekamMedisState extends State<DetailRekamMedis>{
                       'dr. Medina Gozali',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
-                        fontSize: 16.0,
+                        fontSize: 14.0,
                       ),
                     ),
                     const SizedBox(height: 8.0),
@@ -93,53 +93,53 @@ class _DetailRekamMedisState extends State<DetailRekamMedis>{
             const Text(
               'Keluhan',
               style: TextStyle(
-                fontSize: 24.0,
+                fontSize: 22.0,
                 fontWeight: FontWeight.bold,
               ),
             ),
             const SizedBox(height: 5.0),
             const Text(
               'Demam, batuk, nyeri tenggorokan',
-              style: TextStyle(fontSize: 16.0),
+              style: TextStyle(fontSize: 14.0),
             ),
             const SizedBox(height: 15.0),
             const Text(
               'Diagnosa',
               style: TextStyle(
-                fontSize: 24.0,
+                fontSize: 22.0,
                 fontWeight: FontWeight.bold,
               ),
             ),
             const SizedBox(height: 5.0),
             const Text(
               'Influenza dengan pneumonia',
-              style: TextStyle(fontSize: 16.0),
+              style: TextStyle(fontSize: 14.0),
             ),
             const SizedBox(height: 15.0),
             const Text(
               'Terapi Obat',
               style: TextStyle(
-                fontSize: 24.0,
+                fontSize: 22.0,
                 fontWeight: FontWeight.bold,
               ),
             ),
             const SizedBox(height: 5.0),
             const Text(
               'Konsumsi obat oseltamivir, 1 x 1 hari',
-              style: TextStyle(fontSize: 16.0),
+              style: TextStyle(fontSize: 14.0),
             ),
             const SizedBox(height: 15.0),
             const Text(
               'Catatan Dokter',
               style: TextStyle(
-                fontSize: 24.0,
+                fontSize: 22.0,
                 fontWeight: FontWeight.bold,
               ),
             ),
             const SizedBox(height: 5.0),
             const Text(
               'Mulai biasakan istirahat yang cukup dan olahraga yang teratur. Perbanyak minum air putih dan menjaga pola makan.',
-              style: TextStyle(fontSize: 16.0),
+              style: TextStyle(fontSize: 14.0),
             ),
           ],
         ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:tubes/pages/authentication/buat_akun.dart';
 import 'package:tubes/pages/authentication/data_diri.dart';
 import 'package:tubes/pages/authentication/konfirm_email.dart';
@@ -52,6 +53,14 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+			theme: ThemeData(
+        // Atur font default menggunakan GoogleFonts
+        textTheme: GoogleFonts.poppinsTextTheme(
+          Theme.of(context).textTheme,
+        ),
+				colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
+        useMaterial3: true,
+      ),
       onGenerateTitle: (BuildContext context) {
         final routeName = ModalRoute.of(context)?.settings.name;
 
@@ -75,10 +84,6 @@ class MyApp extends StatelessWidget {
             return 'Cari & Buat Reservasi';
         }
       },
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
-        useMaterial3: true,
-      ),
       initialRoute: '/onboard2',
       routes: {
         '/': (context) => const Login(title: 'Login'),

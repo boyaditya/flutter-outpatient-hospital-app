@@ -276,7 +276,10 @@ class _Dashboard1State extends State<Dashboard1> {
                   children: [
                     Text(
                       'Registrasi Akun',
-                      // style: GoogleFonts.dmSans,
+                      style: TextStyle(
+												fontSize: 18,
+												fontWeight: FontWeight.bold,
+											),
                     ),
                     SizedBox(height: 8.0),
                     Text(

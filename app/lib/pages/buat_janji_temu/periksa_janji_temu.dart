@@ -25,7 +25,7 @@ class _PeriksaJanjiTemuState extends State<PeriksaJanjiTemu> {
       appBar: AppBar(
         title: const Text(
           'Periksa Janji Temu',
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
         ),
       ),
       body: ListView(
@@ -176,7 +176,7 @@ class InfoItem extends StatelessWidget {
         Text(
           label,
           style: TextStyle(
-            fontSize: 9,
+            fontSize: 8,
             color: Colors.grey[600],
             fontWeight: FontWeight.bold,
           ),
@@ -184,7 +184,7 @@ class InfoItem extends StatelessWidget {
         Text(
           value,
           style: const TextStyle(
-            fontSize: 14,
+            fontSize: 13,
             color: Colors.black,
             fontWeight: FontWeight.bold,
           ),

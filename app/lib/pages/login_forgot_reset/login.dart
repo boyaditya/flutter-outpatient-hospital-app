@@ -72,7 +72,7 @@ class _LoginState extends State<Login> {
               'Alamat Email',
               style: TextStyle(
                 color: Colors.black,
-                fontSize: 14,
+                fontSize: 12,
               ),
             ),
             TextField(
@@ -87,7 +87,7 @@ class _LoginState extends State<Login> {
               'Kata Sandi',
               style: TextStyle(
                 color: Colors.black,
-                fontSize: 14,
+                fontSize: 12,
               ),
             ),
             TextField(
@@ -140,7 +140,7 @@ class _LoginState extends State<Login> {
                   'Belum punya akun?',
                   style: TextStyle(
                     color: Colors.black,
-                    fontSize: 14,
+                    fontSize: 12,
                   ),
                 ),
                 TextButton(

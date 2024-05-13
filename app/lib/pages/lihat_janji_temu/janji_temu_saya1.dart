@@ -73,7 +73,7 @@ class _JanjiTemuSaya1State extends State<JanjiTemuSaya1> {
                       "Janji Temu Saya",
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
-                        fontSize: 24,
+                        fontSize: 22,
                         color: Colors.white,
                       ),
                     ),
@@ -123,7 +123,7 @@ class _JanjiTemuSaya1State extends State<JanjiTemuSaya1> {
       child: Text(
         text,
         style: TextStyle(
-          fontSize: 17,
+          fontSize: 15,
           color: _selectedTabIndex == index
               ? Colors.white
               : const Color.fromARGB(255, 98, 97, 97),
@@ -146,7 +146,7 @@ class _JanjiTemuSaya1State extends State<JanjiTemuSaya1> {
           const Center(
             child: Text(
               "Anda tidak memiliki janji\nyang akan datang",
-              style: TextStyle(fontSize: 17, color: Colors.blue),
+              style: TextStyle(fontSize: 15, color: Colors.blue),
               textAlign: TextAlign.center,
             ),
           ),
@@ -158,7 +158,7 @@ class _JanjiTemuSaya1State extends State<JanjiTemuSaya1> {
             child: const Text(
               "LIHAT HISTORI JANJI TEMU",
               style: TextStyle(
-                fontSize: 16,
+                fontSize: 14,
                 decoration: TextDecoration.underline,
                 color: Color.fromARGB(255, 3, 48, 85),
                 fontWeight: FontWeight.bold,

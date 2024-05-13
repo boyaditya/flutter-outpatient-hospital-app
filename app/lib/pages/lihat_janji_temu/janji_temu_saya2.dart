@@ -53,9 +53,10 @@ class _JanjiTemuSaya2State extends State<JanjiTemuSaya2> {
                       ),
                     ),
                   ),
+									const SizedBox(height: 10),
                   Positioned(
                     left: 20,
-                    top: 56,
+                    top: 60,
                     right: 20,
                     child: Container(
                       width:
@@ -121,7 +122,7 @@ class _JanjiTemuSaya2State extends State<JanjiTemuSaya2> {
       child: Text(
         text,
         style: TextStyle(
-          fontSize: 17,
+          fontSize: 15,
           color: _selectedTabIndex == index
               ? Colors.white
               : const Color.fromARGB(255, 98, 97, 97),
@@ -138,7 +139,7 @@ class _JanjiTemuSaya2State extends State<JanjiTemuSaya2> {
         children: [
           const Text(
             "Janji temu yang akan datang",
-            style: TextStyle(fontSize: 17, color: Colors.blue),
+            style: TextStyle(fontSize: 12, color: Colors.blue),
             textAlign: TextAlign.left,
           ),
           const SizedBox(height: 20),
@@ -177,7 +178,7 @@ class _JanjiTemuSaya2State extends State<JanjiTemuSaya2> {
 														'Rawat Jalan',
 														style: TextStyle(
 															fontWeight: FontWeight.bold,
-															fontSize: 20,
+															fontSize: 18,
 															color: Colors.grey,
 														),
 													),
@@ -187,7 +188,7 @@ class _JanjiTemuSaya2State extends State<JanjiTemuSaya2> {
 											const Text(
 												"John Hendrick\n11 Mar 2024, 11:00-11.30\ndr. Alvin H Hardjawinata, MARS, SpAk",
 												style: TextStyle(
-													fontSize: 15,
+													fontSize: 13,
 													color: Colors.black,
 													fontWeight: FontWeight.bold,
 												),
@@ -195,7 +196,7 @@ class _JanjiTemuSaya2State extends State<JanjiTemuSaya2> {
 											),
 											const Text(
 												"Spesialis akupuntur",
-												style: TextStyle(fontSize: 15, color: Colors.black),
+												style: TextStyle(fontSize: 13, color: Colors.black),
 												textAlign: TextAlign.left,
 											),
 											const SizedBox(height: 10),
@@ -219,7 +220,7 @@ class _JanjiTemuSaya2State extends State<JanjiTemuSaya2> {
 														Text(
 															'Silahkan menuju ke front office',
 															style: TextStyle(
-																fontSize: 15,
+																fontSize: 13,
 																color: Colors.black,
 															),
 														),
@@ -247,7 +248,7 @@ class _JanjiTemuSaya2State extends State<JanjiTemuSaya2> {
 							child: Text(
 								"LIHAT HISTORI JANJI TEMU",
 								style: TextStyle(
-									fontSize: 16,
+									fontSize: 14,
 									color: Colors.blue[900],
 									fontWeight: FontWeight.bold,
 									decoration: TextDecoration.underline,

@@ -51,12 +51,12 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 'Nama Lengkap',
                 style: TextStyle(
                   color: Colors.black,
-                  fontSize: 14,
+                  fontSize: 12,
                 ),
               ),
               TextFormField(
                 controller: _nameController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   hintText: 'Masukkan Nama Lengkap Anda',
                 ),
@@ -66,12 +66,12 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 'Nomor Induk Kependudukan',
                 style: TextStyle(
                   color: Colors.black,
-                  fontSize: 14,
+                  fontSize: 12,
                 ),
               ),
               TextFormField(
                 controller: _idController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   hintText: '3234XXXXXXXXXXXXX',
                 ),
@@ -81,12 +81,12 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 'Nomor Telepon',
                 style: TextStyle(
                   color: Colors.black,
-                  fontSize: 14,
+                  fontSize: 12,
                 ),
               ),
               TextFormField(
                 controller: _phoneController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   hintText: '+6285123456789',
                 ),
@@ -159,7 +159,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     child: Text(
                       'Dengan ini saya menyatakan bahwa data yang saya berikan adalah benar dan saya menyetujui semua syarat dan ketentuan yang berlaku.',
                       style: TextStyle(
-                        fontSize: 12.0,
+                        fontSize: 10.0,
                       ),
                     ),
                   ),

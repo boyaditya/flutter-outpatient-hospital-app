@@ -42,13 +42,13 @@ class _Onboarding3State extends State<Onboarding3>{
             const Text(
               'Tanya Dokter',
               style: TextStyle(
-                fontSize: 24,
+                fontSize: 22,
                 fontWeight: FontWeight.bold,
               ),
             ),
             const Text(
               'Apakah Anda memiliki pertanyaan kesehatan atau ingin berkonsultasi langsung dengan dokter? Aplikasi kami menyediakan layanan konsultasi dokter secara online, memudahkan Anda untuk mendapatkan jawaban atas pertanyaan Anda tanpa harus datang langsung ke rumah sakit.',
-              style: TextStyle(fontSize: 16),
+              style: TextStyle(fontSize: 14),
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 20),

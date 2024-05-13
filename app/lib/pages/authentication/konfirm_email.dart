@@ -41,19 +41,19 @@ class _KonfirmasiEmailState extends State<KonfirmasiEmail> {
                 const Text(
                   'Konfirmasi Alamat Email',
                   style: TextStyle(
-                    fontSize: 24.0,
+                    fontSize: 22.0,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 const SizedBox(height: 16.0),
                 const Text(
                   'Kami akan  mengirimkan kode ke alamat email Anda.',
-                  style: TextStyle(fontSize: 16.0),
+                  style: TextStyle(fontSize: 15.0),
                 ),
                 const SizedBox(height: 30.0),
                 const Text('kelompok7@gmail.com',
                     style:
-                        TextStyle(fontSize: 28.0, fontWeight: FontWeight.bold)),
+                        TextStyle(fontSize: 26.0, fontWeight: FontWeight.bold)),
                 const SizedBox(height: 24.0),
                 const SizedBox(height: 12.0),
                 const Text('Kode verifikasi'),
@@ -76,7 +76,7 @@ class _KonfirmasiEmailState extends State<KonfirmasiEmail> {
                     child: Text(
                       'Kirim Ulang Kode',
                       style: TextStyle(
-                        fontSize: 16.0,
+                        fontSize: 15.0,
                         color: Colors.purple,
                       ),
                     ),
@@ -87,7 +87,7 @@ class _KonfirmasiEmailState extends State<KonfirmasiEmail> {
                   child: Text(
                     'Kirim Ulang dalam 59 Detik.',
                     style: TextStyle(
-                      fontSize: 16.0,
+                      fontSize: 15.0,
                       color: Colors.green,
                     ),
                   ),

@@ -46,12 +46,12 @@ class DetailSpesialisasi extends StatelessWidget {
                 children: [
                   Text(
                     'Layanan oftalmologi menawarkan saran dan tes medis profesional untuk mengidentifikasi masalah penglihatan Anda dan membantu meningkatkan ketajaman penglihatan. Tim medis kami dilengkapi dengan peralatan diagnostik dan bedah yang berkualitas untuk memberikan perawatan terbaik bagi pasien.',
-                    style: TextStyle(fontSize: 16),
+                    style: TextStyle(fontSize: 14),
                   ),
                   SizedBox(height: 20),
                   Text(
                     'Kondisi yang Kami Tangani',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                   ),
                   SizedBox(height: 10),
                 ],
@@ -81,7 +81,7 @@ class DetailSpesialisasi extends StatelessWidget {
                   SizedBox(height: 20),
                   Text(
                     'Perawatan & Layanan yang Kami Sediakan',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                   ),
                   SizedBox(height: 10),
                 ],
@@ -105,7 +105,7 @@ class DetailSpesialisasi extends StatelessWidget {
                   SizedBox(height: 20),
                   Text(
                     '*Harap diperhatikan bahwa ini bukanlah daftar lengkap semua kondisi dan perawatan yang kami sediakan. Informasi ini dimaksudkan sebagai panduan kasar dan bukan sebagai saran medis.',
-                    style: TextStyle(fontSize: 14, color: Colors.grey),
+                    style: TextStyle(fontSize: 12, color: Colors.grey),
                   ),
                 ],
               ),

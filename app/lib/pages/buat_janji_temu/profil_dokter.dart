@@ -16,7 +16,7 @@ class _ProfilDokterState extends State<ProfilDokter> {
       appBar: AppBar(
         title: const Text(
           'Profil Dokter',
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
         ),
       ),
       body: ListView(
@@ -59,7 +59,7 @@ class _ProfilDokterState extends State<ProfilDokter> {
                           Text(
                             'Jadwal Rawat Jalan',
                             style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 20),
+                                fontWeight: FontWeight.bold, fontSize: 18),
                           ),
                         ],
                       ),
@@ -154,7 +154,7 @@ class CustomContainer extends StatelessWidget {
                   Text(
                     dokter,
                     style: const TextStyle(
-                      fontSize: 14,
+                      fontSize: 12,
                       color: Colors.black,
                       fontWeight: FontWeight.bold,
                     ),
@@ -163,7 +163,7 @@ class CustomContainer extends StatelessWidget {
                   Text(
                     spesialis,
                     style: const TextStyle(
-                      fontSize: 12,
+                      fontSize: 10,
                       color: Colors.black,
                     ),
                   ),
