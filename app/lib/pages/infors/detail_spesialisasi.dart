@@ -118,7 +118,7 @@ class DetailSpesialisasi extends StatelessWidget {
         padding: const EdgeInsets.all(16.0),
         child: ElevatedButton(
           onPressed: () {
-            Navigator.pushNamed(context, '/cari_reservasi');
+            Navigator.pushNamed(context, '/cari_dokter');
           },
           style: ElevatedButton.styleFrom(
             backgroundColor: Colors.blue,
