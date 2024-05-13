@@ -21,7 +21,8 @@ from fastapi.responses import FileResponse
 
 from passlib.context import CryptContext
 
-# from jose import jwt
+import jwt
+# from Crypto.Hash import SHA256
 # import datetime
 
 models.Base.metadata.create_all(bind=engine)
@@ -37,6 +38,7 @@ app.add_middleware(
 )
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
+
 
 def get_db():
     db = SessionLocal()
@@ -90,7 +92,9 @@ async def read_doctors(db: db_dependency, token: str = Depends(oauth2_scheme)):
 
 
 @app.get("/doctors/{doctors_id}", response_model=schemas.Doctor)
-async def read_doctors(doctors_id: int, db: db_dependency, token: str = Depends(oauth2_scheme)):
+async def read_doctors(
+    doctors_id: int, db: db_dependency, token: str = Depends(oauth2_scheme)
+):
     try:
         payload = verify_token(token)
     except HTTPException as e:
@@ -102,7 +106,9 @@ async def read_doctors(doctors_id: int, db: db_dependency, token: str = Depends(
 
 
 @app.get("/doctor_schedules/{doctor_id}", response_model=schemas.DoctorSchedule)
-async def read_doctor_schedules(doctor_id: int, db: Session = Depends(get_db), token: str = Depends(oauth2_scheme)):
+async def read_doctor_schedules(
+    doctor_id: int, db: Session = Depends(get_db), token: str = Depends(oauth2_scheme)
+):
     try:
         payload = verify_token(token)
     except HTTPException as e:
@@ -114,7 +120,9 @@ async def read_doctor_schedules(doctor_id: int, db: Session = Depends(get_db), t
 
 
 @app.get("/medical_records/{record_id}", response_model=schemas.MedicalRecord)
-async def read_medical_record(record_id: int, db: Session = Depends(get_db), token: str = Depends(oauth2_scheme)):
+async def read_medical_record(
+    record_id: int, db: Session = Depends(get_db), token: str = Depends(oauth2_scheme)
+):
     try:
         payload = verify_token(token)
     except HTTPException as e:
@@ -142,7 +150,11 @@ async def read_medical_records_by_patient_id(
 
 
 @app.post("/ratings/")
-def create_rating(ratings: schemas.RatingCreate, db: Session = Depends(get_db), token: str = Depends(oauth2_scheme)):
+def create_rating(
+    ratings: schemas.RatingCreate,
+    db: Session = Depends(get_db),
+    token: str = Depends(oauth2_scheme),
+):
     try:
         payload = verify_token(token)
     except HTTPException as e:
@@ -153,7 +165,11 @@ def create_rating(ratings: schemas.RatingCreate, db: Session = Depends(get_db), 
 @app.post(
     "/patients/", response_model=schemas.Patient, status_code=status.HTTP_201_CREATED
 )
-async def create_patient(patient: schemas.PatientCreate, db: db_dependency, token: str = Depends(oauth2_scheme)):
+async def create_patient(
+    patient: schemas.PatientCreate,
+    db: db_dependency,
+    token: str = Depends(oauth2_scheme),
+):
     try:
         payload = verify_token(token)
     except HTTPException as e:
@@ -191,7 +207,9 @@ async def read_patient(
 
 
 @app.delete("/patients/{patient_id}", status_code=status.HTTP_204_NO_CONTENT)
-async def delete_patient(patient_id: int, db: db_dependency, token: str = Depends(oauth2_scheme)):
+async def delete_patient(
+    patient_id: int, db: db_dependency, token: str = Depends(oauth2_scheme)
+):
     try:
         payload = verify_token(token)
     except HTTPException as e:
@@ -207,7 +225,9 @@ async def delete_patient(patient_id: int, db: db_dependency, token: str = Depend
     status_code=status.HTTP_201_CREATED,
 )
 async def create_appointment(
-    appointment: schemas.AppointmentCreate, db: db_dependency, token: str = Depends(oauth2_scheme)
+    appointment: schemas.AppointmentCreate,
+    db: db_dependency,
+    token: str = Depends(oauth2_scheme),
 ):
     try:
         payload = verify_token(token)
@@ -230,9 +250,7 @@ async def read_appointment(
     return appointment
 
 
-@app.get(
-    "/appointments/patient/{patient_id}", response_model=List[schemas.Appointment]
-)
+@app.get("/appointments/patient/{patient_id}", response_model=List[schemas.Appointment])
 async def read_appointments_by_patient_id(
     patient_id: int, db: db_dependency, token: str = Depends(oauth2_scheme)
 ):
@@ -248,11 +266,11 @@ async def read_appointments_by_patient_id(
     return appointments
 
 
-@app.post(
-    "/set_status_cancelled/{appointment_id}", response_model=schemas.Appointment
-)
+@app.post("/set_status_cancelled/{appointment_id}", response_model=schemas.Appointment)
 async def set_status_cancelled(
-    appointment_id: int, db: Session = Depends(get_db), token: str = Depends(oauth2_scheme)
+    appointment_id: int,
+    db: Session = Depends(get_db),
+    token: str = Depends(oauth2_scheme),
 ):
     try:
         payload = verify_token(token)
@@ -266,11 +284,11 @@ async def set_status_cancelled(
     return appointment
 
 
-@app.post(
-    "/set_status_scheduled/{appointment_id}", response_model=schemas.Appointment
-)
+@app.post("/set_status_scheduled/{appointment_id}", response_model=schemas.Appointment)
 async def set_status_scheduled(
-    appointment_id: int, db: Session = Depends(get_db), token: str = Depends(oauth2_scheme)
+    appointment_id: int,
+    db: Session = Depends(get_db),
+    token: str = Depends(oauth2_scheme),
 ):
     try:
         payload = verify_token(token)
@@ -284,11 +302,11 @@ async def set_status_scheduled(
     return appointment
 
 
-@app.post(
-    "/set_status_complete/{appointment_id}", response_model=schemas.Appointment
-)
+@app.post("/set_status_complete/{appointment_id}", response_model=schemas.Appointment)
 async def set_status_complete(
-    appointment_id: int, db: Session = Depends(get_db), token: str = Depends(oauth2_scheme)
+    appointment_id: int,
+    db: Session = Depends(get_db),
+    token: str = Depends(oauth2_scheme),
 ):
     try:
         payload = verify_token(token)
@@ -313,13 +331,6 @@ async def delete_appointment(
     deleted_appointment = crud.delete_appointment_by_id(db, appointment_id)
     if deleted_appointment is None:
         raise HTTPException(status_code=404, detail="Appointment not found")
-
-
-
-
-
-
-
 
 
 def authenticate(db, user: schemas.UserCreate):
@@ -369,25 +380,31 @@ async def token(
     return {"access_token": access_token, "token_type": "bearer"}
 
 
-
 def verify_token(token: str):
     try:
-        payload = jwt.decode(token,SECRET_KEY,algorithms=["HS256"])  # bukan algorithm,  algorithms (set)
-        email = payload["email"]  
-     
-       
+        payload = jwt.decode(
+            token, SECRET_KEY, algorithms=["HS256"]
+        )  # bukan algorithm,  algorithms (set)
+        email = payload["email"]
+
     # exception jika token invalid
     except jwt.ExpiredSignatureError:
-        raise HTTPException(status_code=401, detail="Unauthorize token, expired signature, harap login")
+        raise HTTPException(
+            status_code=401, detail="Unauthorize token, expired signature, harap login"
+        )
     except jwt.JWSError:
         raise HTTPException(status_code=401, detail="Unauthorize token, JWS Error")
     except jwt.JWTClaimsError:
-        raise HTTPException(status_code=401, detail="Unauthorize token, JWT Claim Error")
+        raise HTTPException(
+            status_code=401, detail="Unauthorize token, JWT Claim Error"
+        )
     except jwt.JWTError:
-        raise HTTPException(status_code=401, detail="Unauthorize token, JWT Error")   
+        raise HTTPException(status_code=401, detail="Unauthorize token, JWT Error")
     except Exception as e:
-        raise HTTPException(status_code=401, detail="Unauthorize token, unknown error"+str(e))
-    
+        raise HTTPException(
+            status_code=401, detail="Unauthorize token, unknown error" + str(e)
+        )
+
     return {"email": email}
 
 
@@ -397,9 +414,11 @@ async def get_protected_route(token: str = Depends(oauth2_scheme)):
         # Verifikasi token
         payload = verify_token(token)
         email = payload["email"]
-        
+
         # Jika token valid, kembalikan respons yang sesuai
-        return {"message": f"Welcome, {email}! You have access to this protected route."}
+        return {
+            "message": f"Welcome, {email}! You have access to this protected route."
+        }
     except HTTPException as e:
         # Tangani HTTPException yang dihasilkan oleh verifikasi token
         raise e
