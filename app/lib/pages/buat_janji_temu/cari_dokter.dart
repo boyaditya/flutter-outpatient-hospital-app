@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:tubes/cubits/doctors_state.dart';
 import 'package:tubes/cubits/doctors_cubit.dart';
 
 class CariDokter extends StatefulWidget {
@@ -101,20 +100,21 @@ class _CariDokterState extends State<CariDokter> {
                           .map((doctor) => CustomButton2(
                                 icon: Icons.person,
                                 dokter: doctor.name,
-                                spesialis: doctor.interest,
+                                spesialis: doctor.idSpecialization.toString(),
                                 availability: 'Available',
-                                imagePath: "assets/images/dokter/dummy-doctor.jpg",
+                                imagePath:
+                                    "assets/images/dokter/dummy-doctor.jpg",
                                 onPressed: () {
-                                  // print(doctor.name);
-                                  // Navigator.pushNamed(
-                                  //   context,
-                                  //   '/profil_dokter',
-                                  //   arguments: {
-                                  //     'namaDokter': doctor.name,
-                                  //     'spesialis': doctor.interest,
-                                  //     'imgName': doctor.imgName,
-                                  //   },
-                                  // );
+                                  print(doctor.name);
+                                  Navigator.pushNamed(
+                                    context,
+                                    '/profil_dokter',
+                                    arguments: {
+                                      'namaDokter': doctor.name,
+                                      'spesialis': doctor.interest,
+                                      'imgName': doctor.imgName,
+                                    },
+                                  );
                                 },
                               ))
                           .toList(),

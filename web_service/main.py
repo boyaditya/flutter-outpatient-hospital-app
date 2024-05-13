@@ -13,7 +13,7 @@ from sqlalchemy.orm import Session
 import crud, models, schemas
 from database import SessionLocal, engine
 
-import jwt
+# import jwt
 from fastapi.security import OAuth2PasswordBearer
 from datetime import datetime, timedelta
 from fastapi.security import OAuth2PasswordRequestForm
