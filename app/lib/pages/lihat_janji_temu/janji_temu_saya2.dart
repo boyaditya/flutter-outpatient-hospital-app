@@ -1,31 +1,5 @@
 import 'package:flutter/material.dart';
 
-// void main() {
-//   runApp(const MyApp());
-// }
-
-// class MyApp extends StatefulWidget {
-//   const MyApp({super.key});
-
-//   @override
-//   State<MyApp> createState() => _MyAppState();
-// }
-
-// class _MyAppState extends State<MyApp> {
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       debugShowCheckedModeBanner: false,
-//       title: 'Quiz UI',
-//       theme: ThemeData(
-//         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-//         useMaterial3: true,
-//       ),
-//       home: const JanjiTemuSaya2(title: 'Quiz UI'),
-//     );
-//   }
-// }
-
 class JanjiTemuSaya2 extends StatefulWidget {
   const JanjiTemuSaya2({super.key, required this.title});
 
@@ -88,19 +62,42 @@ class _JanjiTemuSaya2State extends State<JanjiTemuSaya2> {
                           400, // Add this line to set the width of the Container
                       padding: const EdgeInsets.all(20),
                       decoration: BoxDecoration(
-                        color: const Color.fromRGBO(96, 192, 227, 1),
+                        color: Color.fromRGBO(96, 192, 227, 1),
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child: Center(
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
-                            _buildText("Semua", 0),
-                            _buildText("Saya Sendiri", 1),
-                            _buildText("Orang Lain", 2),
+                            _buildText("Saya Sendiri", 0),
+                            _buildText("Orang Lain", 1),
                           ],
                         ),
                       ),
+                    ),
+                  ),
+                  Positioned(
+                    bottom: 0,
+                    left: 60, // Atur posisi awal ke tepi kiri
+                    right: 240, // Atur posisi akhir ke tepi kanan
+                    child: AnimatedContainer(
+                      duration: Duration(milliseconds: 300),
+                      height:
+                          _selectedTabIndex == 0 ? 4 : 0, // Set lebar awal ke 0
+
+                      color: Colors.blue,
+                    ),
+                  ),
+                  Positioned(
+                    bottom: 0,
+                    left: 240, // Atur posisi awal ke tepi kiri
+                    right: 50, // Atur posisi akhir ke tepi kanan
+                    child: AnimatedContainer(
+                      duration: Duration(milliseconds: 300),
+                      height:
+                          _selectedTabIndex == 1 ? 4 : 0, // Set lebar awal ke 0
+
+                      color: Colors.blue,
                     ),
                   ),
                 ],
@@ -145,107 +142,120 @@ class _JanjiTemuSaya2State extends State<JanjiTemuSaya2> {
             textAlign: TextAlign.left,
           ),
           const SizedBox(height: 20),
-          GestureDetector(
-            onTap: () {
-              Navigator.pushNamed(context, '/rincian_janji');
-            },
-            child: Container(
-              padding: const EdgeInsets.all(20),
-              // margin: const EdgeInsets.all(20),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: Colors.blue[50],
-                boxShadow: const [
-                  BoxShadow(
-                    color: Colors.grey,
-                    blurRadius: 4.0,
-                    offset: Offset(
-                        -2, 2), // Moves the shadow to the left and bottom
-                  ),
-                ],
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Row(
-                    children: [
-                      Icon(
-                        Icons.person_4_outlined,
-                        color: Colors.grey,
-                      ), // This is
-                      SizedBox(width: 8), // This
-                      Text(
-                        'Rawat Jalan',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20,
-                            color: Colors.grey),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 10),
-                  const Text(
-                    "John Hendrick\n11 Mar 2024, 11:00-11.30\ndr. Alvin H Hardjawinata, MARS, SpAk",
-                    style: TextStyle(
-                        fontSize: 15,
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold),
-                    textAlign: TextAlign.left,
-                  ),
-                  const Text(
-                    "Spesialis akupuntur",
-                    style: TextStyle(fontSize: 15, color: Colors.black),
-                    textAlign: TextAlign.left,
-                  ),
-                  const SizedBox(
-                      height:
-                          10), // Jarak antara teks "Spesialis akupuntur" dan icon
-                  Container(
-                    width: 300,
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 8,
-                        horizontal: 12), // Atur padding sesuai kebutuhan
-                    decoration: BoxDecoration(
-                      color: Colors.yellow, // Atur warna latar belakang
-                      borderRadius: BorderRadius.circular(
-                          8), // Atur border radius sesuai keinginan
-                    ),
-                    child: const Row(
-                      children: [
-                        Icon(
-                          Icons.info_outline,
-                          color: Colors.black,
-                        ),
-                        SizedBox(width: 8),
-                        Text(
-                          'Silahkan menuju ke front office',
-                          style: TextStyle(
-                            fontSize: 15,
-                            color: Colors.black,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
+          InkWell(
+						onTap: () {
+							Navigator.pushNamed(context, '/rincian_janji');
+						},
+						borderRadius: BorderRadius.circular(10),
+						child: Ink(
+							decoration: BoxDecoration(
+								borderRadius: BorderRadius.circular(10),
+								color: Colors.blue[50],
+								boxShadow: const [
+									BoxShadow(
+										color: Colors.grey,
+										blurRadius: 4.0,
+										offset: Offset(-2, 2),
+									),
+								],
+							),
+							child: InkWell(
+								borderRadius: BorderRadius.circular(10),
+								child: Container(
+									padding: const EdgeInsets.all(20),
+									child: Column(
+										crossAxisAlignment: CrossAxisAlignment.start,
+										children: [
+											const Row(
+												children: [
+													Icon(
+														Icons.person_4_outlined,
+														color: Colors.grey,
+													),
+													SizedBox(width: 8),
+													Text(
+														'Rawat Jalan',
+														style: TextStyle(
+															fontWeight: FontWeight.bold,
+															fontSize: 20,
+															color: Colors.grey,
+														),
+													),
+												],
+											),
+											const SizedBox(height: 10),
+											const Text(
+												"John Hendrick\n11 Mar 2024, 11:00-11.30\ndr. Alvin H Hardjawinata, MARS, SpAk",
+												style: TextStyle(
+													fontSize: 15,
+													color: Colors.black,
+													fontWeight: FontWeight.bold,
+												),
+												textAlign: TextAlign.left,
+											),
+											const Text(
+												"Spesialis akupuntur",
+												style: TextStyle(fontSize: 15, color: Colors.black),
+												textAlign: TextAlign.left,
+											),
+											const SizedBox(height: 10),
+											Container(
+												width: 300,
+												padding: const EdgeInsets.symmetric(
+													vertical: 8,
+													horizontal: 12,
+												),
+												decoration: BoxDecoration(
+													color: Colors.yellow,
+													borderRadius: BorderRadius.circular(8),
+												),
+												child: const Row(
+													children: [
+														Icon(
+															Icons.info_outline,
+															color: Colors.black,
+														),
+														SizedBox(width: 8),
+														Text(
+															'Silahkan menuju ke front office',
+															style: TextStyle(
+																fontSize: 15,
+																color: Colors.black,
+															),
+														),
+													],
+												),
+											),
+										],
+									),
+								),
+							),
+						),
+					),
           const SizedBox(height: 15),
-          GestureDetector(
-            onTap: () {
-              Navigator.pushNamed(context, '/histori_janji');
-            },
-            child: const Text(
-              "LIHAT HISTORI JANJI TEMU",
-              style: TextStyle(
-                fontSize: 16,
-                decoration: TextDecoration.underline,
-                color: Color.fromARGB(255, 3, 48, 85),
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          )
+          InkWell(
+						onTap: () {
+							Navigator.pushNamed(context, '/histori_janji');
+						},
+						borderRadius: BorderRadius.circular(8),
+						child: Ink(
+							padding: EdgeInsets.symmetric(vertical: 12, horizontal: 24),
+							decoration: BoxDecoration(
+								color: Colors.white, // Ubah warna sesuai kebutuhan
+								borderRadius: BorderRadius.circular(8),
+							),
+							child: Text(
+								"LIHAT HISTORI JANJI TEMU",
+								style: TextStyle(
+									fontSize: 16,
+									color: Colors.blue[900],
+									fontWeight: FontWeight.bold,
+									decoration: TextDecoration.underline,
+								),
+							),
+						),
+					),
+
         ],
       ),
     );
