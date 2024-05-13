@@ -18,3 +18,16 @@ def create_user(db: Session, user: schemas.UserCreate):
 
 def get_doctors(db: Session):
     return db.query(models.Doctor).all()
+
+
+def get_user_by_id(db: Session, user_id: int):
+    return db.query(models.User).filter(models.User.id == user_id).first()
+
+
+def delete_user_by_id(db: Session, user_id: int):
+    user = db.query(models.User).filter(models.User.id == user_id).first()
+    if user:
+        db.delete(user)
+        db.commit()
+        return user
+    return None
