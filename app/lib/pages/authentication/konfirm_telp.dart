@@ -1,21 +1,7 @@
 import 'package:flutter/material.dart';
 
-// void main() {
-//   runApp(_MyApp());
-// }
-
-// class _MyApp extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return const MaterialApp(
-//       title: 'Konfirmasi Nomor Telepon',
-//       home: KonfirmasiTelp(),
-//     );
-//   }
-// }
-
 class KonfirmasiTelp extends StatefulWidget {
-  const KonfirmasiTelp({super.key});
+  const KonfirmasiTelp({Key? key}) : super(key: key);
 
   @override
   State<KonfirmasiTelp> createState() => _KonfirmasiTelpState();
@@ -23,22 +9,13 @@ class KonfirmasiTelp extends StatefulWidget {
 
 class _KonfirmasiTelpState extends State<KonfirmasiTelp> {
   bool _obscureText = true;
-
-  void _togglePasswordVisibility() {
-    setState(() {
-      _obscureText = !_obscureText;
-    });
-  }
+  TextEditingController _verificationCodeController = TextEditingController();
+  bool _isVerificationCodeEntered = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-          // leading: IconButton(
-          //   icon: const Icon(Icons.arrow_back_ios_outlined),
-          //   onPressed: (){},
-          // ),
-          ),
+      appBar: AppBar(),
       body: ListView(
         children: [
           Padding(
@@ -55,11 +32,11 @@ class _KonfirmasiTelpState extends State<KonfirmasiTelp> {
                 ),
                 const SizedBox(height: 16.0),
                 const Text(
-                  'Kami akan  mengirimkan kode ke nomor telepon yang Anda masukan.',
+                  'Kami akan mengirimkan kode ke nomor telepon yang Anda masukkan.',
                   style: TextStyle(fontSize: 16.0),
                 ),
                 const SizedBox(height: 30.0),
-                const Text('(+62) 8106454127',
+                const Text('(+62) 81234567890',
                     style:
                         TextStyle(fontSize: 28.0, fontWeight: FontWeight.bold)),
                 const SizedBox(height: 24.0),
@@ -67,16 +44,16 @@ class _KonfirmasiTelpState extends State<KonfirmasiTelp> {
                 const Text('Kode verifikasi'),
                 const SizedBox(height: 5.0),
                 TextField(
+                  controller: _verificationCodeController,
                   obscureText: _obscureText,
-                  decoration: InputDecoration(
-                    border: const OutlineInputBorder(),
-                    hintText: 'Kode Verifikasi',
-                    suffixIcon: IconButton(
-                      icon: Icon(
-                        _obscureText ? Icons.visibility_off : Icons.visibility,
-                      ),
-                      onPressed: _togglePasswordVisibility,
-                    ),
+                  onChanged: (value) {
+                    setState(() {
+                      _isVerificationCodeEntered = value.isNotEmpty;
+                    });
+                  },
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    hintText: 'Masukkan Kode Verifikasi',
                   ),
                 ),
                 const SizedBox(height: 12.0),
@@ -104,18 +81,27 @@ class _KonfirmasiTelpState extends State<KonfirmasiTelp> {
                 const SizedBox(height: 200.0),
                 Center(
                   child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.pushNamed(context, '/welcome_page');
-                    },
+                    onPressed: _isVerificationCodeEntered
+                        ? () {
+                            Navigator.pushNamed(context, '/welcome_page');
+                          }
+                        : null,
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blue[700],
+                      backgroundColor: _isVerificationCodeEntered
+                          ? Colors.blue[700]
+                          : Colors.grey, // Tombol berwarna abu-abu jika belum ada input
                       shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(8))),
-                      fixedSize: Size(MediaQuery.of(context).size.width,
-                          40), // 50% of screen width
+                        borderRadius: BorderRadius.all(Radius.circular(8)),
+                      ),
+                      fixedSize: Size(
+                        MediaQuery.of(context).size.width,
+                        40,
+                      ), // 50% dari lebar layar
                     ),
-                    child: const Text('Selanjutnya',
-                        style: TextStyle(color: Colors.white)),
+                    child: const Text(
+                      'Selanjutnya',
+                      style: TextStyle(color: Colors.white),
+                    ),
                   ),
                 ),
               ],
