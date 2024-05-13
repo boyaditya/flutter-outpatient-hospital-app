@@ -1,34 +1,19 @@
 import 'package:flutter/material.dart';
 
-// void main() {
-//   runApp(MyApp());
-// }
-
-// class MyApp extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       title: 'Ophthalmology',
-//       theme: ThemeData(
-//         primarySwatch: Colors.blue,
-//       ),
-//       home: DetailSpesialisasi(),
-//     );
-//   }
-// }
-
 class DetailSpesialisasi extends StatelessWidget {
-  const DetailSpesialisasi({super.key});
+  const DetailSpesialisasi({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        // leading: IconButton(
-        //   icon: const Icon(Icons.arrow_back_ios_outlined),
-        //   onPressed: () {},
-        // ),
-        title: const Text('Ophthalmology'),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios_outlined),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+        title: const Text('Oftalmologi'),
         bottom: const PreferredSize(
           preferredSize: Size.fromHeight(1.0),
           child: Divider(
@@ -60,12 +45,12 @@ class DetailSpesialisasi extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Siloam Hospitals\' Ophthalmologic services offer professional medical advice and tests to identify your vision problems and help improve the acuity. Our medical team is equipped with quality diagnostic and surgical equipment to deliver the best treatment for patients.',
+                    'Layanan oftalmologi menawarkan saran dan tes medis profesional untuk mengidentifikasi masalah penglihatan Anda dan membantu meningkatkan ketajaman penglihatan. Tim medis kami dilengkapi dengan peralatan diagnostik dan bedah yang berkualitas untuk memberikan perawatan terbaik bagi pasien.',
                     style: TextStyle(fontSize: 16),
                   ),
                   SizedBox(height: 20),
                   Text(
-                    'Conditions We Treat',
+                    'Kondisi yang Kami Tangani',
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                   SizedBox(height: 10),
@@ -74,18 +59,18 @@ class DetailSpesialisasi extends StatelessWidget {
             ),
             const BulletList(
               items: [
-                'Abnormal Vision Development',
-                'Age-related Macular Degeneration',
+                'Perkembangan Penglihatan Abnormal',
+                'Degenerasi Makula Terkait Usia',
                 'Amblyopia (Lazy Eye)',
-                'Blocked Tear Ducts',
-                'Cataracts',
-                'Childhood Myopia',
-                'Dry Eyes',
-                'Eye Movement Disorders and Double Vision',
+                'Saluran Air Mata Tersumbat',
+                'Katarak',
+                'Miopia Masa Kanak-kanak',
+                'Mata Kering',
+                'Gangguan Gerakan Mata dan Penglihatan Ganda',
                 'Genetic Disorders',
                 'Glaucoma',
-                'Infections',
-                'Orbital Tumors',
+                'Infeksi',
+                'Tumor Orbital',
               ],
             ),
             const Padding(
@@ -95,7 +80,7 @@ class DetailSpesialisasi extends StatelessWidget {
                 children: [
                   SizedBox(height: 20),
                   Text(
-                    'Treatments & Services We Provide',
+                    'Perawatan & Layanan yang Kami Sediakan',
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                   SizedBox(height: 10),
@@ -105,11 +90,11 @@ class DetailSpesialisasi extends StatelessWidget {
             const BulletList(
               items: [
                 'Blepharoplasty (Eyelid Surgery)',
-                'Cataract Surgery',
-                'Cornea and Refractive Surgery',
-                'Glaucoma Treatment',
-                'LASIK Eye Surgery',
-                'Retinal Tear and Detachment Services',
+                'Operasi Katarak',
+                'Operasi Kornea dan Bedah Refraktif',
+                'Pengobatan Glaukoma',
+                'Operasi Mata LASIK',
+                'Layanan Robekan dan Pelepasan Retina',
               ],
             ),
             const Padding(
@@ -119,35 +104,33 @@ class DetailSpesialisasi extends StatelessWidget {
                 children: [
                   SizedBox(height: 20),
                   Text(
-                    '*Please note that this is not a complete list of all the conditions and treatments that we provide. The information is intended as rough guidelines and not for medical advice.',
+                    '*Harap diperhatikan bahwa ini bukanlah daftar lengkap semua kondisi dan perawatan yang kami sediakan. Informasi ini dimaksudkan sebagai panduan kasar dan bukan sebagai saran medis.',
                     style: TextStyle(fontSize: 14, color: Colors.grey),
                   ),
                 ],
               ),
             ),
             const SizedBox(height: 16),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: ElevatedButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, '/cari_reservasi');
-                  // handle the button tap
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.blue,
-                  minimumSize: const Size(double.infinity, 50),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                ),
-                child: const Text(
-                  'Cari Spesialis',
-                  style: TextStyle(color: Colors.white),
-                ),
-              ),
-            ),
-            const SizedBox(height: 16),
           ],
+        ),
+      ),
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: ElevatedButton(
+          onPressed: () {
+            Navigator.pushNamed(context, '/cari_reservasi');
+          },
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.blue,
+            minimumSize: const Size(double.infinity, 50),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+          ),
+          child: const Text(
+            'Cari Spesialis',
+            style: TextStyle(color: Colors.white),
+          ),
         ),
       ),
     );
@@ -157,7 +140,7 @@ class DetailSpesialisasi extends StatelessWidget {
 class BulletList extends StatelessWidget {
   final List<String> items;
 
-  const BulletList({super.key, required this.items});
+  const BulletList({Key? key, required this.items}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
