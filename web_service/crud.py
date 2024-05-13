@@ -38,6 +38,8 @@ def delete_user_by_id(db: Session, user_id: int):
         return user
     return None
 
+def get_specializations(db: Session):
+    return db.query(models.Specialization).all()
 
 def get_specialization_by_id(db: Session, specialization_id: int):
     return db.query(models.Specialization).filter(models.Specialization.id == specialization_id).first()

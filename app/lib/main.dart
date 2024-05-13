@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tubes/cubits/doctors_cubit.dart';
+import 'package:tubes/cubits/specialization_cubit.dart';
 import 'package:tubes/pages/authentication/buat_akun.dart';
 import 'package:tubes/pages/authentication/data_diri.dart';
 import 'package:tubes/pages/authentication/konfirm_email.dart';
@@ -57,6 +58,9 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider<DoctorListCubit>(
           create: (context) => DoctorListCubit(),
+        ),
+        BlocProvider<SpecializationListCubit>(
+          create: (context) => SpecializationListCubit(),
         ),
       ],
       child: MaterialApp(

@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:tubes/cubits/doctors_cubit.dart';
+import 'package:tubes/cubits/specialization_cubit.dart';
 
 class CariDokter extends StatefulWidget {
   const CariDokter({super.key, required this.title});
@@ -18,6 +19,7 @@ class _CariDokterState extends State<CariDokter> {
   void initState() {
     super.initState();
     context.read<DoctorListCubit>().fetchDoctors();
+    context.read<SpecializationListCubit>().fetchSpecializations();
     print("test aja sih2");
   }
 
@@ -47,12 +49,12 @@ class _CariDokterState extends State<CariDokter> {
             color: Colors.black,
             thickness: 0.2,
           ),
-          ElevatedButton(
-            onPressed: () {
-              context.read<DoctorListCubit>().fetchDoctors();
-            },
-            child: Text('Fetch Doctors'),
-          ),
+          // ElevatedButton(
+          //   onPressed: () {
+          //     context.read<DoctorListCubit>().fetchDoctors();
+          //   },
+          //   child: Text('Fetch Doctors'),
+          // ),
           // Text(count.toString()),
           Padding(
             padding: const EdgeInsets.all(20.0),
@@ -93,31 +95,35 @@ class _CariDokterState extends State<CariDokter> {
                   ),
                 ),
                 const SizedBox(height: 20),
-                BlocBuilder<DoctorListCubit, List<DoctorModel>>(
+               BlocBuilder<DoctorListCubit, List<DoctorModel>>(
                   builder: (context, state) {
+                    final specializations =
+                        context.watch<SpecializationListCubit>().state;
                     return Column(
-                      children: state
-                          .map((doctor) => CustomButton2(
-                                icon: Icons.person,
-                                dokter: doctor.name,
-                                spesialis: doctor.idSpecialization.toString(),
-                                availability: 'Available',
-                                imagePath:
-                                    "assets/images/dokter/dummy-doctor.jpg",
-                                onPressed: () {
-                                  print(doctor.name);
-                                  Navigator.pushNamed(
-                                    context,
-                                    '/profil_dokter',
-                                    arguments: {
-                                      'namaDokter': doctor.name,
-                                      'spesialis': doctor.interest,
-                                      'imgName': doctor.imgName,
-                                    },
-                                  );
-                                },
-                              ))
-                          .toList(),
+                      children: state.map((doctor) {
+                        final specializationTitle =
+                            specializations[doctor.idSpecialization]?.title ??
+                                '';
+                        return CustomButton2(
+                          icon: Icons.person,
+                          dokter: doctor.name,
+                          spesialis: specializationTitle,
+                          availability: 'Available',
+                          imagePath: "assets/images/dokter/dummy-doctor.jpg",
+                          onPressed: () {
+                            print(doctor.name);
+                            Navigator.pushNamed(
+                              context,
+                              '/profil_dokter',
+                              arguments: {
+                                'namaDokter': doctor.name,
+                                'spesialis': doctor.interest,
+                                'imgName': doctor.imgName,
+                              },
+                            );
+                          },
+                        );
+                      }).toList(),
                     );
                   },
                 ),

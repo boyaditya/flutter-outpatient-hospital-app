@@ -119,6 +119,9 @@ async def delete_user(user_id: int, db: db_dependency):
     if deleted_user is None:
         raise HTTPException(status_code=404, detail="User not found")
 
+@app.get("/specializations/", response_model=List[schemas.Specialization])
+async def read_specializations(db: db_dependency):
+    return crud.get_specializations(db)
 
 @app.get("/specializations/{specialization_id}", response_model=schemas.Specialization)
 async def read_specialization(specialization_id: int, db: db_dependency):
