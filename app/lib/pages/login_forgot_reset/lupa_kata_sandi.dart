@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tubes/pages/login_forgot_reset/cek_email.dart';
 
 class LupaKataSandi extends StatefulWidget {
   const LupaKataSandi({super.key, required String title});
@@ -70,7 +71,12 @@ class _LupaKataSandiState extends State<LupaKataSandi> {
               child: ElevatedButton(
                 onPressed: isButtonEnabled
                     ? () {
-                        Navigator.pushNamed(context, '/cek_email');
+                        Navigator.push(
+												context,
+												MaterialPageRoute(
+													builder: (context) => const CekEmail(title: 'Cek Email'),
+												),
+											);
                       }
                     : null,
                 style: ElevatedButton.styleFrom(

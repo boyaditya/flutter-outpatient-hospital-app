@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tubes/pages/onboarding/onboard1.dart';
 
 // void main() {
 //   runApp(_MyApp());
@@ -82,7 +83,12 @@ class _OnBoarding2State extends State<OnBoarding2> {
               if (_currentPage == 0) // Menampilkan tombol "Lewati" hanya pada slide pertama
                 TextButton(
                   onPressed: () {
-                    Navigator.pushNamed(context, '/onboard1');
+                    Navigator.push(
+												context,
+												MaterialPageRoute(
+													builder: (context) => const OnBoarding1(),
+												),
+											);
                   },
                   child: const Text(
                     'Lewati',

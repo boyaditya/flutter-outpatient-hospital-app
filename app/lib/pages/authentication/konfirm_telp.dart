@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tubes/pages/authentication/welcome_page.dart';
 
 class KonfirmasiTelp extends StatefulWidget {
   const KonfirmasiTelp({Key? key}) : super(key: key);
@@ -83,7 +84,12 @@ class _KonfirmasiTelpState extends State<KonfirmasiTelp> {
                   child: ElevatedButton(
                     onPressed: _isVerificationCodeEntered
                         ? () {
-                            Navigator.pushNamed(context, '/welcome_page');
+                            Navigator.push(
+															context,
+															MaterialPageRoute(
+																builder: (context) => const SelamatDatang(),
+															),
+														);
                           }
                         : null,
                     style: ElevatedButton.styleFrom(

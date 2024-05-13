@@ -1,36 +1,20 @@
 import 'package:flutter/material.dart';
-
-// void main() {
-//   runApp(_MyApp());
-// }
-
-// class _MyApp extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return const MaterialApp(
-//       title: 'Konfirmasi Alamat Email',
-//       home: KonfirmasiEmail(),
-//     );
-//   }
-// }
+import 'package:tubes/pages/authentication/no_telp.dart';
 
 class KonfirmasiEmail extends StatefulWidget {
-  const KonfirmasiEmail({super.key});
+  const KonfirmasiEmail({Key? key}) : super(key: key);
 
   @override
   State<KonfirmasiEmail> createState() => _KonfirmasiEmailState();
 }
 
 class _KonfirmasiEmailState extends State<KonfirmasiEmail> {
+  bool _isButtonEnabled = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-          // leading: IconButton(
-          //   icon: const Icon(Icons.arrow_back_ios_outlined),
-          //   onPressed: (){},
-          // ),
-          ),
+      appBar: AppBar(),
       body: ListView(
         children: [
           Padding(
@@ -55,10 +39,14 @@ class _KonfirmasiEmailState extends State<KonfirmasiEmail> {
                     style:
                         TextStyle(fontSize: 26.0, fontWeight: FontWeight.bold)),
                 const SizedBox(height: 24.0),
-                const SizedBox(height: 12.0),
                 const Text('Kode verifikasi'),
                 const SizedBox(height: 5.0),
-                const TextField(
+                TextField(
+                  onChanged: (value) {
+                    setState(() {
+                      _isButtonEnabled = value.isNotEmpty;
+                    });
+                  },
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     hintText: 'Kode Verifikasi',
@@ -95,11 +83,20 @@ class _KonfirmasiEmailState extends State<KonfirmasiEmail> {
                 const SizedBox(height: 200.0),
                 Center(
                   child: ElevatedButton(
-                    onPressed: () {
-                       Navigator.pushNamed(context, '/no_telp');
-                    },
+                    onPressed: _isButtonEnabled
+                        ? () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const NoTelp(),
+                              ),
+                            );
+                          }
+                        : null,
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blue[700],
+                      backgroundColor: _isButtonEnabled
+                          ? Colors.blue[700]
+                          : Colors.grey,
                       shape: const RoundedRectangleBorder(
                           borderRadius: BorderRadius.all(Radius.circular(8))),
                       fixedSize: Size(MediaQuery.of(context).size.width,

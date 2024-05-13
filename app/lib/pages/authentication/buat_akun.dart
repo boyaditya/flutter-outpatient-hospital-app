@@ -1,39 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:tubes/pages/authentication/konfirm_email.dart';
 
-// void main() {
-//   runApp(_MyApp());
-// }
-
-// class _MyApp extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return const MaterialApp(
-//       title: 'Buat Akun',
-//       home: BuatAkun(),
-//     );
-//   }
-// }
-
-class BuatAkun extends StatefulWidget{
-  const BuatAkun({super.key});
+class BuatAkun extends StatefulWidget {
+  const BuatAkun({Key? key}) : super(key: key);
 
   @override
   State<BuatAkun> createState() => _BuatAkunState();
 }
 
-class _BuatAkunState extends State<BuatAkun>{
+class _BuatAkunState extends State<BuatAkun> {
   bool _obscureText = true;
-  void _togglePasswordVisibility() {
-    setState(() {
-      _obscureText = !_obscureText;
-    });
-  }
+  bool _isEmailEntered = false;
+  bool _isPasswordEntered = false;
+  bool _isConfirmationEntered = false;
+  TextEditingController _emailController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
+  TextEditingController _confirmationController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-      ),
+      appBar: AppBar(),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Column(
@@ -54,18 +41,30 @@ class _BuatAkunState extends State<BuatAkun>{
             const SizedBox(height: 24.0),
             const Text('Alamat Email'),
             const SizedBox(height: 5.0),
-            const TextField(
+            TextField(
+              controller: _emailController,
+              onChanged: (value) {
+                setState(() {
+                  _isEmailEntered = value.isNotEmpty;
+                });
+              },
               decoration: InputDecoration(
                 border: OutlineInputBorder(),
                 hintText: 'email@domain.com',
-                contentPadding: EdgeInsets.symmetric(horizontal: 16.0),
+                contentPadding: const EdgeInsets.symmetric(horizontal: 16.0),
               ),
             ),
             const SizedBox(height: 12.0),
             const Text('Kata Sandi'),
             const SizedBox(height: 5.0),
             TextField(
+              controller: _passwordController,
               obscureText: _obscureText,
+              onChanged: (value) {
+                setState(() {
+                  _isPasswordEntered = value.isNotEmpty;
+                });
+              },
               decoration: InputDecoration(
                 border: const OutlineInputBorder(),
                 hintText: 'Kata Sandi',
@@ -81,10 +80,16 @@ class _BuatAkunState extends State<BuatAkun>{
             const Text('Konfirmasi Kata Sandi'),
             const SizedBox(height: 5.0),
             TextField(
+              controller: _confirmationController,
               obscureText: _obscureText,
+              onChanged: (value) {
+                setState(() {
+                  _isConfirmationEntered = value.isNotEmpty;
+                });
+              },
               decoration: InputDecoration(
                 border: const OutlineInputBorder(),
-                hintText: 'Kata Sandi',
+                hintText: 'Konfirmasi Kata Sandi',
                 suffixIcon: IconButton(
                   icon: Icon(
                     _obscureText ? Icons.visibility_off : Icons.visibility,
@@ -101,23 +106,43 @@ class _BuatAkunState extends State<BuatAkun>{
             const SizedBox(height: 16.0),
             Center(
               child: ElevatedButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, '/konfirm_email');
-                },
+                onPressed: _isEmailEntered && _isPasswordEntered && _isConfirmationEntered
+                    ? () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const KonfirmasiEmail(),
+                          ),
+                        );
+                      }
+                    : null,
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.blue[700],
+                  backgroundColor: _isEmailEntered && _isPasswordEntered && _isConfirmationEntered
+                      ? Colors.blue[700]
+                      : Colors.grey, // Warna abu-abu jika input belum diisi
                   shape: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(8))),
-                  fixedSize: Size(MediaQuery.of(context).size.width,
-                      40), // 50% of screen width
+                    borderRadius: BorderRadius.all(Radius.circular(8)),
+                  ),
+                  fixedSize: Size(
+                    MediaQuery.of(context).size.width,
+                    40,
+                  ), // Lebar 50% dari lebar layar
                 ),
-                child:
-                    const Text('Selanjutnya', style: TextStyle(color: Colors.white)),
+                child: const Text(
+                  'Selanjutnya',
+                  style: TextStyle(color: Colors.white),
+                ),
               ),
             ),
           ],
         ),
       ),
     );
+  }
+
+  void _togglePasswordVisibility() {
+    setState(() {
+      _obscureText = !_obscureText;
+    });
   }
 }

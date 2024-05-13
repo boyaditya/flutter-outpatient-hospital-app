@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tubes/pages/buat_janji_temu/periksa_janji_temu.dart';
 
 class ProfilPasien extends StatefulWidget {
   const ProfilPasien({super.key, required this.title});
@@ -63,7 +64,12 @@ class _ProfilPasienState extends State<ProfilPasien> {
                 const SizedBox(height: 120),
                 ElevatedButton(
                   onPressed: () {
-                    Navigator.pushNamed(context, '/periksa_janji_temu');
+                    Navigator.push(
+												context,
+												MaterialPageRoute(
+													builder: (context) => const PeriksaJanjiTemu(title: 'Periksa Janji Temu'),
+												),
+											);
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.blue,

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:tubes/pages/lihat_janji_temu/histori_janji_temu.dart';
+import 'package:tubes/pages/lihat_janji_temu/rincian_janji_temu.dart';
 
 class JanjiTemuSaya2 extends StatefulWidget {
   const JanjiTemuSaya2({super.key, required this.title});
@@ -145,7 +147,12 @@ class _JanjiTemuSaya2State extends State<JanjiTemuSaya2> {
           const SizedBox(height: 20),
           InkWell(
 						onTap: () {
-							Navigator.pushNamed(context, '/rincian_janji');
+							Navigator.push(
+								context,
+								MaterialPageRoute(
+									builder: (context) => const RincianJanjiTemu(title: 'Rincian Janji Temu'),
+								),
+							);
 						},
 						borderRadius: BorderRadius.circular(10),
 						child: Ink(
@@ -236,7 +243,12 @@ class _JanjiTemuSaya2State extends State<JanjiTemuSaya2> {
           const SizedBox(height: 15),
           InkWell(
 						onTap: () {
-							Navigator.pushNamed(context, '/histori_janji');
+							Navigator.push(
+								context,
+								MaterialPageRoute(
+									builder: (context) => const HistoriJanjiTemu(title: 'Histori Janji Temu'),
+								),
+							);
 						},
 						borderRadius: BorderRadius.circular(8),
 						child: Ink(
