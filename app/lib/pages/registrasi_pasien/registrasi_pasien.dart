@@ -1,34 +1,36 @@
 import 'package:flutter/material.dart';
 
-// void main() {
-//   runApp(MyApp());
-// }
-
-// class MyApp extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       title: 'Registrasi Pasien Baru',
-//       home: RegistrationScreen(),
-//     );
-//   }
-// }
-
 class RegistrationScreen extends StatefulWidget {
-  const RegistrationScreen({super.key});
-
   @override
   _RegistrationScreenState createState() => _RegistrationScreenState();
 }
 
 class _RegistrationScreenState extends State<RegistrationScreen> {
   final _formKey = GlobalKey<FormState>();
-  final _nameController = TextEditingController();
-  final _dobController = TextEditingController();
-  final _phoneController = TextEditingController();
-  final _emailController = TextEditingController();
-  final _idController = TextEditingController();
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _dobController = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _idController = TextEditingController();
   bool _agreeTerms = false;
+  String? _gender;
+
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(1900),
+      lastDate: DateTime.now(),
+    );
+    if (picked != null && picked != DateTime.now())
+      setState(() {
+        _dobController.text = picked.day.toString().padLeft(2, '0') +
+            '/' +
+            picked.month.toString().padLeft(2, '0') +
+            '/' +
+            picked.year.toString().substring(2);
+      });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,18 +47,75 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             children: [
               const Text('Harap isi data Anda yang sebenarnya.'),
               const SizedBox(height: 16.0),
-              const Text('Nama Lengkap'),
+              const Text(
+                'Nama Lengkap',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 14,
+                ),
+              ),
+              TextFormField(
+                controller: _nameController,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  hintText: 'Masukkan Nama Lengkap Anda',
+                ),
+              ),
+              const SizedBox(height: 16.0),
+              const Text(
+                'Nomor Induk Kependudukan',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 14,
+                ),
+              ),
+              TextFormField(
+                controller: _idController,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  hintText: '3234XXXXXXXXXXXXX',
+                ),
+              ),
+              const SizedBox(height: 16.0),
+              const Text(
+                'Nomor Telepon',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 14,
+                ),
+              ),
+              TextFormField(
+                controller: _phoneController,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  hintText: '+6285123456789',
+                ),
+              ),
+              const SizedBox(height: 16.0),
+              const Text('Jenis Kelamin'),
               Container(
                 decoration: BoxDecoration(
                   border: Border.all(color: Colors.grey),
                   borderRadius: BorderRadius.circular(5.0),
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.all(0.2),
-                  child: TextFormField(
-                    controller: _nameController,
+                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                  child: DropdownButtonFormField<String>(
+                    value: _gender,
+                    onChanged: (String? newValue) {
+                      setState(() {
+                        _gender = newValue;
+                      });
+                    },
+                    items: <String>['Laki-laki', 'Perempuan']
+                        .map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
                     decoration: const InputDecoration(
-                      hintText: '  Masukkan Nama Lengkap Anda',
+                      hintText: 'Pilih salah satu',
                       border: InputBorder.none,
                     ),
                   ),
@@ -64,72 +123,23 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               ),
               const SizedBox(height: 16.0),
               const Text('Tanggal Lahir'),
-              Container(
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.grey),
-                  borderRadius: BorderRadius.circular(5.0),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(0.2),
-                  child: TextFormField(
-                    controller: _dobController,
-                    decoration: const InputDecoration(
-                      hintText: '  DD/MM/YY',
-                      border: InputBorder.none,
+              GestureDetector(
+                onTap: () => _selectDate(context),
+                child: AbsorbPointer(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.grey),
+                      borderRadius: BorderRadius.circular(5.0),
                     ),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 16.0),
-              const Text('Nomor Telepon'),
-              Container(
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.grey),
-                  borderRadius: BorderRadius.circular(5.0),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(0.2),
-                  child: TextFormField(
-                    controller: _phoneController,
-                    decoration: const InputDecoration(
-                      hintText: '  +62000000000000',
-                      border: InputBorder.none,
-                    ),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 16.0),
-              const Text('Alamat Email'),
-              Container(
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.grey),
-                  borderRadius: BorderRadius.circular(5.0),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(0.2),
-                  child: TextFormField(
-                    controller: _emailController,
-                    decoration: const InputDecoration(
-                      hintText: '  test@email.com',
-                      border: InputBorder.none,
-                    ),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 16.0),
-              const Text('Nomor Induk Kependudukan'),
-              Container(
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.grey),
-                  borderRadius: BorderRadius.circular(5.0),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(0.2),
-                  child: TextFormField(
-                    controller: _idController,
-                    decoration: const InputDecoration(
-                      hintText: '  XXXXXXXXXXXXXXX',
-                      border: InputBorder.none,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: TextFormField(
+                        controller: _dobController,
+                        decoration: const InputDecoration(
+                          hintText: '  DD/MM/YY',
+                          border: InputBorder.none,
+                        ),
+                      ),
                     ),
                   ),
                 ),
@@ -178,3 +188,4 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     );
   }
 }
+
