@@ -1,31 +1,5 @@
 import 'package:flutter/material.dart';
 
-// void main() {
-//   runApp(const MyApp());
-// }
-
-// class MyApp extends StatefulWidget {
-//   const MyApp({Key? key}) : super(key: key);
-
-//   @override
-//   State<MyApp> createState() => _MyAppState();
-// }
-
-// class _MyAppState extends State<MyApp> {
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       debugShowCheckedModeBanner: false,
-//       title: 'Quiz UI',
-//       theme: ThemeData(
-//         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-//         useMaterial3: true,
-//       ),
-//       home: const RincianJanjiTemu(title: 'Quiz UI'),
-//     );
-//   }
-// }
-
 class RincianJanjiTemu extends StatefulWidget {
   const RincianJanjiTemu({super.key, required this.title});
 
@@ -150,17 +124,6 @@ class _RincianJanjiTemuState extends State<RincianJanjiTemu> {
                   '16', // Ganti dengan ID Janji Temu yang sesuai
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
-                // Teks
-                const Text(
-                  'Kode Booking',
-                  style: TextStyle(fontSize: 16),
-                ),
-                const SizedBox(height: 8), // Berikan jarak antara teks berikutnya
-                // Teks bold
-                const Text(
-                  'T6NWHR', // Ganti dengan Nomor Antrian yang sesuai
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                ),
                 const SizedBox(height: 8), // Berikan jarak antara teks berikutnya
                 const Text(
                   'Pindai kode QR di Kios untuk Check In',
@@ -238,18 +201,18 @@ class _RincianJanjiTemuState extends State<RincianJanjiTemu> {
                         children: <Widget>[
                           InfoItem(
                             label: "NAMA LENGKAP",
-                            value: "John Doe",
+                            value: "Hanni",
                           ),
                           InfoItem(
                             label: "TANGGAL LAHIR",
-                            value: "12 Januari 1990",
+                            value: "12 Januari 2004",
                           ),
                           InfoItem(
                             label: "EMAIL",
-                            value: "johnhendrick@gmail.com",
+                            value: "hanni@gmail.com",
                           ),
                           InfoItem(
-                            label: "NOMOR PNSEL",
+                            label: "NOMOR PONSEL",
                             value: "081234567890",
                           ),
                         ],
@@ -349,26 +312,28 @@ class _RincianJanjiTemuState extends State<RincianJanjiTemu> {
                     //   child: const Text('CHECK IN',
                     //       style: TextStyle(color: Colors.white)),
                     // ),
-                    const SizedBox(height: 15),
-                    Center(
-                      child: GestureDetector(
-                        onTap: () {
-                          _showBottomSheet(context, [
-                            'Jadwal Ulang Janji Temu',
-                            'Batalkan Janji Temu',
-                            'Cancel'
-                          ]);
-                        },
-                        child: const Text(
-                          "PILIHAN LAIN",
-                          style: TextStyle(
-                            fontSize: 16,
-                            decoration: TextDecoration.underline,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                    )
+                    ElevatedButton(
+											onPressed: () {
+												_showBottomSheet(context, [
+													'Batalkan Janji Temu',
+													'Cancel'
+												]);
+											},
+											style: ElevatedButton.styleFrom(
+												backgroundColor: Colors.blue[100], // Ganti dengan warna yang diinginkan
+												shape: RoundedRectangleBorder(
+													borderRadius: BorderRadius.circular(8),
+												),
+												fixedSize: Size(
+													MediaQuery.of(context).size.width,
+													40,
+												),
+											),
+											child: const Text(
+												'Pilihan Lain',
+												style: TextStyle(color: Colors.black),
+											),
+										)
                   ],
                 ),
               ],
