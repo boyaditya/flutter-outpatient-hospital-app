@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tubes/pages/login_forgot_reset/reset_success.dart';
 
 class KataSandiBaru extends StatefulWidget {
   const KataSandiBaru({super.key, required String title});
@@ -123,7 +124,12 @@ class _KataSandiBaruState extends State<KataSandiBaru> {
               child: ElevatedButton(
                 onPressed: isButtonEnabled
                     ? () {
-                        Navigator.pushNamed(context, '/reset_success');
+                        Navigator.push(
+												context,
+												MaterialPageRoute(
+													builder: (context) => const ResetSuccess(title: 'Reset Success'),
+												),
+											);
                       }
                     : null,
                 style: ElevatedButton.styleFrom(

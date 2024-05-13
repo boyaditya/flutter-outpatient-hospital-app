@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tubes/pages/lihat_janji_temu/rincian_janji_temu.dart';
 
 class PeriksaJanjiTemu extends StatefulWidget {
   const PeriksaJanjiTemu({super.key, required this.title});
@@ -135,7 +136,12 @@ class _PeriksaJanjiTemuState extends State<PeriksaJanjiTemu> {
                 const SizedBox(height: 120),
                 ElevatedButton(
                   onPressed: () {
-                    Navigator.pushNamed(context, '/rincian_janji');
+                    Navigator.push(
+												context,
+												MaterialPageRoute(
+													builder: (context) => const RincianJanjiTemu(title: 'Rincian Janji Temu'),
+												),
+											);
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.blue,

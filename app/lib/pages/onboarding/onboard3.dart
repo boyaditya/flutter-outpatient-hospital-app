@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tubes/pages/onboarding/onboard1.dart';
 
 // void main() {
 //   runApp(_MyApp());
@@ -82,7 +83,12 @@ class _Onboarding3State extends State<Onboarding3>{
                 const Spacer(),
                 ElevatedButton(
                   onPressed: (){
-										Navigator.pushNamed(context, '/onboard1');
+										Navigator.push(
+												context,
+												MaterialPageRoute(
+													builder: (context) => const OnBoarding1(),
+												),
+											);
 									},
                   style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.blue[700],

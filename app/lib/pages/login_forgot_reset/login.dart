@@ -1,6 +1,9 @@
 // ignore_for_file: library_private_types_in_public_api
 
 import 'package:flutter/material.dart';
+import 'package:tubes/pages/authentication/buat_akun.dart';
+import 'package:tubes/pages/dashboard/dashboard.dart';
+import 'package:tubes/pages/login_forgot_reset/lupa_kata_sandi.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key, required String title});
@@ -109,7 +112,12 @@ class _LoginState extends State<Login> {
               child: ElevatedButton(
                 onPressed: isButtonEnabled
                     ? () {
-                        Navigator.pushNamed(context, '/dashboard');
+                        Navigator.push(
+												context,
+												MaterialPageRoute(
+													builder: (context) => const Dashboard(title: 'Dashboard'),
+												),
+											);
                       }
                     : null,
                 style: ElevatedButton.styleFrom(
@@ -126,7 +134,12 @@ class _LoginState extends State<Login> {
             Center(
               child: TextButton(
                 onPressed: () {
-                  Navigator.pushNamed(context, '/lupa_kata_sandi');
+                  Navigator.push(
+										context,
+										MaterialPageRoute(
+											builder: (context) => const LupaKataSandi(title: 'Lupa Kata Sandi'),
+										),
+									);
                 },
                 child: const Text('Lupa Kata Sandi?',
                     style: TextStyle(color: Colors.blue)),
@@ -145,7 +158,12 @@ class _LoginState extends State<Login> {
                 ),
                 TextButton(
                   onPressed: () {
-                    Navigator.pushNamed(context, '/buat_akun');
+                    Navigator.push(
+												context,
+												MaterialPageRoute(
+													builder: (context) => const BuatAkun(),
+												),
+											);
                   },
                   child: const Text('Daftar Sekarang',
                       style: TextStyle(color: Colors.blue)),

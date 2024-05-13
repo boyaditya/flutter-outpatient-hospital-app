@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tubes/pages/login_forgot_reset/login.dart';
 
 class ResetSuccess extends StatefulWidget {
   const ResetSuccess({super.key, required String title});
@@ -52,7 +53,12 @@ class _ResetSuccessState extends State<ResetSuccess> {
             Center(
               child: ElevatedButton(
                 onPressed: () {
-                  Navigator.pushNamed(context, '/');
+                  Navigator.push(
+												context,
+												MaterialPageRoute(
+													builder: (context) => const Login(title: 'Login'),
+												),
+											);
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.blue[700],

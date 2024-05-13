@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tubes/pages/login_forgot_reset/kata_sandi_baru.dart';
 
 class CekEmail extends StatefulWidget {
   const CekEmail({super.key, required String title});
@@ -51,7 +52,12 @@ class _CekEmailState extends State<CekEmail> {
             Center(
               child: ElevatedButton(
                 onPressed: () {
-                  Navigator.pushNamed(context, '/kata_sandi_baru');
+                  Navigator.push(
+										context,
+										MaterialPageRoute(
+											builder: (context) => const KataSandiBaru(title: 'Kata Sandi Baru'),
+										),
+									);
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.blue[700],

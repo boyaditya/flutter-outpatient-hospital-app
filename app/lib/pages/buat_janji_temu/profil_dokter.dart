@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:tubes/pages/buat_janji_temu/pilih_jadwal.dart';
+import 'package:tubes/pages/buat_janji_temu/profil_lengkap_dokter.dart';
 
 class ProfilDokter extends StatefulWidget {
   const ProfilDokter({super.key, required this.title});
@@ -82,7 +84,12 @@ class _ProfilDokterState extends State<ProfilDokter> {
                       const SizedBox(height: 30),
                       ElevatedButton(
                         onPressed: () {
-                          Navigator.pushNamed(context, '/pilih_jadwal');
+                          Navigator.push(
+														context,
+														MaterialPageRoute(
+															builder: (context) => const PilihJadwal(title: 'Pilih Jadwal'),
+														),
+													);
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.blue[900],
@@ -170,7 +177,12 @@ class CustomContainer extends StatelessWidget {
                   const SizedBox(height: 4),
                   TextButton(
                     onPressed: () {
-                      Navigator.pushNamed(context, '/profil_lengkap_dokter');
+                     Navigator.push(
+												context,
+												MaterialPageRoute(
+													builder: (context) => const ProfilLengkapDokter(title: 'Profil Lengkap Dokter'),
+												),
+											);
                     },
                     child: Text(
                       'Lihat Profil Lengkap',

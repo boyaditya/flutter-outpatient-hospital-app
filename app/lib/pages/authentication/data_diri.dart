@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tubes/pages/authentication/konfirm_email.dart';
 
 // void main() => runApp(const MaterialApp(
 //   home: ForgetPass(),
@@ -146,19 +147,24 @@ class _DataDiriState extends State<DataDiri> {
               ),
             ),
             const SizedBox(height: 50),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.blue[700],
-                shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(8))),
-                fixedSize: Size(MediaQuery.of(context).size.width,
-                    40), // 50% of screen width
-              ),
-              onPressed: _isButtonEnabled ? () {
-                Navigator.pushNamed(context, '/konfirm_email');
-              } : null,
-              child: const Text('Selanjutnya', style: TextStyle(color: Colors.white)),
-            ),
+           ElevatedButton(
+							style: ElevatedButton.styleFrom(
+								backgroundColor: _isButtonEnabled ? Colors.blue[700] : Colors.grey, // Menggunakan warna abu jika tombol dinonaktifkan
+								shape: const RoundedRectangleBorder(
+										borderRadius: BorderRadius.all(Radius.circular(8))),
+								fixedSize: Size(MediaQuery.of(context).size.width,
+										40), // 50% of screen width
+							),
+							onPressed: _isButtonEnabled ? () {
+								Navigator.push(
+									context,
+									MaterialPageRoute(
+										builder: (context) => const KonfirmasiEmail(),
+									),
+								);
+							} : null,
+							child: const Text('Selanjutnya', style: TextStyle(color: Colors.white)),
+						),
           ],
         ),
       ),

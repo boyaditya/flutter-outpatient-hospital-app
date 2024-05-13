@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tubes/pages/lihat_janji_temu/histori_janji_temu.dart';
 
 // void main() {
 //   runApp(const MyApp());
@@ -153,7 +154,12 @@ class _JanjiTemuSaya1State extends State<JanjiTemuSaya1> {
           const SizedBox(height: 15),
           GestureDetector(
             onTap: () {
-              Navigator.pushNamed(context, '/histori_janji');
+              Navigator.push(
+												context,
+												MaterialPageRoute(
+													builder: (context) => const HistoriJanjiTemu(title: 'Histori Janji Temu'),
+												),
+											);
             },
             child: const Text(
               "LIHAT HISTORI JANJI TEMU",
