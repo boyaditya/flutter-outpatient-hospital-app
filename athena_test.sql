@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 19 Bulan Mei 2024 pada 07.51
--- Versi server: 10.4.28-MariaDB
--- Versi PHP: 8.2.4
+-- Generation Time: May 19, 2024 at 10:15 AM
+-- Server version: 10.4.27-MariaDB
+-- PHP Version: 8.2.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -24,7 +24,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `appointments`
+-- Table structure for table `appointments`
 --
 
 CREATE TABLE `appointments` (
@@ -42,7 +42,7 @@ CREATE TABLE `appointments` (
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `doctors`
+-- Table structure for table `doctors`
 --
 
 CREATE TABLE `doctors` (
@@ -55,7 +55,7 @@ CREATE TABLE `doctors` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data untuk tabel `doctors`
+-- Dumping data for table `doctors`
 --
 
 INSERT INTO `doctors` (`id`, `name`, `img_name`, `interest`, `education`, `id_specialization`) VALUES
@@ -71,7 +71,7 @@ INSERT INTO `doctors` (`id`, `name`, `img_name`, `interest`, `education`, `id_sp
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `doctor_schedules`
+-- Table structure for table `doctor_schedules`
 --
 
 CREATE TABLE `doctor_schedules` (
@@ -82,18 +82,39 @@ CREATE TABLE `doctor_schedules` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data untuk tabel `doctor_schedules`
+-- Dumping data for table `doctor_schedules`
 --
 
 INSERT INTO `doctor_schedules` (`id`, `doctor_id`, `day`, `time`) VALUES
 (1, 1, 'Selasa', '14.00 - 16.30'),
 (2, 1, 'Rabu', '14.00 - 16.30'),
-(3, 1, 'Kamis', '14.00 - 16.30');
+(3, 1, 'Kamis', '14.00 - 16.30'),
+(4, 2, 'Senin', '08.00 - 12.00'),
+(5, 2, 'Rabu', '13.00 - 17.00'),
+(6, 2, 'Jumat', '08.00 - 12.00'),
+(7, 3, 'Selasa', '10.00 - 14.00'),
+(8, 3, 'Kamis', '08.30 - 12.30'),
+(9, 3, 'Sabtu', '09.00 - 13.00'),
+(10, 5, 'Senin', '09.00 - 13.00'),
+(11, 5, 'Rabu', '14.00 - 18.00'),
+(12, 5, 'Jumat', '14.00 - 18.00'),
+(13, 7, 'Selasa', '08:00 - 12:00'),
+(14, 7, 'Kamis', '13.00 - 17.00'),
+(15, 7, 'Sabtu', '09.30 - 12.30'),
+(16, 8, 'Senin', '11.00 - 15.00'),
+(17, 8, 'Rabu', '08.00 - 12.00'),
+(18, 8, 'Jumat', '13.00 - 16.00'),
+(19, 9, 'Selasa', '09.00 - 13.00'),
+(20, 9, 'Kamis', '10.00 - 14.00'),
+(21, 9, 'Sabtu', '08.30 - 12.30'),
+(22, 10, 'Senin', '08.30 - 12.30'),
+(23, 10, 'Rabu', '09.00 - 13.00'),
+(24, 10, 'Jumat', '14.00 - 18.00');
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `medical_records`
+-- Table structure for table `medical_records`
 --
 
 CREATE TABLE `medical_records` (
@@ -108,7 +129,7 @@ CREATE TABLE `medical_records` (
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `patients`
+-- Table structure for table `patients`
 --
 
 CREATE TABLE `patients` (
@@ -124,7 +145,7 @@ CREATE TABLE `patients` (
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `ratings`
+-- Table structure for table `ratings`
 --
 
 CREATE TABLE `ratings` (
@@ -138,7 +159,7 @@ CREATE TABLE `ratings` (
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `specializations`
+-- Table structure for table `specializations`
 --
 
 CREATE TABLE `specializations` (
@@ -149,7 +170,7 @@ CREATE TABLE `specializations` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data untuk tabel `specializations`
+-- Dumping data for table `specializations`
 --
 
 INSERT INTO `specializations` (`id`, `title`, `description`, `img_name`) VALUES
@@ -161,7 +182,7 @@ INSERT INTO `specializations` (`id`, `title`, `description`, `img_name`) VALUES
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `users`
+-- Table structure for table `users`
 --
 
 CREATE TABLE `users` (
@@ -171,9 +192,8 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data untuk tabel `users`
+-- Dumping data for table `users`
 --
-
 
 INSERT INTO `users` (`id`, `email`, `hashed_password`) VALUES
 (7, '123', '$2b$12$/bGt5NNwhngAxpF2Txdf5uSUZfL6B7HT8Ks5zQwMQdwadRImthNYW'),
@@ -185,7 +205,7 @@ INSERT INTO `users` (`id`, `email`, `hashed_password`) VALUES
 --
 
 --
--- Indeks untuk tabel `appointments`
+-- Indexes for table `appointments`
 --
 ALTER TABLE `appointments`
   ADD PRIMARY KEY (`id`),
@@ -193,141 +213,141 @@ ALTER TABLE `appointments`
   ADD KEY `patient_id` (`patient_id`);
 
 --
--- Indeks untuk tabel `doctors`
+-- Indexes for table `doctors`
 --
 ALTER TABLE `doctors`
   ADD PRIMARY KEY (`id`),
   ADD KEY `id_specialization` (`id_specialization`);
 
 --
--- Indeks untuk tabel `doctor_schedules`
+-- Indexes for table `doctor_schedules`
 --
 ALTER TABLE `doctor_schedules`
   ADD PRIMARY KEY (`id`),
   ADD KEY `doctor_id` (`doctor_id`);
 
 --
--- Indeks untuk tabel `medical_records`
+-- Indexes for table `medical_records`
 --
 ALTER TABLE `medical_records`
   ADD PRIMARY KEY (`id`),
   ADD KEY `appointment_id` (`appointment_id`);
 
 --
--- Indeks untuk tabel `patients`
+-- Indexes for table `patients`
 --
 ALTER TABLE `patients`
   ADD PRIMARY KEY (`id`),
   ADD KEY `user_id` (`user_id`);
 
 --
--- Indeks untuk tabel `ratings`
+-- Indexes for table `ratings`
 --
 ALTER TABLE `ratings`
   ADD PRIMARY KEY (`id`),
   ADD KEY `patient_id` (`patient_id`);
 
 --
--- Indeks untuk tabel `specializations`
+-- Indexes for table `specializations`
 --
 ALTER TABLE `specializations`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeks untuk tabel `users`
+-- Indexes for table `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`);
 
 --
--- AUTO_INCREMENT untuk tabel yang dibuang
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT untuk tabel `appointments`
+-- AUTO_INCREMENT for table `appointments`
 --
 ALTER TABLE `appointments`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT untuk tabel `doctors`
+-- AUTO_INCREMENT for table `doctors`
 --
 ALTER TABLE `doctors`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
--- AUTO_INCREMENT untuk tabel `doctor_schedules`
+-- AUTO_INCREMENT for table `doctor_schedules`
 --
 ALTER TABLE `doctor_schedules`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
--- AUTO_INCREMENT untuk tabel `medical_records`
+-- AUTO_INCREMENT for table `medical_records`
 --
 ALTER TABLE `medical_records`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT untuk tabel `patients`
+-- AUTO_INCREMENT for table `patients`
 --
 ALTER TABLE `patients`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT untuk tabel `ratings`
+-- AUTO_INCREMENT for table `ratings`
 --
 ALTER TABLE `ratings`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT untuk tabel `specializations`
+-- AUTO_INCREMENT for table `specializations`
 --
 ALTER TABLE `specializations`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- AUTO_INCREMENT untuk tabel `users`
+-- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
--- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
+-- Constraints for dumped tables
 --
 
 --
--- Ketidakleluasaan untuk tabel `appointments`
+-- Constraints for table `appointments`
 --
 ALTER TABLE `appointments`
   ADD CONSTRAINT `appointments_ibfk_1` FOREIGN KEY (`doctor_id`) REFERENCES `doctors` (`id`),
   ADD CONSTRAINT `appointments_ibfk_2` FOREIGN KEY (`patient_id`) REFERENCES `patients` (`id`);
 
 --
--- Ketidakleluasaan untuk tabel `doctors`
+-- Constraints for table `doctors`
 --
 ALTER TABLE `doctors`
   ADD CONSTRAINT `doctors_ibfk_1` FOREIGN KEY (`id_specialization`) REFERENCES `specializations` (`id`);
 
 --
--- Ketidakleluasaan untuk tabel `doctor_schedules`
+-- Constraints for table `doctor_schedules`
 --
 ALTER TABLE `doctor_schedules`
   ADD CONSTRAINT `doctor_schedules_ibfk_1` FOREIGN KEY (`doctor_id`) REFERENCES `doctors` (`id`);
 
 --
--- Ketidakleluasaan untuk tabel `medical_records`
+-- Constraints for table `medical_records`
 --
 ALTER TABLE `medical_records`
   ADD CONSTRAINT `medical_records_ibfk_1` FOREIGN KEY (`appointment_id`) REFERENCES `appointments` (`id`);
 
 --
--- Ketidakleluasaan untuk tabel `patients`
+-- Constraints for table `patients`
 --
 ALTER TABLE `patients`
   ADD CONSTRAINT `patients_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
 
 --
--- Ketidakleluasaan untuk tabel `ratings`
+-- Constraints for table `ratings`
 --
 ALTER TABLE `ratings`
   ADD CONSTRAINT `ratings_ibfk_1` FOREIGN KEY (`patient_id`) REFERENCES `patients` (`id`);
