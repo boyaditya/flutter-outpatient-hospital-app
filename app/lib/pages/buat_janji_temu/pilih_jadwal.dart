@@ -1,14 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:calendar_date_picker2/calendar_date_picker2.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tubes/cubits/doctor_cubit.dart';
 import 'package:tubes/cubits/doctor_schedule_cubit.dart';
 // import 'package:tubes/pages/buat_janji_temu/profil_dokter.dart';
 import 'package:tubes/pages/buat_janji_temu/profil_pasien.dart';
 
 class PilihJadwal extends StatefulWidget {
-  const PilihJadwal({super.key, required this.doctorId});
+  const PilihJadwal({
+    super.key,
+    required this.doctorId,
+    required this.specialization,
+  });
 
   final int doctorId;
+  final String specialization;
 
   @override
   State<PilihJadwal> createState() => _PilihJadwalState();
@@ -18,22 +24,29 @@ class _PilihJadwalState extends State<PilihJadwal> {
   DateTime _dates = DateTime(0);
   DateTime now = DateTime.now();
   late Future<List<DoctorScheduleModel>> futureSchedule;
+  List<int> days = [];
 
   @override
   void initState() {
     super.initState();
-    print('Doctor ID: ${widget.doctorId}'); // print the doctorId
     futureSchedule = context
         .read<DoctorScheduleCubit>()
         .fetchDoctorSchedule(widget.doctorId);
     futureSchedule.then((schedule) {
-      print('Schedule: $schedule'); // print the schedule
-      for (var item in schedule) {
-        print(
-            'Day: ${item.day}, Time: ${item.time}'); // print the day and time of each item
-      }
-    }).catchError((error) {
-      print('Error: $error'); // print the error if any
+      setState(() {
+        // Mapping from Bahasa days to weekday numbers
+        Map<String, int> dayToNumber = {
+          'Minggu': 0,
+          'Senin': 1,
+          'Selasa': 2,
+          'Rabu': 3,
+          'Kamis': 4,
+          'Jumat': 5,
+          'Sabtu': 6,
+        };
+
+        days = schedule.map((item) => dayToNumber[item.day]!).toList();
+      });
     });
   }
 
@@ -68,9 +81,18 @@ class _PilihJadwalState extends State<PilihJadwal> {
                     config: CalendarDatePicker2Config(
                       selectedDayHighlightColor: Colors.blue,
                       firstDate: DateTime.now(),
+                      weekdayLabels: [
+                        'Minggu',
+                        'Senin',
+                        'Selasa',
+                        'Rabu',
+                        'Kamis',
+                        'Jumat',
+                        'Sabtu',
+                      ],
                       selectableDayPredicate: (date) {
                         // Senin adalah hari ke-1 dan Rabu adalah hari ke-3
-                        return date.weekday == 1 || date.weekday == 3;
+                        return days.contains(date.weekday);
                       },
                     ),
                     value: [_dates],
@@ -130,40 +152,55 @@ class _PilihJadwalState extends State<PilihJadwal> {
                   ),
                 ),
                 const SizedBox(height: 20),
-                const CustomContainer2(
-                  dokter: "dr. John Doe, MARS, SpAk",
-                  spesialis: "Andrologi - Spesialis Andrologi",
-                  imagePath: 'assets/images/dokter/dummy-doctor.jpg',
+                BlocBuilder<DoctorListCubit, List<DoctorModel>>(
+                  builder: (context, state) {
+                    try {
+                      DoctorModel doctor = context
+                          .read<DoctorListCubit>()
+                          .getDoctorById(widget.doctorId);
+                      return DoctorContainer(
+                        name: doctor.name,
+                        specializationTitle: widget.specialization,
+                        imagePath: doctor.imgPath,
+                      );
+                    } catch (e) {
+                      return Text(
+                          'Error: $e'); // show error message if an error occurred
+                    }
+                  },
                 ),
                 const SizedBox(height: 90),
-                ElevatedButton(
-                  onPressed: _dates == DateTime(0)
-                      ? null
-                      : () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) =>
-                                  const ProfilPasien(title: 'Profil Pasien'),
-                            ),
-                          );
-                        },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.blue,
-                    shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(8))),
-                    fixedSize: Size(
-                      MediaQuery.of(context).size.width,
-                      40,
-                    ),
-                  ),
-                  child: const Text('Selanjutnya',
-                      style: TextStyle(color: Colors.white)),
-                ),
               ],
             ),
           ),
         ],
+      ),
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: ElevatedButton(
+          onPressed: _dates == DateTime(0)
+              ? null
+              : () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          const ProfilPasien(title: 'Profil Pasien'),
+                    ),
+                  );
+                },
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.blue,
+            minimumSize: const Size(double.infinity, 50),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+          ),
+          child: const Text(
+            'Selanjutnya',
+            style: TextStyle(color: Colors.white),
+          ),
+        ),
       ),
     );
   }
@@ -214,15 +251,15 @@ class CustomButton extends StatelessWidget {
   }
 }
 
-class CustomContainer2 extends StatelessWidget {
-  final String dokter;
-  final String spesialis;
+class DoctorContainer extends StatelessWidget {
+  final String name;
+  final String specializationTitle;
   final String imagePath;
 
-  const CustomContainer2({
+  const DoctorContainer({
     super.key,
-    required this.dokter,
-    required this.spesialis,
+    required this.name,
+    required this.specializationTitle,
     required this.imagePath,
   });
 
@@ -248,14 +285,14 @@ class CustomContainer2 extends StatelessWidget {
             padding: const EdgeInsets.all(8),
             child: CircleAvatar(
               radius: 40,
-              backgroundImage: AssetImage(imagePath),
+              backgroundImage: NetworkImage(imagePath),
             ),
           ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                dokter,
+                name,
                 style: const TextStyle(
                   fontSize: 13,
                   color: Colors.black,
@@ -264,7 +301,7 @@ class CustomContainer2 extends StatelessWidget {
               ),
               const SizedBox(height: 6),
               Text(
-                spesialis,
+                specializationTitle,
                 style: const TextStyle(
                   fontSize: 11,
                   color: Colors.black,

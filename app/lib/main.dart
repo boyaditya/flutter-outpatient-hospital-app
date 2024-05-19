@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:tubes/cubits/doctor_cubit.dart';
 import 'package:tubes/cubits/doctor_schedule_cubit.dart';
 import 'package:tubes/cubits/specialization_cubit.dart';
@@ -68,6 +69,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+       localizationsDelegates: GlobalMaterialLocalizations.delegates,
+      supportedLocales: const [
+        Locale('id', ''),
+      ],
       debugShowCheckedModeBanner: false,
       onGenerateTitle: (BuildContext context) {
         final routeName = ModalRoute.of(context)?.settings.name;

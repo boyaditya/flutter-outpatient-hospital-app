@@ -153,6 +153,7 @@ class _ProfilDokterState extends State<ProfilDokter> {
                             MaterialPageRoute(
                               builder: (context) => PilihJadwal(
                                 doctorId: widget.doctorId,
+                                specialization: widget.specialization,
                               ),
                             ),
                           );

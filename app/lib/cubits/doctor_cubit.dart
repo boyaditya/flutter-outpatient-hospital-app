@@ -52,6 +52,8 @@ class DoctorListCubit extends Cubit<List<DoctorModel>> {
           )
         ]);
 
+  bool isLoading = false;
+
   void setFromJson(List<dynamic> json) {
     List<DoctorModel> doctors =
         json.map((item) => DoctorModel.fromJson(item)).toList();
@@ -147,6 +149,3 @@ class DoctorListCubit extends Cubit<List<DoctorModel>> {
   //   super.onChange(change);
   // }
 }
-
-
-
