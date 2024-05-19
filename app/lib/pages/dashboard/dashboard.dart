@@ -198,52 +198,63 @@ class _Dashboard1State extends State<Dashboard1> {
                 ],
               ),
             ),
-            CarouselSlider(
-              // CarouselSlider widget remains as it is
-              options: CarouselOptions(
-                height: 200.0,
-                autoPlay: true,
-                autoPlayInterval: const Duration(seconds: 3),
-                autoPlayAnimationDuration: const Duration(milliseconds: 800),
-                autoPlayCurve: Curves.fastOutSlowIn,
-                pauseAutoPlayOnTouch: true,
-                enlargeCenterPage: true,
-                onPageChanged: (index, reason) {
-                  setState(() {
-                    _currentIndex = index;
-                  });
-                },
-              ),
-              items: [
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8.0),
-                    image: const DecorationImage(
+           CarouselSlider(
+							options: CarouselOptions(
+								height: 200.0,
+								autoPlay: true,
+								autoPlayInterval: const Duration(seconds: 3),
+								autoPlayAnimationDuration: const Duration(milliseconds: 800),
+								autoPlayCurve: Curves.fastOutSlowIn,
+								pauseAutoPlayOnTouch: true,
+								enlargeCenterPage: true,
+								onPageChanged: (index, reason) {
+									setState(() {
+										_currentIndex = index;
+									});
+								},
+							),
+							items: [
+								Container(
+									decoration: BoxDecoration(
+										borderRadius: BorderRadius.circular(8.0),
+										border: Border.all(
+											color: Colors.grey, // Ganti dengan warna border yang diinginkan
+											width: 3.0, // Ganti dengan ketebalan border yang diinginkan
+										),
+										image: const DecorationImage(
 											image: AssetImage('assets/images/carousel/1.png'),
 											fit: BoxFit.cover,
 										),
-                  ),
-                ),
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8.0),
-                    image: const DecorationImage(
+									),
+								),
+								Container(
+									decoration: BoxDecoration(
+										borderRadius: BorderRadius.circular(8.0),
+										border: Border.all(
+											color: Colors.grey,
+											width: 3.0,
+										),
+										image: const DecorationImage(
 											image: AssetImage('assets/images/carousel/2.png'),
 											fit: BoxFit.cover,
 										),
-                  ),
-                ),
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8.0),
-                    image: const DecorationImage(
+									),
+								),
+								Container(
+									decoration: BoxDecoration(
+										borderRadius: BorderRadius.circular(8.0),
+										border: Border.all(
+											color: Colors.grey,
+											width: 3.0,
+										),
+										image: const DecorationImage(
 											image: AssetImage('assets/images/carousel/3.png'),
 											fit: BoxFit.cover,
 										),
-                  ),
-                ),
-              ],
-            ),
+									),
+								),
+							],
+						),
             const SizedBox(height: 8.0),
             DotsIndicator(
               // DotsIndicator widget remains as it is
@@ -300,7 +311,7 @@ class _Dashboard1State extends State<Dashboard1> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Registrasi Akun',
+                      'Buat Janji Temu',
                       style: TextStyle(
 												fontSize: 18,
 												fontWeight: FontWeight.bold,
@@ -308,7 +319,7 @@ class _Dashboard1State extends State<Dashboard1> {
                     ),
                     SizedBox(height: 8.0),
                     Text(
-                      'Daftarkan akun Anda sekarang untuk mendapatkan akses penuh ke layanan kami dan mengatur janji temu dengan praktisi kesehatan.',
+                      'Dapatkan akses cepat untuk bertemu dengan dokter ahli. Nikmati kemudahan mengatur janji temu kesehatan dengan aplikasi kami.',
                       style: TextStyle(
                         fontSize: 14,
                       ),
@@ -325,7 +336,7 @@ class _Dashboard1State extends State<Dashboard1> {
                   Navigator.push(
 												context,
 												MaterialPageRoute(
-													builder: (context) => RegistrationScreen(),
+													builder: (context) => const CariDokter(title: 'Cari Dokter'),
 												),
 											);
                 },
@@ -339,7 +350,7 @@ class _Dashboard1State extends State<Dashboard1> {
                     child: AspectRatio(
                       aspectRatio: 16 / 8, // Set aspect ratio based on the original image
                       child: Image.asset(
-                        'assets/images/registrasi.png', // Path to your registration image
+                        'assets/images/janji.png', // Path to your registration image
                         fit: BoxFit.cover,
                       ),
                     ),
