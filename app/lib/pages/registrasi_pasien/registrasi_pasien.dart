@@ -123,27 +123,36 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               ),
               const SizedBox(height: 16.0),
               const Text('Tanggal Lahir'),
-              GestureDetector(
-                onTap: () => _selectDate(context),
-                child: AbsorbPointer(
-                  child: Container(
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.grey),
-                      borderRadius: BorderRadius.circular(5.0),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: TextFormField(
-                        controller: _dobController,
-                        decoration: const InputDecoration(
-                          hintText: '  DD/MM/YY',
-                          border: InputBorder.none,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
+              ElevatedButton(
+								onPressed: () => _selectDate(context),
+								style: ElevatedButton.styleFrom(
+									padding: EdgeInsets.zero,
+									backgroundColor: Colors.white,
+									shadowColor: Colors.transparent,
+									shape: RoundedRectangleBorder(
+										borderRadius: BorderRadius.circular(5.0), // Match the border radius
+									),
+								),
+								child: AbsorbPointer(
+									child: Container(
+										width: double.infinity, // Ensure the button takes the full width
+										decoration: BoxDecoration(
+											border: Border.all(color: Colors.grey),
+											borderRadius: BorderRadius.circular(5.0),
+										),
+										child: Padding(
+											padding: const EdgeInsets.all(8.0),
+											child: TextFormField(
+												controller: _dobController,
+												decoration: const InputDecoration(
+													hintText: '  DD/MM/YY',
+													border: InputBorder.none,
+												),
+											),
+										),
+									),
+								),
+							),
               const SizedBox(height: 50.0),
               Row(
                 children: [
