@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tubes/pages/authentication/konfirm_telp.dart';
 
 class RegistrationScreen extends StatefulWidget {
   @override
@@ -180,7 +181,12 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   width: MediaQuery.of(context).size.width * 0.8,
                   child: ElevatedButton(
                     onPressed: () {
-                      // Tambahkan logika untuk mengirim data registrasi
+                      Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const KonfirmasiTelp(),
+                              ),
+                            );
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.blue,

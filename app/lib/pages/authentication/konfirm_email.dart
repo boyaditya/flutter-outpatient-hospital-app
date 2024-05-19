@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tubes/pages/authentication/no_telp.dart';
+import 'package:tubes/pages/registrasi_pasien/registrasi_pasien.dart';
 
 class KonfirmasiEmail extends StatefulWidget {
   const KonfirmasiEmail({Key? key}) : super(key: key);
@@ -88,7 +89,7 @@ class _KonfirmasiEmailState extends State<KonfirmasiEmail> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => const NoTelp(),
+                                builder: (context) => RegistrationScreen(),
                               ),
                             );
                           }
