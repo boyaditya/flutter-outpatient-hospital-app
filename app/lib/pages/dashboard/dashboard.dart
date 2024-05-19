@@ -7,6 +7,7 @@ import 'package:tubes/pages/lihat_janji_temu/janji_temu_saya2.dart';
 import 'package:tubes/pages/registrasi_pasien/registrasi_pasien.dart';
 import 'package:tubes/pages/rekam_medis/rekam_medis.dart';
 import 'package:tubes/pages/profile/profile.dart';
+// import 'package:shared_preferences/shared_preferences.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({super.key, required this.title});
@@ -18,6 +19,8 @@ class Dashboard extends StatefulWidget {
 
 class _DashboardState extends State<Dashboard> {
   int _currentIndex = 0;
+
+
 
   // int _selectedIndex = 0;
 
@@ -95,6 +98,7 @@ class CustomButton extends StatelessWidget {
         margin: const EdgeInsets.all(10),
         child: Column(
           children: <Widget>[
+            
             Container(
               padding: const EdgeInsets.all(12),
               decoration: const BoxDecoration(
@@ -244,7 +248,7 @@ class _Dashboard1State extends State<Dashboard1> {
             DotsIndicator(
               // DotsIndicator widget remains as it is
               dotsCount: 3,
-              position: _currentIndex.toDouble(),
+              position: _currentIndex.toInt(),
               decorator: DotsDecorator(
                 activeColor: Colors.blue,
                 spacing: const EdgeInsets.all(2.0),

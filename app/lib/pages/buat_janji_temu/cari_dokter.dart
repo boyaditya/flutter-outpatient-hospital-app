@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:tubes/cubits/doctors_cubit.dart';
+import 'package:tubes/cubits/doctor_cubit.dart';
 import 'package:tubes/cubits/specialization_cubit.dart';
+import 'package:tubes/pages/buat_janji_temu/profil_dokter.dart';
 
 class CariDokter extends StatefulWidget {
   const CariDokter({super.key, required this.title});
@@ -16,12 +17,12 @@ class CariDokter extends StatefulWidget {
 
 class _CariDokterState extends State<CariDokter> {
   @override
-  void initState() {
-    super.initState();
-    context.read<DoctorListCubit>().fetchDoctors();
-    context.read<SpecializationListCubit>().fetchSpecializations();
-    print("test aja sih2");
-  }
+  // void initState() {
+  //   super.initState();
+  //   // context.read<DoctorListCubit>().fetchDoctors();
+  //   // context.read<SpecializationListCubit>().fetchSpecializations();
+  //   print("test aja sih2");
+  // }
 
   // int count = 0;
 
@@ -95,31 +96,28 @@ class _CariDokterState extends State<CariDokter> {
                   ),
                 ),
                 const SizedBox(height: 20),
-               BlocBuilder<DoctorListCubit, List<DoctorModel>>(
+                BlocBuilder<DoctorListCubit, List<DoctorModel>>(
                   builder: (context, state) {
-                    final specializations =
-                        context.watch<SpecializationListCubit>().state;
+                    final specializationCubit = context.read<SpecializationListCubit>();
                     return Column(
                       children: state.map((doctor) {
-                        final specializationTitle =
-                            specializations[doctor.idSpecialization]?.title ??
-                                '';
-                        return CustomButton2(
+                        final specialization = specializationCubit.getSpecializationById(doctor.idSpecialization);
+                        final specializationTitle = specialization?.title ?? 'Unknown';
+                        return DoctorButton(
                           icon: Icons.person,
                           dokter: doctor.name,
                           spesialis: specializationTitle,
                           availability: 'Available',
-                          imagePath: "assets/images/dokter/dummy-doctor.jpg",
+                          imagePath: doctor.imgPath,
                           onPressed: () {
-                            print(doctor.name);
-                            Navigator.pushNamed(
+                            Navigator.push(
                               context,
-                              '/profil_dokter',
-                              arguments: {
-                                'namaDokter': doctor.name,
-                                'spesialis': doctor.interest,
-                                'imgName': doctor.imgName,
-                              },
+                              MaterialPageRoute(
+                                builder: (context) => ProfilDokter(
+                                  doctorId: doctor.id,
+                                  specialization: specializationTitle,
+                                ),
+                              ),
                             );
                           },
                         );
@@ -186,7 +184,7 @@ class CustomButton extends StatelessWidget {
   }
 }
 
-class CustomButton2 extends StatelessWidget {
+class DoctorButton extends StatelessWidget {
   final IconData icon;
   final String dokter;
   final String spesialis;
@@ -194,7 +192,7 @@ class CustomButton2 extends StatelessWidget {
   final String imagePath;
   final VoidCallback onPressed;
 
-  const CustomButton2({
+  const DoctorButton({
     super.key,
     required this.icon,
     required this.dokter,
@@ -225,7 +223,7 @@ class CustomButton2 extends StatelessWidget {
             padding: const EdgeInsets.all(8),
             child: CircleAvatar(
               radius: 40,
-              backgroundImage: AssetImage(imagePath),
+              backgroundImage: NetworkImage(imagePath),
             ),
           ),
           Column(

@@ -1,9 +1,12 @@
 // ignore_for_file: library_private_types_in_public_api
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tubes/cubits/user_cubit.dart';
 import 'package:tubes/pages/authentication/buat_akun.dart';
 import 'package:tubes/pages/dashboard/dashboard.dart';
 import 'package:tubes/pages/login_forgot_reset/lupa_kata_sandi.dart';
+import 'package:http/http.dart' as http;
 
 class Login extends StatefulWidget {
   const Login({super.key, required String title});
@@ -43,6 +46,24 @@ class _LoginState extends State<Login> {
     setState(() {
       _obscureText = !_obscureText;
     });
+  }
+
+  void showSuccessMessage(String message) {
+    final snackBar = SnackBar(
+      content: Text(message, style: const TextStyle(color: Colors.white)),
+      duration: const Duration(seconds: 2),
+      backgroundColor: Colors.green,
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+
+  void showErrorMessage(String message) {
+    final snackBar = SnackBar(
+      content: Text(message, style: const TextStyle(color: Colors.white)),
+      duration: const Duration(seconds: 2),
+      backgroundColor: Colors.red,
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
   @override
@@ -110,16 +131,7 @@ class _LoginState extends State<Login> {
             const SizedBox(height: 40.0),
             Center(
               child: ElevatedButton(
-                onPressed: isButtonEnabled
-                    ? () {
-                        Navigator.push(
-												context,
-												MaterialPageRoute(
-													builder: (context) => const Dashboard(title: 'Dashboard'),
-												),
-											);
-                      }
-                    : null,
+                onPressed: isButtonEnabled ? () => performLogin(context) : null,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.blue[700],
                   shape: const RoundedRectangleBorder(
@@ -135,11 +147,12 @@ class _LoginState extends State<Login> {
               child: TextButton(
                 onPressed: () {
                   Navigator.push(
-										context,
-										MaterialPageRoute(
-											builder: (context) => const LupaKataSandi(title: 'Lupa Kata Sandi'),
-										),
-									);
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          const LupaKataSandi(title: 'Lupa Kata Sandi'),
+                    ),
+                  );
                 },
                 child: const Text('Lupa Kata Sandi?',
                     style: TextStyle(color: Colors.blue)),
@@ -159,11 +172,11 @@ class _LoginState extends State<Login> {
                 TextButton(
                   onPressed: () {
                     Navigator.push(
-												context,
-												MaterialPageRoute(
-													builder: (context) => const BuatAkun(),
-												),
-											);
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const BuatAkun(),
+                      ),
+                    );
                   },
                   child: const Text('Daftar Sekarang',
                       style: TextStyle(color: Colors.blue)),
@@ -175,4 +188,27 @@ class _LoginState extends State<Login> {
       ),
     );
   }
+
+  Future<void> performLogin(BuildContext context) async {
+    try {
+      await context.read<UserCubit>().login(
+            emailController.text,
+            passwordController.text,
+          );
+      showSuccessMessage('Login berhasil');
+      if (mounted) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const Dashboard(title: 'Dashboard'),
+          ),
+        );
+      }
+    } catch (e) {
+      print(e);
+      showErrorMessage('Email atau kata sandi salah');
+      // Handle the error
+    }
+  }
+
 }

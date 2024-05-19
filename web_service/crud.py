@@ -2,16 +2,15 @@ from sqlalchemy.orm import Session
 import models, schemas
 import bcrypt
 
-SALT = b'$2b$12$0nFckzktMD0Fb16a8JsNA.'
+# SALT = b'$2b$12$0nFckzktMD0Fb16a8JsNA.'
+SALT = b'$2b$12$/bGt5NNwhngAxpF2Txdf5u'
 
 def get_user_by_email(db: Session, email: str):
     return db.query(models.User).filter(models.User.email == email).first()
 
 
 def create_user(db: Session, user: schemas.UserCreate):
-    hashed_password = bcrypt.hashpw(
-        user.hashed_password.encode("utf-8"), bcrypt.gensalt()
-    )
+    hashed_password = hash_password(user.hashed_password)
     db_user = models.User(email=user.email, hashed_password=hashed_password)
     db.add(db_user)
     db.commit()
@@ -47,7 +46,7 @@ def get_specialization_by_id(db: Session, specialization_id: int):
 
 
 def get_doctor_schedules_by_doctor_id(db: Session, doctor_id: int) -> models.DoctorSchedule:
-    return db.query(models.DoctorSchedule).filter(models.DoctorSchedule.doctor_id == doctor_id).first()
+    return db.query(models.DoctorSchedule).filter(models.DoctorSchedule.doctor_id == doctor_id).all()
 
 
 def get_medical_record_by_id(db: Session, record_id: int):
@@ -166,7 +165,5 @@ def delete_appointment_by_id(db: Session, appointment_id: int):
     return appointment
 
 
-def hashPassword(passwd: str):
-    bytePwd = passwd.encode('utf-8')
-    pwd_hash = bcrypt.hashpw(bytePwd, SALT)
-    return pwd_hash
+def hash_password(password: str):
+    return bcrypt.hashpw(password.encode("utf-8"), SALT)

@@ -92,7 +92,6 @@ async def read_doctors(doctors_id: int, db: db_dependency):
     return doctors
 
 
-
 path_img = "../images/doctor/"
 
 
@@ -282,9 +281,6 @@ async def delete_appointment(appointment_id: int, db: db_dependency):
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
 
-
-
-
 def authenticate(db, user: schemas.UserCreate):
     user_cari = crud.get_user_by_email(db=db, email=user.email)
     if user_cari:
@@ -314,43 +310,49 @@ def create_access_token(email):
     return access_token
 
 
-@app.post("/token", response_model=schemas.Token)
-async def token(
-    req: Request,
-    form_data: OAuth2PasswordRequestForm = Depends(),
-    db: Session = Depends(get_db),
-):
+# @app.post("/token", response_model=schemas.Token)
+# async def token(
+#     req: Request,
+#     form_data: OAuth2PasswordRequestForm = Depends(),
+#     db: Session = Depends(get_db),
+# ):
 
-    f = schemas.UserCreate
-    f.email = form_data.username
-    f.hashed_password = form_data.password
-    if not authenticate(db, f):
-        raise HTTPException(status_code=400, detail="Email or password incorrect")
+#     f = schemas.UserCreate
+#     f.email = form_data.username
+#     f.hashed_password = form_data.password
+#     if not authenticate(db, f):
+#         raise HTTPException(status_code=400, detail="Email or password incorrect")
 
-    access_token = create_access_token(form_data.username)
+#     access_token = create_access_token(form_data.username)
 
-    return {"access_token": access_token, "token_type": "bearer"}
-
+#     return {"access_token": access_token, "token_type": "bearer"}
 
 
 def verify_token(token: str):
     try:
-        payload = jwt.decode(token,SECRET_KEY,algorithms=["HS256"])  # bukan algorithm,  algorithms (set)
-        email = payload["email"]  
-     
-       
+        payload = jwt.decode(
+            token, SECRET_KEY, algorithms=["HS256"]
+        )  # bukan algorithm,  algorithms (set)
+        email = payload["email"]
+
     # exception jika token invalid
     except jwt.ExpiredSignatureError:
-        raise HTTPException(status_code=401, detail="Unauthorize token, expired signature, harap login")
+        raise HTTPException(
+            status_code=401, detail="Unauthorize token, expired signature, harap login"
+        )
     except jwt.JWSError:
         raise HTTPException(status_code=401, detail="Unauthorize token, JWS Error")
     except jwt.JWTClaimsError:
-        raise HTTPException(status_code=401, detail="Unauthorize token, JWT Claim Error")
+        raise HTTPException(
+            status_code=401, detail="Unauthorize token, JWT Claim Error"
+        )
     except jwt.JWTError:
-        raise HTTPException(status_code=401, detail="Unauthorize token, JWT Error")   
+        raise HTTPException(status_code=401, detail="Unauthorize token, JWT Error")
     except Exception as e:
-        raise HTTPException(status_code=401, detail="Unauthorize token, unknown error"+str(e))
-    
+        raise HTTPException(
+            status_code=401, detail="Unauthorize token, unknown error" + str(e)
+        )
+
     return {"email": email}
 
 
@@ -360,9 +362,11 @@ async def get_protected_route(token: str = Depends(oauth2_scheme)):
         # Verifikasi token
         payload = verify_token(token)
         email = payload["email"]
-        
+
         # Jika token valid, kembalikan respons yang sesuai
-        return {"message": f"Welcome, {email}! You have access to this protected route."}
+        return {
+            "message": f"Welcome, {email}! You have access to this protected route."
+        }
     except HTTPException as e:
         # Tangani HTTPException yang dihasilkan oleh verifikasi token
         raise e

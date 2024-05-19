@@ -1,15 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tubes/cubits/doctor_cubit.dart';
 
 class ProfilLengkapDokter extends StatefulWidget {
-  const ProfilLengkapDokter({super.key, required this.title});
+  const ProfilLengkapDokter({super.key, required this.doctorId});
 
-  final String title;
+  final int doctorId;
 
   @override
   State<ProfilLengkapDokter> createState() => _ProfilDokterLengkapState();
 }
 
 class _ProfilDokterLengkapState extends State<ProfilLengkapDokter> {
+  late DoctorModel doctor;
+
+  @override
+  void initState() {
+    super.initState();
+    doctor = context.read<DoctorListCubit>().getDoctorById(widget.doctorId);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,25 +64,25 @@ class _ProfilDokterLengkapState extends State<ProfilLengkapDokter> {
                 child: Container(
                   margin: const EdgeInsets.only(top: 20),
                   padding: const EdgeInsets.all(10),
-                  child: const CircleAvatar(
+                  child: CircleAvatar(
                     radius: 60,
-                    backgroundImage:
-                        AssetImage('assets/images/dokter/dummy-doctor.jpg'),
+                    backgroundImage: NetworkImage(doctor.imgPath),
                   ),
                 ),
               ),
             ],
           ),
-          const Center(
+          Center(
             child: Padding(
-              padding: EdgeInsets.only(left: 15, right: 15, top: 10),
+              padding: const EdgeInsets.only(left: 15, right: 15, top: 10),
               child: Column(
                 children: [
                   Text(
-                    'dr. John Doe, MARS, SpAk',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                    doctor.name,
+                    style: const TextStyle(
+                        fontWeight: FontWeight.bold, fontSize: 18),
                   ),
-                  Text(
+                  const Text(
                     'Andrologi - Spesialis Andrologi',
                   ),
                 ],
@@ -83,80 +93,67 @@ class _ProfilDokterLengkapState extends State<ProfilLengkapDokter> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               const SizedBox(height: 10),
-              Container(
-                padding: const EdgeInsets.all(20),
-                margin: const EdgeInsets.all(20),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: Colors.blue[50],
-                  boxShadow: const [
-                    BoxShadow(
-                      color: Colors.grey,
-                      blurRadius: 4.0,
-                      offset: Offset(
-                          -2, 2), // Moves the shadow to the left and bottom
-                    ),
-                  ],
-                ),
-                child: const Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Icon(Icons.medical_information), // This is
-                        SizedBox(width: 8), // This
-                        Text(
-                          'Kondisi & Minat Klinis',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 18),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 10),
-                    Text(
-                        "-dr. John Doe, MARS, SpAk merupakan seorang Dokter Spesialis Andrologi. Saat ini dr. Hermawan Ludirja berpraktek di X. Sebagai seorang dokter, beliau telah mengenyam pendidikan Spesialis di Universitas X.\n"),
-                    Text("- Pemeriksaan sperma"),
-                  ],
-                ),
+              InfoCard(
+                icon: Icons.medical_services,
+                title: 'Kondisi & Minat Klinis',
+                content: [doctor.interest],
               ),
-              Container(
-                padding: const EdgeInsets.all(20),
-                margin: const EdgeInsets.all(20),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: Colors.blue[50],
-                  boxShadow: const [
-                    BoxShadow(
-                      color: Colors.grey,
-                      blurRadius: 4.0,
-                      offset: Offset(
-                          -2, 2), // Moves the shadow to the left and bottom
-                    ),
-                  ],
-                ),
-                child: const Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Icon(Icons.school), // This is
-                        SizedBox(width: 8), // This
-                        Text(
-                          'Pendidikan',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 18),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 10),
-                    Text(
-                        "- Kedokteran Umum, Fakultas Kedokteran Universitas X (1979)\n"),
-                    Text("- Spesialis Andrologi, Universitas Y (1979)"),
-                  ],
-                ),
+              InfoCard(
+                icon: Icons.school,
+                title: 'Pendidikan',
+                content: [doctor.education],
+              )
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class InfoCard extends StatelessWidget {
+  final IconData icon;
+  final String title;
+  final List<String> content;
+
+  const InfoCard(
+      {super.key,
+      required this.icon,
+      required this.title,
+      required this.content});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
+      margin: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        color: Colors.blue[50],
+        boxShadow: const [
+          BoxShadow(
+            color: Colors.grey,
+            blurRadius: 4.0,
+            offset: Offset(-2, 2),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Icon(icon),
+              const SizedBox(width: 8),
+              Text(
+                title,
+                style:
+                    const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
               ),
             ],
           ),
+          const SizedBox(height: 10),
+          ...content.map((text) => Text(text)),
         ],
       ),
     );

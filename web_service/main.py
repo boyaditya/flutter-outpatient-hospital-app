@@ -1,5 +1,6 @@
 from os import path
 
+import bcrypt
 from fastapi import Depends, Request, FastAPI, HTTPException, status
 
 # from fastapi.responses import FileResponser
@@ -21,7 +22,7 @@ from fastapi.responses import FileResponse
 
 from passlib.context import CryptContext
 
-import jwt
+from jose import jwt
 
 # from Crypto.Hash import SHA256
 # import datetime
@@ -51,6 +52,12 @@ def get_db():
 
 db_dependency = Annotated[Session, Depends(get_db)]
 
+# hapus ini kalau salt sudah digenerate
+# @app.get("/getsalt")
+# async def getsalt():
+#     hasil = bcrypt.gensalt()
+#     return {"message": hasil}
+
 
 @app.get("/")
 async def root():
@@ -67,7 +74,7 @@ async def create_user(user: schemas.UserCreate, db: db_dependency):
 
 # hasil adalah akses token
 @app.post("/login")  # ,response_model=schemas.Token
-async def login(user: schemas.UserCreate, db: Session = Depends(get_db)):
+async def login(user: schemas.UserCreate, db: db_dependency):
     if not authenticate(db, user):
         raise HTTPException(status_code=400, detail="Email atau password tidak cocok")
 
@@ -90,6 +97,14 @@ async def read_doctors(db: db_dependency, token: str = Depends(oauth2_scheme)):
     except HTTPException as e:
         raise e
     return crud.get_doctors(db)
+
+# @app.get("/doctors/", response_model=List[schemas.Doctor])
+# async def read_doctors(db: db_dependency):
+#     # try:
+#     #     payload = verify_token(token)
+#     # except HTTPException as e:
+#     #     raise e
+#     return crud.get_doctors(db)
 
 
 @app.get("/doctors/{doctors_id}", response_model=schemas.Doctor)
@@ -127,6 +142,24 @@ async def read_doctor_image(
         return FileResponse(path_img + nama_image)
     except HTTPException as e:
         raise e
+# @app.get("/doctors/image/{doctor_id}")
+# async def read_doctor_image(
+#     doctor_id: int, db: db_dependency, token: str = Depends(oauth2_scheme)
+# ):
+#     try:
+#         payload = verify_token(token)
+#         # Di sini Anda bisa menambahkan pengecekan apakah pengguna memiliki hak akses tertentu
+#         doctor = crud.get_doctors_by_id(db, doctor_id)
+#         if not doctor:
+#             raise HTTPException(status_code=404, detail="Doctor not found")
+#         nama_image = doctor.img_name
+#         if not path.exists(path_img + nama_image):
+#             raise HTTPException(
+#                 status_code=404, detail="File dengan nama tersebut tidak ditemukan"
+#             )
+#         return FileResponse(path_img + nama_image)
+#     except HTTPException as e:
+#         raise e
 
 
 @app.get("/users/{user_id}", response_model=schemas.User)
@@ -141,18 +174,18 @@ async def read_user(
     return user
 
 
-@app.delete("/users/{user_id}", status_code=status.HTTP_204_NO_CONTENT)
-async def delete_user(
-    user_id: int, db: db_dependency, token: str = Depends(oauth2_scheme)
-):
-    payload = verify_token(token)
-    # Lalu tambahkan logika untuk mengecek apakah user memiliki akses yang diperlukan
-    deleted_user = crud.delete_user_by_id(db, user_id)
-    if deleted_user is None:
-        raise HTTPException(status_code=404, detail="User not found")
+# @app.delete("/users/{user_id}", status_code=status.HTTP_204_NO_CONTENT)
+# async def delete_user(
+#     user_id: int, db: db_dependency, token: str = Depends(oauth2_scheme)
+# ):
+#     payload = verify_token(token)
+#     # Lalu tambahkan logika untuk mengecek apakah user memiliki akses yang diperlukan
+#     deleted_user = crud.delete_user_by_id(db, user_id)
+#     if deleted_user is None:
+#         raise HTTPException(status_code=404, detail="User not found")
 
 @app.get("/specializations/", response_model=List[schemas.Specialization])
-async def read_specializations(db: db_dependency):
+async def read_specializations(db: db_dependency, token: str = Depends(oauth2_scheme)):
     return crud.get_specializations(db)
 
 @app.get("/specializations/{specialization_id}", response_model=schemas.Specialization)
@@ -186,7 +219,7 @@ async def read_specialization_image(
     return FileResponse(img_path)
 
 
-@app.get("/doctor_schedules/{doctor_id}", response_model=schemas.DoctorSchedule)
+@app.get("/doctor_schedules/{doctor_id}", response_model=List[schemas.DoctorSchedule])
 async def read_doctor_schedules(
     doctor_id: int, db: Session = Depends(get_db), token: str = Depends(oauth2_scheme)
 ):
@@ -287,17 +320,17 @@ async def read_patient(
     return patient
 
 
-@app.delete("/patients/{patient_id}", status_code=status.HTTP_204_NO_CONTENT)
-async def delete_patient(
-    patient_id: int, db: db_dependency, token: str = Depends(oauth2_scheme)
-):
-    try:
-        payload = verify_token(token)
-    except HTTPException as e:
-        raise e
-    deleted_patient = crud.delete_patient_by_id(db, patient_id)
-    if deleted_patient is None:
-        raise HTTPException(status_code=404, detail="Patient not found")
+# @app.delete("/patients/{patient_id}", status_code=status.HTTP_204_NO_CONTENT)
+# async def delete_patient(
+#     patient_id: int, db: db_dependency, token: str = Depends(oauth2_scheme)
+# ):
+#     try:
+#         payload = verify_token(token)
+#     except HTTPException as e:
+#         raise e
+#     deleted_patient = crud.delete_patient_by_id(db, patient_id)
+#     if deleted_patient is None:
+#         raise HTTPException(status_code=404, detail="Patient not found")
 
 
 @app.post(
@@ -401,26 +434,28 @@ async def set_status_complete(
     return appointment
 
 
-@app.delete("/appointments/{appointment_id}", status_code=status.HTTP_204_NO_CONTENT)
-async def delete_appointment(
-    appointment_id: int, db: db_dependency, token: str = Depends(oauth2_scheme)
-):
-    try:
-        payload = verify_token(token)
-    except HTTPException as e:
-        raise e
-    deleted_appointment = crud.delete_appointment_by_id(db, appointment_id)
-    if deleted_appointment is None:
-        raise HTTPException(status_code=404, detail="Appointment not found")
+# @app.delete("/appointments/{appointment_id}", status_code=status.HTTP_204_NO_CONTENT)
+# async def delete_appointment(
+#     appointment_id: int, db: db_dependency, token: str = Depends(oauth2_scheme)
+# ):
+#     try:
+#         payload = verify_token(token)
+#     except HTTPException as e:
+#         raise e
+#     deleted_appointment = crud.delete_appointment_by_id(db, appointment_id)
+#     if deleted_appointment is None:
+#         raise HTTPException(status_code=404, detail="Appointment not found")
 
 
-def authenticate(db, user: schemas.UserCreate):
-    user_cari = crud.get_user_by_email(db=db, email=user.email)
+def authenticate(db: Session, user: schemas.UserCreate):
+    user_cari = crud.get_user_by_email(db, user.email)
     if user_cari:
-        return verify_password(user.hashed_password, user_cari.hashed_password)
+        print(user_cari.hashed_password)
+        hashed_password = crud.hash_password(user.hashed_password)
+        print(hashed_password.decode())  # decode the byte string to a regular string
+        return (user_cari.hashed_password == hashed_password.decode())
     else:
         return False
-
 
 def verify_password(plain_password, hashed_password):
     return pwd_context.verify(plain_password, hashed_password)

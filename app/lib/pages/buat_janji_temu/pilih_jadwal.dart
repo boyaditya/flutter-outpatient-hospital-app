@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:calendar_date_picker2/calendar_date_picker2.dart';
-import 'package:tubes/pages/buat_janji_temu/profil_dokter.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tubes/cubits/doctor_schedule_cubit.dart';
+// import 'package:tubes/pages/buat_janji_temu/profil_dokter.dart';
 import 'package:tubes/pages/buat_janji_temu/profil_pasien.dart';
 
 class PilihJadwal extends StatefulWidget {
-  const PilihJadwal({super.key, required this.title});
+  const PilihJadwal({super.key, required this.doctorId});
 
-  final String title;
+  final int doctorId;
 
   @override
   State<PilihJadwal> createState() => _PilihJadwalState();
@@ -15,6 +17,25 @@ class PilihJadwal extends StatefulWidget {
 class _PilihJadwalState extends State<PilihJadwal> {
   DateTime _dates = DateTime(0);
   DateTime now = DateTime.now();
+  late Future<List<DoctorScheduleModel>> futureSchedule;
+
+  @override
+  void initState() {
+    super.initState();
+    print('Doctor ID: ${widget.doctorId}'); // print the doctorId
+    futureSchedule = context
+        .read<DoctorScheduleCubit>()
+        .fetchDoctorSchedule(widget.doctorId);
+    futureSchedule.then((schedule) {
+      print('Schedule: $schedule'); // print the schedule
+      for (var item in schedule) {
+        print(
+            'Day: ${item.day}, Time: ${item.time}'); // print the day and time of each item
+      }
+    }).catchError((error) {
+      print('Error: $error'); // print the error if any
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -76,16 +97,35 @@ class _PilihJadwalState extends State<PilihJadwal> {
                       ),
                     ],
                   ),
-                  child: const Column(
+                  child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SizedBox(height: 6),
-                      Text(
+                      const SizedBox(height: 6),
+                      const Text(
                         "Jadwal Regular\n",
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
-                      ScheduleItem(day: "Senin", time: "14:00 - 16:30"),
-                      ScheduleItem(day: "Rabu", time: "14:00 - 16:30"),
+                      FutureBuilder<List<DoctorScheduleModel>>(
+                        future: futureSchedule,
+                        builder: (context, snapshot) {
+                          if (snapshot.hasData) {
+                            return Column(
+                              children: snapshot.data!.map((item) {
+                                return ScheduleItem(
+                                  day: item.day,
+                                  time: item.time,
+                                );
+                              }).toList(),
+                            );
+                          } else if (snapshot.hasError) {
+                            return Text(
+                                'Error: ${snapshot.error}'); // show error message if an error occurred
+                          }
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        },
+                      ),
                     ],
                   ),
                 ),
@@ -101,11 +141,12 @@ class _PilihJadwalState extends State<PilihJadwal> {
                       ? null
                       : () {
                           Navigator.push(
-														context,
-														MaterialPageRoute(
-															builder: (context) => const ProfilPasien(title: 'Profil Pasien'),
-														),
-													);
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  const ProfilPasien(title: 'Profil Pasien'),
+                            ),
+                          );
                         },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.blue,

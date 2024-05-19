@@ -1,7 +1,10 @@
+// ignore_for_file: avoid_print
+
 import 'package:bloc/bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SpecializationModel {
   final int id;
@@ -26,48 +29,74 @@ class SpecializationModel {
   }
 }
 
-// class SpecializationListCubit extends Cubit<List<SpecializationModel>> {
-//   SpecializationListCubit()
-//       : super([
-//           SpecializationModel(
-//             id: 0,
-//             title: "",
-//             description: "",
-//             imgName: "",
-//           )
-//         ]);
+class SpecializationListCubit extends Cubit<List<SpecializationModel>> {
+  SpecializationListCubit()
+      : super([
+          SpecializationModel(
+            id: 0,
+            title: "",
+            description: "",
+            imgName: "",
+          )
+        ]);
 
-//   void setFromJson(List<dynamic> json) {
-//     List<SpecializationModel> specializations =
-//         json.map((item) => SpecializationModel.fromJson(item)).toList();
-//     emit(specializations);
-//   }
+  void setFromJson(List<dynamic> json) {
+    List<SpecializationModel> specializations =
+        json.map((item) => SpecializationModel.fromJson(item)).toList();
 
-//   void fetchSpecializations() async {
-//     final response =
-//         await http.get(Uri.parse('http://127.0.0.1:8000/specializations/'));
-//     final json = jsonDecode(response.body);
-//     setFromJson(json);
-//   }
-// }
+    emit(specializations);
+  }
 
-class SpecializationListCubit extends Cubit<Map<int, SpecializationModel>> {
-  SpecializationListCubit() : super({});
+  final Map<int, SpecializationModel> _specializationCache = {};
 
   Future<void> fetchSpecializations() async {
-    final response =
-        await http.get(Uri.parse('http://127.0.0.1:8000/specializations/'));
+    try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      String? accessToken = prefs.getString('access_token');
 
-    if (response.statusCode == 200) {
-      List jsonResponse = json.decode(response.body);
-      Map<int, SpecializationModel> specializations = {};
-      for (var item in jsonResponse) {
-        SpecializationModel specialization = SpecializationModel.fromJson(item);
-        specializations[specialization.id] = specialization;
+      if (accessToken == null) {
+        throw Exception('No access token found');
       }
-      emit(specializations);
-    } else {
-      throw Exception('Failed to load specializations');
+
+      final response = await http.get(
+        Uri.parse('http://127.0.0.1:8000/specializations/'),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $accessToken',
+        },
+      );
+
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        List<Map<String, dynamic>> updatedData = [];
+        for (var specialization in data) {
+          final imageResponse = await http.get(
+            Uri.parse('http://127.0.0.1:8000/specializations/image/${specialization['id']}'),
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': 'Bearer $accessToken',
+            },
+          );
+          if (imageResponse.statusCode == 200) {
+            Map<String, dynamic> updatedSpecialization = Map.from(specialization);
+            updatedSpecialization['img_name'] =
+                'http://127.0.0.1:8000/specializations/image/${specialization['id']}';
+            updatedData.add(updatedSpecialization);
+            _specializationCache[specialization['id']] = SpecializationModel.fromJson(updatedSpecialization);
+          } else {
+            throw Exception('Failed to load image from API');
+          }
+        }
+        setFromJson(updatedData);
+      } else {
+        print('Failed to fetch specializations: ${response.statusCode}');
+      }
+    } catch (e) {
+      throw Exception('Failed to fetch specializations: $e');
     }
+  }
+
+  SpecializationModel? getSpecializationById(int id) {
+    return _specializationCache[id];
   }
 }

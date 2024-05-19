@@ -1,17 +1,49 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tubes/cubits/doctor_cubit.dart';
+// import 'package:tubes/cubits/specialization_cubit.dart';
+import 'package:tubes/cubits/doctor_schedule_cubit.dart';
 import 'package:tubes/pages/buat_janji_temu/pilih_jadwal.dart';
 import 'package:tubes/pages/buat_janji_temu/profil_lengkap_dokter.dart';
 
 class ProfilDokter extends StatefulWidget {
-  const ProfilDokter({super.key, required this.title});
+  const ProfilDokter({
+    super.key,
+    required this.doctorId,
+    // required this.doctorName,
+    required this.specialization,
+    // required this.imagePath,
+  });
 
-  final String title;
+  final int doctorId;
+  // final String doctorName;
+  final String specialization;
+  // final String imagePath;
 
   @override
   State<ProfilDokter> createState() => _ProfilDokterState();
 }
 
 class _ProfilDokterState extends State<ProfilDokter> {
+  late Future<List<DoctorScheduleModel>> futureSchedule;
+
+  void initState() {
+    super.initState();
+    print('Doctor ID: ${widget.doctorId}'); // print the doctorId
+    futureSchedule = context
+        .read<DoctorScheduleCubit>()
+        .fetchDoctorSchedule(widget.doctorId);
+    futureSchedule.then((schedule) {
+      print('Schedule: $schedule'); // print the schedule
+      schedule.forEach((item) {
+        print(
+            'Day: ${item.day}, Time: ${item.time}'); // print the day and time of each item
+      });
+    }).catchError((error) {
+      print('Error: $error'); // print the error if any
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,10 +64,23 @@ class _ProfilDokterState extends State<ProfilDokter> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const CustomContainer(
-                  dokter: "dr. John Doe, MARS, SpAk",
-                  spesialis: "Andrologi - Spesialis Andrologi",
-                  imagePath: 'assets/images/dokter/dummy-doctor.jpg',
+                BlocBuilder<DoctorListCubit, List<DoctorModel>>(
+                  builder: (context, state) {
+                    try {
+                      DoctorModel doctor = context
+                          .read<DoctorListCubit>()
+                          .getDoctorById(widget.doctorId);
+                      return CustomContainer(
+                        id: doctor.id,
+                        name: doctor.name,
+                        specializationTitle: widget.specialization,
+                        imagePath: doctor.imgPath,
+                      );
+                    } catch (e) {
+                      return Text(
+                          'Error: $e'); // show error message if an error occurred
+                    }
+                  },
                 ),
                 const SizedBox(height: 20),
                 Container(
@@ -79,17 +124,38 @@ class _ProfilDokterState extends State<ProfilDokter> {
                         "Jadwal Regular\n",
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
-                      const ScheduleItem(day: "Senin", time: "14:00 - 16:30"),
-                      const ScheduleItem(day: "Rabu", time: "14:00 - 16:30"),
+                      FutureBuilder<List<DoctorScheduleModel>>(
+                        future: futureSchedule,
+                        builder: (context, snapshot) {
+                          if (snapshot.hasData) {
+                            return Column(
+                              children: snapshot.data!.map((item) {
+                                return ScheduleItem(
+                                  day: item.day,
+                                  time: item.time,
+                                );
+                              }).toList(),
+                            );
+                          } else if (snapshot.hasError) {
+                            return Text(
+                                'Error: ${snapshot.error}'); // show error message if an error occurred
+                          }
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        },
+                      ),
                       const SizedBox(height: 30),
                       ElevatedButton(
                         onPressed: () {
                           Navigator.push(
-														context,
-														MaterialPageRoute(
-															builder: (context) => const PilihJadwal(title: 'Pilih Jadwal'),
-														),
-													);
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => PilihJadwal(
+                                doctorId: widget.doctorId,
+                              ),
+                            ),
+                          );
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.blue[900],
@@ -117,14 +183,16 @@ class _ProfilDokterState extends State<ProfilDokter> {
 }
 
 class CustomContainer extends StatelessWidget {
-  final String dokter;
-  final String spesialis;
+  final int id;
+  final String name;
+  final String specializationTitle;
   final String imagePath;
 
   const CustomContainer({
     super.key,
-    required this.dokter,
-    required this.spesialis,
+    required this.id,
+    required this.name,
+    required this.specializationTitle,
     required this.imagePath,
   });
 
@@ -152,14 +220,14 @@ class CustomContainer extends StatelessWidget {
                 padding: const EdgeInsets.all(8),
                 child: CircleAvatar(
                   radius: 50,
-                  backgroundImage: AssetImage(imagePath),
+                  backgroundImage: NetworkImage(imagePath),
                 ),
               ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    dokter,
+                    name,
                     style: const TextStyle(
                       fontSize: 12,
                       color: Colors.black,
@@ -168,7 +236,7 @@ class CustomContainer extends StatelessWidget {
                   ),
                   const SizedBox(height: 6),
                   Text(
-                    spesialis,
+                    specializationTitle,
                     style: const TextStyle(
                       fontSize: 10,
                       color: Colors.black,
@@ -177,12 +245,13 @@ class CustomContainer extends StatelessWidget {
                   const SizedBox(height: 4),
                   TextButton(
                     onPressed: () {
-                     Navigator.push(
-												context,
-												MaterialPageRoute(
-													builder: (context) => const ProfilLengkapDokter(title: 'Profil Lengkap Dokter'),
-												),
-											);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              ProfilLengkapDokter(doctorId: id),
+                        ),
+                      );
                     },
                     child: Text(
                       'Lihat Profil Lengkap',
