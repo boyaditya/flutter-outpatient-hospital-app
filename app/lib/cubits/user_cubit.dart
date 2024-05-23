@@ -102,4 +102,33 @@ class UserCubit extends Cubit<UserModel?> {
       throw Exception('Email already registered');
     }
   }
+
+  Future<void> fetchUserById() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? accessToken = prefs.getString('access_token');
+    int? userId = prefs.getInt('user_id');
+
+    if (accessToken == null) {
+      throw Exception('No access token found');
+    }
+
+    final response = await http.get(
+      Uri.parse('http://127.0.0.1:8000/users/$userId'),
+      headers: <String, String>{
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $accessToken',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      UserModel user = UserModel.fromJson(jsonDecode(response.body));
+
+      String userJson = jsonEncode(user.toJson());
+      await prefs.setString('user', userJson);
+
+      emit(user);
+    } else {
+      throw Exception('Failed to load user');
+    }
+  }
 }

@@ -98,6 +98,7 @@ async def read_doctors(db: db_dependency, token: str = Depends(oauth2_scheme)):
         raise e
     return crud.get_doctors(db)
 
+
 # @app.get("/doctors/", response_model=List[schemas.Doctor])
 # async def read_doctors(db: db_dependency):
 #     # try:
@@ -142,6 +143,8 @@ async def read_doctor_image(
         return FileResponse(path_img + nama_image)
     except HTTPException as e:
         raise e
+
+
 # @app.get("/doctors/image/{doctor_id}")
 # async def read_doctor_image(
 #     doctor_id: int, db: db_dependency, token: str = Depends(oauth2_scheme)
@@ -184,9 +187,11 @@ async def read_user(
 #     if deleted_user is None:
 #         raise HTTPException(status_code=404, detail="User not found")
 
+
 @app.get("/specializations/", response_model=List[schemas.Specialization])
 async def read_specializations(db: db_dependency, token: str = Depends(oauth2_scheme)):
     return crud.get_specializations(db)
+
 
 @app.get("/specializations/{specialization_id}", response_model=schemas.Specialization)
 async def read_specialization(
@@ -291,6 +296,7 @@ async def create_patient(
     # Create the patient
     return crud.create_patient(db=db, patient=patient)
 
+
 # @app.post(
 #     "/patients/", response_model=schemas.Patient, status_code=status.HTTP_201_CREATED
 # )
@@ -319,6 +325,17 @@ async def read_patients(db: db_dependency, token: str = Depends(oauth2_scheme)):
     except HTTPException as e:
         raise e
     return crud.get_patients(db)
+
+
+@app.get("/user_patients/{user_id}", response_model=List[schemas.Patient])
+async def read_patients(
+    user_id: int, db: db_dependency, token: str = Depends(oauth2_scheme)
+):
+    try:
+        payload = verify_token(token)
+    except HTTPException as e:
+        raise e
+    return crud.get_patients_by_user_id(db, user_id)
 
 
 @app.get("/patients/{patient_id}", response_model=schemas.Patient)
@@ -468,9 +485,10 @@ def authenticate(db: Session, user: schemas.UserCreate):
         print(user_cari.hashed_password)
         hashed_password = crud.hash_password(user.hashed_password)
         print(hashed_password.decode())  # decode the byte string to a regular string
-        return (user_cari.hashed_password == hashed_password.decode())
+        return user_cari.hashed_password == hashed_password.decode()
     else:
         return False
+
 
 def verify_password(plain_password, hashed_password):
     return pwd_context.verify(plain_password, hashed_password)

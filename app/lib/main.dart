@@ -55,7 +55,7 @@ void main() {
       create: (context) => SpecializationListCubit()..fetchSpecializations(),
     ),
     BlocProvider<UserCubit>(
-      create: (context) => UserCubit(),
+      create: (context) => UserCubit()..fetchUserById(),
     ),
     BlocProvider<DoctorScheduleCubit>(
       create: (context) => DoctorScheduleCubit(),
@@ -63,7 +63,9 @@ void main() {
     BlocProvider<PatientCubit>(
       create: (context) => PatientCubit(),
     ),
-
+    BlocProvider<PatientListCubit>(
+      create: (context) => PatientListCubit()..fetchPatientsByUserId(),
+    ),
   ], child: const MyApp()));
 }
 
@@ -74,7 +76,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-       localizationsDelegates: GlobalMaterialLocalizations.delegates,
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
       supportedLocales: const [
         Locale('id', ''),
       ],

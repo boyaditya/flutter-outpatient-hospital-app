@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class PatientModel {
@@ -43,6 +42,7 @@ class PatientModel {
       'nik': nik,
       'gender': gender,
       'user_id': userId,
+      'id': userId
     };
   }
 }
@@ -60,19 +60,64 @@ class PatientCubit extends Cubit<PatientModel?> {
 
     patient.userId = userId;
 
-    final response =
-        await http.post(Uri.parse('http://127.0.0.1:8000/patients/'),
-            headers: {
-              'Content-Type': 'application/json; charset=UTF-8',
-            },
-            body: jsonEncode(patient.toJson()));
+    final response = await http.post(
+      Uri.parse('http://127.0.0.1:8000/patients/'),
+      headers: {
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(
+        patient.toJson(),
+      ),
+    );
 
     if (response.statusCode == 201) {
       PatientModel patient = PatientModel.fromJson(json.decode(response.body));
       emit(patient);
-      print(response.body);
+      // print(response.body);
     } else {
       throw Exception('Failed to create patient');
+    }
+  }
+}
+
+class PatientListCubit extends Cubit<List<PatientModel>> {
+  PatientListCubit() : super([]);
+
+  // void setFromJson(List<dynamic> json) {
+  //   List<PatientModel> patients =
+  //       json.map((item) => PatientModel.fromJson(item)).toList();
+  //   emit(patients);
+  // }
+
+  Future<void> fetchPatientsByUserId() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? accessToken = prefs.getString('access_token');
+    int? userId = prefs.getInt('user_id');
+
+    if (accessToken == null) {
+      throw Exception('No access token found');
+    }
+
+    final response = await http.get(
+      Uri.parse('http://127.0.0.1:8000/user_patients/$userId'),
+      headers: <String, String>{
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $accessToken',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      List<dynamic> body = jsonDecode(response.body);
+      List<PatientModel> patients = body.map((dynamic item) => PatientModel.fromJson(item)).toList();
+
+      String patientsJson = jsonEncode(patients.map((patient) => patient.toJson()).toList());
+      await prefs.setString('patients', patientsJson);
+
+      // print(response.body);
+
+      emit(patients);
+    } else {
+      throw Exception('Failed to load patients');
     }
   }
 }
