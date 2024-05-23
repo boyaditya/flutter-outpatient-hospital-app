@@ -282,12 +282,7 @@ def create_rating(
 async def create_patient(
     patient: schemas.PatientCreate,
     db: db_dependency,
-    token: str = Depends(oauth2_scheme),
 ):
-    try:
-        payload = verify_token(token)
-    except HTTPException as e:
-        raise e
     # Check if the user associated with the patient exists
     user = crud.get_user_by_id(db, patient.user_id)
     if user is None:
@@ -295,6 +290,26 @@ async def create_patient(
 
     # Create the patient
     return crud.create_patient(db=db, patient=patient)
+
+# @app.post(
+#     "/patients/", response_model=schemas.Patient, status_code=status.HTTP_201_CREATED
+# )
+# async def create_patient(
+#     patient: schemas.PatientCreate,
+#     db: db_dependency,
+#     token: str = Depends(oauth2_scheme),
+# ):
+#     try:
+#         payload = verify_token(token)
+#     except HTTPException as e:
+#         raise e
+#     # Check if the user associated with the patient exists
+#     user = crud.get_user_by_id(db, patient.user_id)
+#     if user is None:
+#         raise HTTPException(status_code=404, detail="User not found")
+
+#     # Create the patient
+#     return crud.create_patient(db=db, patient=patient)
 
 
 @app.get("/patients/", response_model=List[schemas.Patient])

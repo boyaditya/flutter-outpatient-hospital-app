@@ -6,7 +6,6 @@ import 'package:tubes/cubits/user_cubit.dart';
 import 'package:tubes/pages/authentication/buat_akun.dart';
 import 'package:tubes/pages/dashboard/dashboard.dart';
 import 'package:tubes/pages/login_forgot_reset/lupa_kata_sandi.dart';
-import 'package:http/http.dart' as http;
 
 class Login extends StatefulWidget {
   const Login({super.key, required String title});

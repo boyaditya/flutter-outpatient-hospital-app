@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:tubes/pages/authentication/no_telp.dart';
 import 'package:tubes/pages/registrasi_pasien/registrasi_pasien.dart';
 
 class KonfirmasiEmail extends StatefulWidget {
-  const KonfirmasiEmail({Key? key}) : super(key: key);
+  const KonfirmasiEmail({super.key});
 
   @override
   State<KonfirmasiEmail> createState() => _KonfirmasiEmailState();
@@ -48,7 +47,7 @@ class _KonfirmasiEmailState extends State<KonfirmasiEmail> {
                       _isButtonEnabled = value.isNotEmpty;
                     });
                   },
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     hintText: 'Kode Verifikasi',
                   ),
@@ -89,7 +88,7 @@ class _KonfirmasiEmailState extends State<KonfirmasiEmail> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => RegistrationScreen(),
+                                builder: (context) => const RegistrationScreen(),
                               ),
                             );
                           }

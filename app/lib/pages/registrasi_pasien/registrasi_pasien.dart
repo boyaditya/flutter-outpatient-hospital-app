@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:tubes/pages/authentication/konfirm_telp.dart';
 
 class RegistrationScreen extends StatefulWidget {
+  const RegistrationScreen({super.key});
+
   @override
   _RegistrationScreenState createState() => _RegistrationScreenState();
 }
@@ -11,7 +13,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _dobController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
-  final TextEditingController _emailController = TextEditingController();
   final TextEditingController _idController = TextEditingController();
   bool _agreeTerms = false;
   String? _gender;
@@ -23,14 +24,12 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       firstDate: DateTime(1900),
       lastDate: DateTime.now(),
     );
-    if (picked != null && picked != DateTime.now())
+    if (picked != null && picked != DateTime.now()) {
       setState(() {
-        _dobController.text = picked.day.toString().padLeft(2, '0') +
-            '/' +
-            picked.month.toString().padLeft(2, '0') +
-            '/' +
-            picked.year.toString().substring(2);
+        _dobController.text =
+            '${picked.day.toString().padLeft(2, '0')}/${picked.month.toString().padLeft(2, '0')}/${picked.year.toString().substring(2)}';
       });
+    }
   }
 
   @override
@@ -125,35 +124,37 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               const SizedBox(height: 16.0),
               const Text('Tanggal Lahir'),
               ElevatedButton(
-								onPressed: () => _selectDate(context),
-								style: ElevatedButton.styleFrom(
-									padding: EdgeInsets.zero,
-									backgroundColor: Colors.white,
-									shadowColor: Colors.transparent,
-									shape: RoundedRectangleBorder(
-										borderRadius: BorderRadius.circular(5.0), // Match the border radius
-									),
-								),
-								child: AbsorbPointer(
-									child: Container(
-										width: double.infinity, // Ensure the button takes the full width
-										decoration: BoxDecoration(
-											border: Border.all(color: Colors.grey),
-											borderRadius: BorderRadius.circular(5.0),
-										),
-										child: Padding(
-											padding: const EdgeInsets.all(8.0),
-											child: TextFormField(
-												controller: _dobController,
-												decoration: const InputDecoration(
-													hintText: '  DD/MM/YY',
-													border: InputBorder.none,
-												),
-											),
-										),
-									),
-								),
-							),
+                onPressed: () => _selectDate(context),
+                style: ElevatedButton.styleFrom(
+                  padding: EdgeInsets.zero,
+                  backgroundColor: Colors.white,
+                  shadowColor: Colors.transparent,
+                  shape: RoundedRectangleBorder(
+                    borderRadius:
+                        BorderRadius.circular(5.0), // Match the border radius
+                  ),
+                ),
+                child: AbsorbPointer(
+                  child: Container(
+                    width: double
+                        .infinity, // Ensure the button takes the full width
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.grey),
+                      borderRadius: BorderRadius.circular(5.0),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: TextFormField(
+                        controller: _dobController,
+                        decoration: const InputDecoration(
+                          hintText: '  DD/MM/YY',
+                          border: InputBorder.none,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
               const SizedBox(height: 50.0),
               Row(
                 children: [
@@ -182,11 +183,11 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   child: ElevatedButton(
                     onPressed: () {
                       Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const KonfirmasiTelp(),
-                              ),
-                            );
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const KonfirmasiTelp(),
+                        ),
+                      );
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.blue,
@@ -203,4 +204,3 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     );
   }
 }
-
