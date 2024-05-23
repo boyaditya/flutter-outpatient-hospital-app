@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:tubes/cubits/doctor_cubit.dart';
 import 'package:tubes/cubits/doctor_schedule_cubit.dart';
+import 'package:tubes/cubits/patient_cubit.dart';
 import 'package:tubes/cubits/specialization_cubit.dart';
 import 'package:tubes/pages/authentication/buat_akun.dart';
 import 'package:tubes/pages/authentication/data_diri.dart';
@@ -59,6 +60,10 @@ void main() {
     BlocProvider<DoctorScheduleCubit>(
       create: (context) => DoctorScheduleCubit(),
     ),
+    BlocProvider<PatientCubit>(
+      create: (context) => PatientCubit(),
+    ),
+
   ], child: const MyApp()));
 }
 

@@ -1,29 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:tubes/pages/login_forgot_reset/login.dart';
 
-// void main() {
-//   runApp(_MyApp());
-// }
-
-// class _MyApp extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return const MaterialApp(
-//       title: 'Selamat Datang',
-//       home: SelamatDatang(),
-//     );
-//   }
-// }
-
-class SelamatDatang extends StatefulWidget{
+class SelamatDatang extends StatelessWidget {
   const SelamatDatang({super.key});
-
-  @override
-  State<SelamatDatang> createState() => _SelamatDatangState();
-}
-
-class _SelamatDatangState extends State<SelamatDatang>{
 
   @override
   Widget build(BuildContext context) {
@@ -62,11 +41,13 @@ class _SelamatDatangState extends State<SelamatDatang>{
               child: ElevatedButton(
                 onPressed: () {
                   Navigator.push(
-												context,
-												MaterialPageRoute(
-													builder: (context) => const Login(title: 'Login',),
-												),
-											);
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const Login(
+                        title: 'Login',
+                      ),
+                    ),
+                  );
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.blue[700],
@@ -75,8 +56,8 @@ class _SelamatDatangState extends State<SelamatDatang>{
                   fixedSize: Size(MediaQuery.of(context).size.width,
                       40), // 50% of screen width
                 ),
-                child:
-                    const Text('Selanjutnya', style: TextStyle(color: Colors.white)),
+                child: const Text('Selanjutnya',
+                    style: TextStyle(color: Colors.white)),
               ),
             ),
           ],

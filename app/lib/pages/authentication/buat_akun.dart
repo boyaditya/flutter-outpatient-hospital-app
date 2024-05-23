@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tubes/pages/authentication/konfirm_email.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tubes/cubits/user_cubit.dart';
+import 'package:tubes/utils/snackbar.dart';
 
 class BuatAkun extends StatefulWidget {
   const BuatAkun({super.key});
@@ -124,7 +125,7 @@ class _BuatAkunState extends State<BuatAkun> {
                             _isConfirmationEntered &&
                             _passwordError == null
                         ? () {
-                            performRegister(context);
+                            performRegister();
                           }
                         : null,
                     style: ElevatedButton.styleFrom(
@@ -183,42 +184,24 @@ class _BuatAkunState extends State<BuatAkun> {
     }
   }
 
-  void showSuccessMessage(String message) {
-    final snackBar = SnackBar(
-      content: Text(message, style: const TextStyle(color: Colors.white)),
-      duration: const Duration(seconds: 2),
-      backgroundColor: Colors.green,
-    );
-    ScaffoldMessenger.of(context).showSnackBar(snackBar);
-  }
-
-  void showErrorMessage(String message) {
-    final snackBar = SnackBar(
-      content: Text(message, style: const TextStyle(color: Colors.white)),
-      duration: const Duration(seconds: 2),
-      backgroundColor: Colors.red,
-    );
-    ScaffoldMessenger.of(context).showSnackBar(snackBar);
-  }
-
-  Future<void> performRegister(BuildContext context) async {
+  Future<void> performRegister() async {
     try {
       await context.read<UserCubit>().register(
             _emailController.text,
             _passwordController.text,
           );
-      showSuccessMessage('Registrasi berhasil');
-      if (mounted) {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const KonfirmasiEmail(),
-          ),
-        );
-      }
+      if (!mounted) return;
+      showSuccessMessage(context, 'Akun berhasil dibuat');
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const KonfirmasiEmail(),
+        ),
+      );
     } catch (e) {
-      print(e);
-      showErrorMessage('Email sudah terdaftar');
+      if (!mounted) return;
+      // print(e);
+      showErrorMessage(context, 'Email sudah terdaftar');
       // Handle the error
     }
   }

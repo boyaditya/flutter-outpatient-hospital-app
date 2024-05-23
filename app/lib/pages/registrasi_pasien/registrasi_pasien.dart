@@ -1,21 +1,31 @@
 import 'package:flutter/material.dart';
-import 'package:tubes/pages/authentication/konfirm_telp.dart';
+import 'package:intl/intl.dart';
+// import 'package:tubes/pages/authentication/konfirm_telp.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tubes/cubits/patient_cubit.dart';
+import 'package:tubes/utils/snackbar.dart';
+import 'package:tubes/pages/authentication/welcome_page.dart';
 
 class RegistrationScreen extends StatefulWidget {
   const RegistrationScreen({super.key});
 
   @override
-  _RegistrationScreenState createState() => _RegistrationScreenState();
+  State<RegistrationScreen> createState() => _RegistrationScreenState();
 }
 
 class _RegistrationScreenState extends State<RegistrationScreen> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _dobController = TextEditingController();
+  final TextEditingController _nikController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
-  final TextEditingController _idController = TextEditingController();
+  final TextEditingController _dobController = TextEditingController();
   bool _agreeTerms = false;
   String? _gender;
+
+  bool _isNameEntered = false;
+  bool _isNikEntered = false;
+  bool _isPhoneEntered = false;
+  bool _isDobEntered = false;
 
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
@@ -26,8 +36,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     );
     if (picked != null && picked != DateTime.now()) {
       setState(() {
-        _dobController.text =
-            '${picked.day.toString().padLeft(2, '0')}/${picked.month.toString().padLeft(2, '0')}/${picked.year.toString().substring(2)}';
+        _dobController.text = DateFormat('dd/MM/yyyy').format(picked);
+        _isDobEntered = true;
       });
     }
   }
@@ -60,6 +70,11 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   border: OutlineInputBorder(),
                   hintText: 'Masukkan Nama Lengkap Anda',
                 ),
+                onChanged: (value) {
+                  setState(() {
+                    _isNameEntered = value.isNotEmpty;
+                  });
+                },
               ),
               const SizedBox(height: 16.0),
               const Text(
@@ -70,11 +85,16 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 ),
               ),
               TextFormField(
-                controller: _idController,
+                controller: _nikController,
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   hintText: '3234XXXXXXXXXXXXX',
                 ),
+                onChanged: (value) {
+                  setState(() {
+                    _isNikEntered = value.isNotEmpty;
+                  });
+                },
               ),
               const SizedBox(height: 16.0),
               const Text(
@@ -90,6 +110,11 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   border: OutlineInputBorder(),
                   hintText: '+6285123456789',
                 ),
+                onChanged: (value) {
+                  setState(() {
+                    _isPhoneEntered = value.isNotEmpty;
+                  });
+                },
               ),
               const SizedBox(height: 16.0),
               const Text('Jenis Kelamin'),
@@ -100,23 +125,30 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 ),
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                  child: DropdownButtonFormField<String>(
-                    value: _gender,
-                    onChanged: (String? newValue) {
-                      setState(() {
-                        _gender = newValue;
-                      });
+                  child: Focus(
+                    onFocusChange: (hasFocus) {
+                      if (hasFocus) {
+                        FocusScope.of(context).requestFocus(FocusNode());
+                      }
                     },
-                    items: <String>['Laki-laki', 'Perempuan']
-                        .map<DropdownMenuItem<String>>((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value),
-                      );
-                    }).toList(),
-                    decoration: const InputDecoration(
-                      hintText: 'Pilih salah satu',
-                      border: InputBorder.none,
+                    child: DropdownButtonFormField<String>(
+                      value: _gender,
+                      onChanged: (String? newValue) {
+                        setState(() {
+                          _gender = newValue;
+                        });
+                      },
+                      items: <String>['Laki-laki', 'Perempuan']
+                          .map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
+                      decoration: const InputDecoration(
+                        hintText: 'Pilih salah satu',
+                        border: InputBorder.none,
+                      ),
                     ),
                   ),
                 ),
@@ -178,22 +210,35 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               ),
               const SizedBox(height: 25.0),
               Center(
-                child: SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.8,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const KonfirmasiTelp(),
-                        ),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blue,
-                      foregroundColor: Colors.white,
+                child: ElevatedButton(
+                  onPressed: _isNameEntered &&
+                          _isNikEntered &&
+                          _isPhoneEntered &&
+                          _isDobEntered &&
+                          _agreeTerms
+                      ? () {
+                          performRegister();
+                        }
+                      : null,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: _isNameEntered &&
+                            _isNikEntered &&
+                            _isPhoneEntered &&
+                            _isDobEntered &&
+                            _agreeTerms
+                        ? Colors.blue[700]
+                        : Colors.grey, // Warna abu-abu jika input belum diisi
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(8)),
                     ),
-                    child: const Text('Kirim'),
+                    fixedSize: Size(
+                      MediaQuery.of(context).size.width,
+                      40,
+                    ), // Lebar 50% dari lebar layar
+                  ),
+                  child: const Text(
+                    'Selanjutnya',
+                    style: TextStyle(color: Colors.white),
                   ),
                 ),
               ),
@@ -202,5 +247,34 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         ),
       ),
     );
+  }
+
+  Future<void> performRegister() async {
+    final patient = PatientModel(
+      id: 0,
+      userId: 0,
+      name: _nameController.text,
+      dateOfBirth: DateFormat('dd/MM/yyyy').parse(_dobController.text),
+      phone: _phoneController.text,
+      nik: _nikController.text,
+      gender: _gender!,
+    );
+
+    try {
+      await context.read<PatientCubit>().createPatient(patient);
+      if (!mounted) return;
+      showSuccessMessage(context, 'Registrasi pasien berhasil!');
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const SelamatDatang(),
+        ),
+      );
+    } catch (e) {
+      if (!mounted) return;
+      // print(e);
+      showErrorMessage(context, 'Registrasi pasien gagal!');
+      // Handle the error
+    }
   }
 }

@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class PatientModel {
   final int id;
@@ -9,7 +11,7 @@ class PatientModel {
   final String phone;
   final String nik;
   final String gender;
-  final int userId;
+  int userId;
 
   PatientModel({
     required this.id,
@@ -35,7 +37,6 @@ class PatientModel {
 
   Map<String, dynamic> toJson() {
     return {
-      'id': id,
       'name': name,
       'date_of_birth': dateOfBirth.toIso8601String(),
       'phone': phone,
@@ -50,6 +51,15 @@ class PatientCubit extends Cubit<PatientModel?> {
   PatientCubit() : super(null);
 
   Future<void> createPatient(PatientModel patient) async {
+    final prefs = await SharedPreferences.getInstance();
+    final userId = prefs.getInt('user_id');
+
+    if (userId == null) {
+      throw Exception('No user ID found');
+    }
+
+    patient.userId = userId;
+
     final response =
         await http.post(Uri.parse('http://127.0.0.1:8000/patients/'),
             headers: {
@@ -60,6 +70,7 @@ class PatientCubit extends Cubit<PatientModel?> {
     if (response.statusCode == 201) {
       PatientModel patient = PatientModel.fromJson(json.decode(response.body));
       emit(patient);
+      print(response.body);
     } else {
       throw Exception('Failed to create patient');
     }
