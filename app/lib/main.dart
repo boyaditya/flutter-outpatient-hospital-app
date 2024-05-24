@@ -115,7 +115,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
         useMaterial3: true,
       ),
-      initialRoute: '/dashboard',
+      initialRoute: '/onboard2',
       routes: {
         '/': (context) => const Login(title: 'Login'),
         '/lupa_kata_sandi': (context) =>
