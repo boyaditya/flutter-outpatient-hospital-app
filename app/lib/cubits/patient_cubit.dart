@@ -89,6 +89,8 @@ class PatientListCubit extends Cubit<List<PatientModel>> {
   //   emit(patients);
   // }
 
+  final Map<int, PatientModel> _patientCache = {};
+
   Future<void> fetchPatientsByUserId() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? accessToken = prefs.getString('access_token');
@@ -108,9 +110,15 @@ class PatientListCubit extends Cubit<List<PatientModel>> {
 
     if (response.statusCode == 200) {
       List<dynamic> body = jsonDecode(response.body);
-      List<PatientModel> patients = body.map((dynamic item) => PatientModel.fromJson(item)).toList();
+      List<PatientModel> patients =
+          body.map((dynamic item) => PatientModel.fromJson(item)).toList();
 
-      String patientsJson = jsonEncode(patients.map((patient) => patient.toJson()).toList());
+      for (var patient in patients) {
+        _patientCache[patient.id] = patient;
+      }
+
+      String patientsJson =
+          jsonEncode(patients.map((patient) => patient.toJson()).toList());
       await prefs.setString('patients', patientsJson);
 
       // print(response.body);
@@ -119,5 +127,9 @@ class PatientListCubit extends Cubit<List<PatientModel>> {
     } else {
       throw Exception('Failed to load patients');
     }
+  }
+
+  PatientModel getPatientById(int id) {
+    return _patientCache[id]!;
   }
 }

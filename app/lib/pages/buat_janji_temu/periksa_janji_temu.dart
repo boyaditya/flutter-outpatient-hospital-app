@@ -1,10 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
+import 'package:tubes/cubits/doctor_cubit.dart';
+import 'package:tubes/cubits/patient_cubit.dart';
 import 'package:tubes/pages/lihat_janji_temu/rincian_janji_temu.dart';
 
 class PeriksaJanjiTemu extends StatefulWidget {
-  const PeriksaJanjiTemu({super.key, required this.title});
+  final String selectedDate;
+  final String scheduleTime;
+  final int patientId;
+  final int doctorId;
+  final String specialization;
 
-  final String title;
+  const PeriksaJanjiTemu({
+    super.key,
+    required this.selectedDate,
+    required this.scheduleTime,
+    required this.patientId,
+    required this.doctorId,
+    required this.specialization,
+  });
 
   @override
   State<PeriksaJanjiTemu> createState() => _PeriksaJanjiTemuState();
@@ -22,6 +37,9 @@ class _PeriksaJanjiTemuState extends State<PeriksaJanjiTemu> {
 
   @override
   Widget build(BuildContext context) {
+    print(widget.patientId);
+    final patientListCubit = BlocProvider.of<PatientListCubit>(context);
+    final patient = patientListCubit.getPatientById(widget.patientId);
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -64,24 +82,29 @@ class _PeriksaJanjiTemuState extends State<PeriksaJanjiTemu> {
                   ),
                   width: double.infinity,
                   padding: const EdgeInsets.all(20),
-                  child: const Column(
+                  child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       InfoItem(
                         label: "NAMA LENGKAP",
-                        value: "John Doe",
+                        value: patient.name,
+                      ),
+                      InfoItem(
+                        label: "NOMOR INDUK KEPENDUDUKAN",
+                        value: patient.nik,
                       ),
                       InfoItem(
                         label: "TANGGAL LAHIR",
-                        value: "12 Januari 1990",
+                        value: DateFormat('dd MMMM yyyy', 'id')
+                            .format(patient.dateOfBirth),
                       ),
                       InfoItem(
-                        label: "EMAIL",
-                        value: "johnhendrick@gmail.com",
+                        label: "NOMOR TELEPON",
+                        value: patient.phone,
                       ),
                       InfoItem(
-                        label: "NOMOR PNSEL",
-                        value: "081234567890",
+                        label: "JENIS KELAMIN",
+                        value: patient.gender,
                       ),
                     ],
                   ),
@@ -106,20 +129,33 @@ class _PeriksaJanjiTemuState extends State<PeriksaJanjiTemu> {
                   ),
                   width: double.infinity,
                   padding: const EdgeInsets.all(20),
-                  child: const Column(
+                  child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       InfoItem(
                         label: "TANGGAL DAN WAKTU JANJI TEMU",
-                        value: "24 April 2024, 14:00 - 16:30",
+                        value:
+                            "${DateFormat('EEEE, dd MMMM yyyy', 'id').format(DateTime.parse(widget.selectedDate))}, ${widget.scheduleTime}",
                       ),
-                      InfoItem(
-                        label: "DOKTER",
-                        value: "dr. John Doe",
+                      BlocBuilder<DoctorListCubit, List<DoctorModel>>(
+                        builder: (context, state) {
+                          try {
+                            DoctorModel doctor = context
+                                .read<DoctorListCubit>()
+                                .getDoctorById(widget.doctorId);
+                            return InfoItem(
+                              label: "DOKTER",
+                              value: doctor.name,
+                            );
+                          } catch (e) {
+                            return Text(
+                                'Error: $e'); // show error message if an error occurred
+                          }
+                        },
                       ),
                       InfoItem(
                         label: "SPESIALIS",
-                        value: "Spesialis Akupuntur",
+                        value: widget.specialization,
                       ),
                     ],
                   ),
@@ -137,11 +173,12 @@ class _PeriksaJanjiTemuState extends State<PeriksaJanjiTemu> {
                 ElevatedButton(
                   onPressed: () {
                     Navigator.push(
-												context,
-												MaterialPageRoute(
-													builder: (context) => const RincianJanjiTemu(title: 'Rincian Janji Temu'),
-												),
-											);
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            const RincianJanjiTemu(title: 'Rincian Janji Temu'),
+                      ),
+                    );
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.blue,

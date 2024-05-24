@@ -21,8 +21,8 @@ import 'package:tubes/pages/buat_janji_temu/cari_dokter.dart';
 // import 'package:tubes/pages/buat_janji_temu/profil_dokter.dart';
 // import 'package:tubes/pages/buat_janji_temu/profil_lengkap_dokter.dart';
 // import 'package:tubes/pages/buat_janji_temu/pilih_jadwal.dart';
-import 'package:tubes/pages/buat_janji_temu/periksa_janji_temu.dart';
-import 'package:tubes/pages/buat_janji_temu/profil_pasien.dart';
+// import 'package:tubes/pages/buat_janji_temu/periksa_janji_temu.dart';
+// import 'package:tubes/pages/buat_janji_temu/profil_pasien.dart';
 import 'package:tubes/pages/dashboard/dashboard.dart';
 import 'package:tubes/pages/login_forgot_reset/login.dart';
 import 'package:tubes/pages/login_forgot_reset/lupa_kata_sandi.dart';
@@ -55,7 +55,7 @@ void main() {
       create: (context) => SpecializationListCubit()..fetchSpecializations(),
     ),
     BlocProvider<UserCubit>(
-      create: (context) => UserCubit()..fetchUserById(),
+      create: (context) => UserCubit(),
     ),
     BlocProvider<DoctorScheduleCubit>(
       create: (context) => DoctorScheduleCubit(),
@@ -64,7 +64,7 @@ void main() {
       create: (context) => PatientCubit(),
     ),
     BlocProvider<PatientListCubit>(
-      create: (context) => PatientListCubit()..fetchPatientsByUserId(),
+      create: (context) => PatientListCubit(),
     ),
   ], child: const MyApp()));
 }
@@ -134,10 +134,10 @@ class MyApp extends StatelessWidget {
         // '/profil_lengkap_dokter': (context) =>
         //     const ProfilLengkapDokter(),
         // '/pilih_jadwal': (context) => const PilihJadwal(title: 'Pilih Jadwal'),
-        '/profil_pasien': (context) =>
-            const ProfilPasien(title: 'Profil Pasien'),
-        '/periksa_janji_temu': (context) =>
-            const PeriksaJanjiTemu(title: 'Periksa Janji Temu'),
+        // '/profil_pasien': (context) =>
+        //     const ProfilPasien(title: 'Profil Pasien'),
+        // '/periksa_janji_temu': (context) =>
+        //     const PeriksaJanjiTemu(title: 'Periksa Janji Temu'),
         '/dashboard': (context) => const Dashboard(title: 'Dashboard'),
         '/histori_janji': (context) =>
             const HistoriJanjiTemu(title: 'Histori Janji Temu'),

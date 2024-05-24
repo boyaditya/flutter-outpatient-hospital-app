@@ -25,6 +25,7 @@ class _PilihJadwalState extends State<PilihJadwal> {
   DateTime now = DateTime.now();
   late Future<List<DoctorScheduleModel>> futureSchedule;
   List<int> days = [];
+  Map<int, String> scheduleTimeMap = {};
 
   @override
   void initState() {
@@ -46,12 +47,19 @@ class _PilihJadwalState extends State<PilihJadwal> {
         };
 
         days = schedule.map((item) => dayToNumber[item.day]!).toList();
+        scheduleTimeMap = {
+          for (var item in schedule) dayToNumber[item.day]!: item.time
+        };
       });
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    String dateString = _dates.toIso8601String().split('T')[0];
+    String? scheduleTime = scheduleTimeMap[_dates.weekday];
+    // print(dateString);
+    // print(scheduleTimeMap);
     return Scaffold(
       appBar: AppBar(
           title: const Text(
@@ -100,6 +108,8 @@ class _PilihJadwalState extends State<PilihJadwal> {
                       if (dates.isNotEmpty) {
                         setState(() {
                           _dates = dates.first!;
+                          scheduleTime = scheduleTimeMap[_dates.weekday];
+                          print(scheduleTime);
                         });
                       }
                     },
@@ -169,7 +179,6 @@ class _PilihJadwalState extends State<PilihJadwal> {
                     }
                   },
                 ),
-                const SizedBox(height: 90),
               ],
             ),
           ),
@@ -184,8 +193,11 @@ class _PilihJadwalState extends State<PilihJadwal> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) =>
-                          const ProfilPasien(title: 'Profil Pasien'),
+                      builder: (context) => ProfilPasien(
+                          selectedDate: dateString,
+                          scheduleTime: scheduleTime!,
+                          doctorId: widget.doctorId,
+                          specialization: widget.specialization),
                     ),
                   );
                 },
