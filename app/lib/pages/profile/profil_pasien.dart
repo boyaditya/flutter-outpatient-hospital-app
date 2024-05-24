@@ -31,69 +31,92 @@ class _ProfilPasienScreenState extends State<ProfilPasienScreen> {
               ),
             ),
           ),
-          // Container dengan lebar 80% dari layar, ditempatkan di tengah
           Center(
-            child: Container(
-              width: containerWidth,
-              padding: const EdgeInsets.all(16.0),
-              decoration: BoxDecoration(
-                color: Colors.blue,
-                borderRadius: BorderRadius.circular(8.0),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    'John Hendrick',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(height: 4.0),
-                  const Text(
-                    '22 Feb 2003',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  const SizedBox(height: 4.0),
-                  const Text(
-                    'john.hendrick@gmail.com',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  const SizedBox(height: 4.0),
-                  const Text(
-                    '08000000000',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  const SizedBox(height: 8.0),
-                  GestureDetector(
-                    onTap: () {
-                      // Mengubah state untuk menampilkan pesan status
-                      setState(() {
-                        statusMessage = 'Akan Di Proses';
-                      });
+						child: TextButton(
+							onPressed: () {
+								// Fungsi yang akan dijalankan saat tombol ditekan
+								// setState(() {
+								// 	statusMessage = 'Akan Di Proses';
+								// });
 
-                      // Menampilkan snackbar dengan pesan
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text(statusMessage),
-                          duration: const Duration(seconds: 2), // Durasi tampilan snackbar
-                        ),
-                      );
-                    },
-                    child: const Text(
-                      'PERMINTAAN PERUBAHAN DATA',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                        decoration: TextDecoration.underline,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
+								// // Menampilkan snackbar dengan pesan
+								// ScaffoldMessenger.of(context).showSnackBar(
+								// 	SnackBar(
+								// 		content: Text(statusMessage),
+								// 		duration: const Duration(seconds: 2), // Durasi tampilan snackbar
+								// 	),
+								// );
+							},
+							style: TextButton.styleFrom(
+								padding: const EdgeInsets.all(16.0),
+								backgroundColor: Colors.blue,
+								shape: RoundedRectangleBorder(
+									borderRadius: BorderRadius.circular(8.0),
+								),
+							),
+							child: Container(
+								width: containerWidth, // Lebar 80% dari layar
+								child: Column(
+									crossAxisAlignment: CrossAxisAlignment.start,
+									children: [
+										const Text(
+											'John Hendrick',
+											style: TextStyle(
+												color: Colors.white,
+												fontWeight: FontWeight.bold,
+											),
+										),
+										const SizedBox(height: 4.0),
+										const Text(
+											'22 Feb 2003',
+											style: TextStyle(color: Colors.white),
+										),
+										const SizedBox(height: 4.0),
+										const Text(
+											'john.hendrick@gmail.com',
+											style: TextStyle(color: Colors.white),
+										),
+										const SizedBox(height: 4.0),
+										const Text(
+											'08000000000',
+											style: TextStyle(color: Colors.white),
+										),
+										const SizedBox(height: 8.0),
+										TextButton(
+											onPressed: () {
+												// Mengubah state untuk menampilkan pesan status
+												setState(() {
+													statusMessage = 'Akan Di Proses';
+												});
+
+												// Menampilkan snackbar dengan pesan
+												ScaffoldMessenger.of(context).showSnackBar(
+													SnackBar(
+														content: Text(statusMessage),
+														duration: const Duration(seconds: 2), // Durasi tampilan snackbar
+													),
+												);
+											},
+											style: TextButton.styleFrom(
+												padding: EdgeInsets.zero, // Menjaga padding sesuai kebutuhan
+												minimumSize: Size.zero, // Menjaga ukuran minimum sesuai kebutuhan
+												tapTargetSize: MaterialTapTargetSize.shrinkWrap, // Mengecilkan tap target sesuai ukuran teks
+											),
+											child: const Text(
+												'PERMINTAAN PERUBAHAN DATA',
+												style: TextStyle(
+													color: Colors.black,
+													fontWeight: FontWeight.bold,
+													decoration: TextDecoration.underline,
+												),
+											),
+										),
+									],
+								),
+							),
+						),
+					),
+
           const Padding(
             padding: EdgeInsets.all(16.0),
             child: Text(
