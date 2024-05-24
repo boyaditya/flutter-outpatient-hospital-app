@@ -15,12 +15,8 @@ import 'package:tubes/pages/authentication/welcome_page.dart';
 import 'package:tubes/pages/infors/infors.dart';
 import 'package:tubes/pages/infors/spesialisasi.dart';
 import 'package:tubes/pages/infors/detail_spesialisasi.dart';
-
 import 'package:tubes/pages/buat_janji_temu/cari_reservasi.dart';
 import 'package:tubes/pages/buat_janji_temu/cari_dokter.dart';
-// import 'package:tubes/pages/buat_janji_temu/profil_dokter.dart';
-// import 'package:tubes/pages/buat_janji_temu/profil_lengkap_dokter.dart';
-// import 'package:tubes/pages/buat_janji_temu/pilih_jadwal.dart';
 import 'package:tubes/pages/buat_janji_temu/periksa_janji_temu.dart';
 import 'package:tubes/pages/buat_janji_temu/profil_pasien.dart';
 import 'package:tubes/pages/dashboard/dashboard.dart';
@@ -39,8 +35,8 @@ import 'package:tubes/pages/onboarding/onboard1.dart';
 import 'package:tubes/pages/onboarding/onboard2.dart';
 import 'package:tubes/pages/onboarding/onboard3.dart';
 import 'package:tubes/cubits/user_cubit.dart';
-
 import 'package:intl/date_symbol_data_local.dart';
+
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -116,7 +112,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
         useMaterial3: true,
       ),
-      initialRoute: '/onboard2',
+      initialRoute: '/dashboard',
       routes: {
         '/': (context) => const Login(title: 'Login'),
         '/lupa_kata_sandi': (context) =>
