@@ -162,7 +162,7 @@ class _RincianJanjiTemuState extends State<RincianJanjiTemu> {
                         children: [
                           // Teks pertama
                           Text(
-                            "Silahkan menuju ke front office",
+                            "Silahkan menuju ke QR Code scanner",
                             style: TextStyle(
                                 fontSize: 16, fontWeight: FontWeight.bold),
                           ),

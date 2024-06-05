@@ -208,7 +208,7 @@ class _JanjiTemuSaya2State extends State<JanjiTemuSaya2> {
 										width: 300,
 										padding: const EdgeInsets.symmetric(
 											vertical: 8,
-											horizontal: 12,
+											horizontal: 20,
 										),
 										decoration: BoxDecoration(
 											color: Colors.yellow,
@@ -222,9 +222,9 @@ class _JanjiTemuSaya2State extends State<JanjiTemuSaya2> {
 												),
 												SizedBox(width: 8),
 												Text(
-													'Silahkan menuju ke front office',
+													'Silahkan menuju ke QR Code scanner',
 													style: TextStyle(
-														fontSize: 13,
+														fontSize: 11,
 														color: Colors.black,
 													),
 												),
