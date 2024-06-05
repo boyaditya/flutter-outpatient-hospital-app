@@ -1,25 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tubes/cubits/specialization_cubit.dart';
+import 'package:tubes/pages/infors/detail_spesialisasi.dart';
 
-void main() {
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Spesialisasi',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const Spesialisasi(),
-    );
-  }
-}
 
 class Spesialisasi extends StatelessWidget {
   const Spesialisasi({super.key});
@@ -81,8 +64,14 @@ class Spesialisasi extends StatelessWidget {
                         icon: Icons.remove_red_eye,
                         text: item.title,
                         onPressed: () {
-                          Navigator.pushNamed(context, '/detail_spesialisasi',
-                              arguments: item.id);
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => DetailSpesialisasi(
+                                specializationId: item.id,
+                              ),
+                            ),
+                          );
                         },
                       );
                     }).toList(),
