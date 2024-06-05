@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:tubes/pages/profile/edit_profile.dart';
+import 'package:tubes/pages/registrasi_pasien/registrasi_pasien.dart';
 
 class ProfilPasienScreen extends StatefulWidget {
   @override
@@ -83,34 +85,26 @@ class _ProfilPasienScreenState extends State<ProfilPasienScreen> {
                     ),
                     const SizedBox(height: 8.0),
                     TextButton(
-                      onPressed: () {
-                        // Mengubah state untuk menampilkan pesan status
-                        setState(() {
-                          statusMessage = 'Akan Di Proses';
-                        });
-
-                        // Menampilkan snackbar dengan pesan
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text(statusMessage),
-                            duration: const Duration(seconds: 2), // Durasi tampilan snackbar
-                          ),
-                        );
-                      },
-                      style: TextButton.styleFrom(
-                        padding: EdgeInsets.zero, // Menjaga padding sesuai kebutuhan
-                        minimumSize: Size.zero, // Menjaga ukuran minimum sesuai kebutuhan
-                        tapTargetSize: MaterialTapTargetSize.shrinkWrap, // Mengecilkan tap target sesuai ukuran teks
-                      ),
-                      child: const Text(
-                        'PERMINTAAN PERUBAHAN DATA',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                          decoration: TextDecoration.underline,
-                        ),
-                      ),
-                    ),
+											onPressed: () {
+												Navigator.push(
+													context,
+													MaterialPageRoute(
+														builder: (context) => const EditProfileScreen(),
+													),
+												);
+											},
+											style: TextButton.styleFrom(
+												tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+											),
+											child: const Text(
+												'PERMINTAAN PERUBAHAN DATA',
+												style: TextStyle(
+													color: Colors.black,
+													fontWeight: FontWeight.bold,
+													decoration: TextDecoration.underline,
+												),
+											),
+										),
                   ],
                 ),
               ),
@@ -137,7 +131,7 @@ class _ProfilPasienScreenState extends State<ProfilPasienScreen> {
                     color: Colors.grey,
                   ),
                   SizedBox(height: 8.0),
-                  const Text(
+                  Text(
                     'Anda belum menambahkan profil untuk orang lain',
                     textAlign: TextAlign.center,
                     style: TextStyle(color: Colors.grey),
@@ -152,7 +146,12 @@ class _ProfilPasienScreenState extends State<ProfilPasienScreen> {
               width: MediaQuery.of(context).size.width * 0.8,
               child: ElevatedButton(
                 onPressed: () {
-                  // Tambahkan logika untuk mengirim data registrasi
+                  Navigator.push(
+													context,
+													MaterialPageRoute(
+														builder: (context) => const RegistrationScreen(),
+													),
+												);
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.blue,

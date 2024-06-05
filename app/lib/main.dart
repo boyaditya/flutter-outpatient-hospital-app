@@ -31,6 +31,7 @@ import 'package:tubes/pages/login_forgot_reset/reset_success.dart';
 import 'package:tubes/pages/lihat_janji_temu/histori_janji_temu.dart';
 import 'package:tubes/pages/lihat_janji_temu/rincian_janji_temu.dart';
 import 'package:tubes/pages/lihat_janji_temu/janji_temu_saya2.dart';
+import 'package:tubes/pages/profile/edit_profile.dart';
 import 'package:tubes/pages/registrasi_pasien/registrasi_pasien.dart';
 import 'package:tubes/pages/rekam_medis/rekam_medis.dart';
 import 'package:tubes/pages/rekam_medis/detail_rm.dart';
@@ -39,7 +40,6 @@ import 'package:tubes/pages/onboarding/onboard2.dart';
 import 'package:tubes/pages/onboarding/onboard3.dart';
 import 'package:tubes/cubits/user_cubit.dart';
 import 'package:intl/date_symbol_data_local.dart';
-
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -160,9 +160,8 @@ class MyApp extends StatelessWidget {
         '/onboard1': (context) => const OnBoarding1(),
         '/onboard2': (context) => const OnBoarding2(),
         '/onboard3': (context) => const Onboarding3(),
-        '/registrasi_pasien': (context) => RegistrationScreen(),
-
-        // Add more routes here
+        '/registrasi_pasien': (context) => const RegistrationScreen(),
+				'/edit_profil' : (context) => const EditProfileScreen(),
       },
     );
   }
