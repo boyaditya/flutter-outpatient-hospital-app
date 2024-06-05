@@ -40,7 +40,6 @@ import 'package:tubes/pages/onboarding/onboard3.dart';
 import 'package:tubes/cubits/user_cubit.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
-
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
 

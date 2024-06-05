@@ -22,7 +22,7 @@ from fastapi.responses import FileResponse
 
 from passlib.context import CryptContext
 
-from jose import jwt
+import jwt
 
 # from Crypto.Hash import SHA256
 # import datetime
@@ -118,6 +118,17 @@ async def read_doctors(
         raise e
     doctors = crud.get_doctors_by_id(db, doctors_id)
     if doctors is None:
+        raise HTTPException(status_code=404, detail="Doctor not found")
+    return doctors
+
+@app.get("/doctors/name/{doctor_name}", response_model=List[schemas.Doctor])
+async def read_doctor_by_name(doctor_name: str, db: Session = Depends(get_db), token: str = Depends(oauth2_scheme)):
+    try:
+        payload = verify_token(token)
+    except HTTPException as e:
+        raise e
+    doctors = crud.get_doctor_by_name(db, doctor_name)
+    if not doctors:
         raise HTTPException(status_code=404, detail="Doctor not found")
     return doctors
 
