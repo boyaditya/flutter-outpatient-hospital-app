@@ -25,6 +25,9 @@ def get_doctors(db: Session):
 def get_doctors_by_id(db: Session, doctors_id: int):
     return db.query(models.Doctor).filter(models.Doctor.id == doctors_id).first()
 
+def get_doctor_by_name(db: Session, doctor_name: str):
+    return db.query(models.Doctor).filter(models.Doctor.name.ilike(f"%{doctor_name}%")).all()
+
 
 def get_user_by_id(db: Session, user_id: int):
     return db.query(models.User).filter(models.User.id == user_id).first()

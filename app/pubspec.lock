@@ -29,10 +29,10 @@ packages:
     dependency: "direct main"
     description:
       name: calendar_date_picker2
-      sha256: "7ff3f372faff6814a2ba69427d116fb9a3d52e28644b9de4b06db6638fdac798"
+      sha256: "5fddc1fb78c8f218b2e0dd6bae239f7ac502784c62f34ef96f4b22a8cb5d5608"
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.2"
+    version: "1.0.3"
   carousel_slider:
     dependency: "direct main"
     description:
@@ -77,10 +77,10 @@ packages:
     dependency: "direct main"
     description:
       name: cupertino_icons
-      sha256: d57953e10f9f8327ce64a508a355f0b1ec902193f66288e8cb5070e7c47eeb2d
+      sha256: ba631d1c7f7bef6b729a622b7b752645a2d076dba9976925b8f25725a30e1ee6
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.6"
+    version: "1.0.8"
   dots_indicator:
     dependency: "direct main"
     description:

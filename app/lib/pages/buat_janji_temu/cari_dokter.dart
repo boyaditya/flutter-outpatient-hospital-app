@@ -13,6 +13,9 @@ class CariDokter extends StatefulWidget {
 }
 
 class _CariDokterState extends State<CariDokter> {
+  TextEditingController _controller = TextEditingController();
+  String _selectedDay = 'Senin'; // default to Monday
+
   @override
   // void initState() {
   //   super.initState();
@@ -67,11 +70,17 @@ class _CariDokterState extends State<CariDokter> {
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: TextFormField(
+                    controller: _controller,
                     initialValue: data['namaDokter'],
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
                       hintText: 'Cari nama dokter atau spesialisasi',
                       hintStyle: TextStyle(fontSize: 13),
-                      suffixIcon: Icon(Icons.search),
+                      suffixIcon: IconButton(
+                        icon: Icon(Icons.search),
+                        onPressed: () {
+                          setState(() {});
+                        },
+                      ),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.all(
                           Radius.circular(10),
@@ -96,8 +105,13 @@ class _CariDokterState extends State<CariDokter> {
                   builder: (context, state) {
                     final specializationCubit =
                         context.read<SpecializationListCubit>();
+                    final searchQuery = _controller.text.toLowerCase();
+                    final filteredDoctors = state.where((doctor) {
+                      return doctor.name.toLowerCase().contains(searchQuery);
+                    }).toList();
+
                     return Column(
-                      children: state.map((doctor) {
+                      children: filteredDoctors.map((doctor) {
                         final specialization = specializationCubit
                             .getSpecializationById(doctor.idSpecialization);
                         final specializationTitle =
