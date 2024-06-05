@@ -32,6 +32,7 @@ import 'package:tubes/pages/lihat_janji_temu/histori_janji_temu.dart';
 import 'package:tubes/pages/lihat_janji_temu/rincian_janji_temu.dart';
 import 'package:tubes/pages/lihat_janji_temu/janji_temu_saya2.dart';
 import 'package:tubes/pages/profile/edit_profile.dart';
+
 import 'package:tubes/pages/registrasi_pasien/registrasi_pasien.dart';
 import 'package:tubes/pages/rekam_medis/rekam_medis.dart';
 import 'package:tubes/pages/rekam_medis/detail_rm.dart';

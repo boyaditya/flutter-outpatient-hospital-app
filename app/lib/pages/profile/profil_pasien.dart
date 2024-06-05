@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:tubes/pages/profile/detail_profile.dart';
 import 'package:tubes/pages/profile/edit_profile.dart';
 import 'package:tubes/pages/registrasi_pasien/registrasi_pasien.dart';
+
 
 class ProfilPasienScreen extends StatefulWidget {
   @override
@@ -36,18 +38,12 @@ class _ProfilPasienScreenState extends State<ProfilPasienScreen> {
           Center(
             child: TextButton(
               onPressed: () {
-                // Fungsi yang akan dijalankan saat tombol ditekan
-                // setState(() {
-                // 	statusMessage = 'Akan Di Proses';
-                // });
-
-                // // Menampilkan snackbar dengan pesan
-                // ScaffoldMessenger.of(context).showSnackBar(
-                // 	SnackBar(
-                // 		content: Text(statusMessage),
-                // 		duration: const Duration(seconds: 2), // Durasi tampilan snackbar
-                // 	),
-                // );
+                Navigator.push(
+													context,
+													MaterialPageRoute(
+														builder: (context) => DetailProfilPasien(),
+													),
+												);
               },
               style: TextButton.styleFrom(
                 padding: const EdgeInsets.all(16.0),
