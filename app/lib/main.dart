@@ -14,7 +14,7 @@ import 'package:tubes/pages/authentication/no_telp.dart';
 import 'package:tubes/pages/authentication/welcome_page.dart';
 import 'package:tubes/pages/infors/infors.dart';
 import 'package:tubes/pages/infors/spesialisasi.dart';
-import 'package:tubes/pages/infors/detail_spesialisasi.dart';
+// import 'package:tubes/pages/infors/detail_spesialisasi.dart';
 import 'package:tubes/pages/buat_janji_temu/cari_reservasi.dart';
 import 'package:tubes/pages/buat_janji_temu/cari_dokter.dart';
 // import 'package:tubes/pages/buat_janji_temu/profil_dokter.dart';
@@ -154,13 +154,13 @@ class MyApp extends StatelessWidget {
               title: "Informasi Rumah Sakit",
             ),
         '/spesialisasi': (context) => const Spesialisasi(),
-        '/detail_spesialisasi': (context) => const DetailSpesialisasi(),
+        // '/detail_spesialisasi': (context) => const DetailSpesialisasi(),
         '/rekam_medis': (context) => const RekamMedis(),
         '/detail_rm': (context) => const DetailRekamMedis(),
         '/onboard1': (context) => const OnBoarding1(),
         '/onboard2': (context) => const OnBoarding2(),
         '/onboard3': (context) => const Onboarding3(),
-        '/registrasi_pasien': (context) => RegistrationScreen(),
+        '/registrasi_pasien': (context) => const RegistrationScreen(),
 
         // Add more routes here
       },
