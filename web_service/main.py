@@ -22,7 +22,7 @@ from fastapi.responses import FileResponse
 
 from passlib.context import CryptContext
 
-import jwt
+from jose import jwt
 
 # from Crypto.Hash import SHA256
 # import datetime
