@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:tubes/cubits/doctor_cubit.dart';
@@ -7,9 +6,7 @@ import 'package:tubes/cubits/specialization_cubit.dart';
 import 'package:tubes/pages/buat_janji_temu/profil_dokter.dart';
 
 class CariDokter extends StatefulWidget {
-  const CariDokter({super.key, required this.title});
-
-  final String title;
+  const CariDokter({super.key});
 
   @override
   State<CariDokter> createState() => _CariDokterState();
@@ -34,7 +31,6 @@ class _CariDokterState extends State<CariDokter> {
 
   @override
   Widget build(BuildContext context) {
-    print("test aja sih");
     final Map<String, String> data =
         (ModalRoute.of(context)?.settings.arguments as Map<String, String>?) ??
             {};
@@ -98,11 +94,14 @@ class _CariDokterState extends State<CariDokter> {
                 const SizedBox(height: 20),
                 BlocBuilder<DoctorListCubit, List<DoctorModel>>(
                   builder: (context, state) {
-                    final specializationCubit = context.read<SpecializationListCubit>();
+                    final specializationCubit =
+                        context.read<SpecializationListCubit>();
                     return Column(
                       children: state.map((doctor) {
-                        final specialization = specializationCubit.getSpecializationById(doctor.idSpecialization);
-                        final specializationTitle = specialization?.title ?? 'Unknown';
+                        final specialization = specializationCubit
+                            .getSpecializationById(doctor.idSpecialization);
+                        final specializationTitle =
+                            specialization?.title ?? 'Unknown';
                         return DoctorButton(
                           icon: Icons.person,
                           dokter: doctor.name,

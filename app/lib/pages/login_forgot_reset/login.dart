@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tubes/cubits/user_cubit.dart';
 import 'package:tubes/pages/authentication/buat_akun.dart';
 import 'package:tubes/pages/dashboard/dashboard.dart';
@@ -25,6 +26,8 @@ class _LoginState extends State<Login> {
   @override
   void initState() {
     super.initState();
+
+    checkLoginStatus();
 
     emailController.addListener(() {
       setState(() {
@@ -195,6 +198,7 @@ class _LoginState extends State<Login> {
             passwordController.text,
           );
       showSuccessMessage('Login berhasil');
+
       if (mounted) {
         Navigator.push(
           context,
@@ -210,4 +214,20 @@ class _LoginState extends State<Login> {
     }
   }
 
+  void checkLoginStatus() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    int? savedUserId = prefs.getInt('user_id');
+
+    if (savedUserId != null) {
+      // If user_id is saved in shared preferences, navigate to Dashboard directly
+      if (mounted) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const Dashboard(title: 'Dashboard'),
+          ),
+        );
+      }
+    }
+  }
 }

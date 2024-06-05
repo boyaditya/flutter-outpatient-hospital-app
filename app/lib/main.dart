@@ -127,7 +127,7 @@ class MyApp extends StatelessWidget {
             const ResetSuccess(title: 'Reset Success'),
         '/cari_reservasi': (context) =>
             const CariReservasi(title: 'Cari & Buat Reservasi'),
-        '/cari_dokter': (context) => const CariDokter(title: 'Cari Dokter'),
+        '/cari_dokter': (context) => const CariDokter(),
         // '/profil_dokter': (context) =>
         //     const ProfilDokter(),
         // '/profil_lengkap_dokter': (context) =>
