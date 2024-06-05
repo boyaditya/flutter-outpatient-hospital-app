@@ -32,7 +32,7 @@ class DetailProfilPasien extends StatelessWidget {
           const SizedBox(height: 20),
           const InfoCard(
             icon: Icons.person,
-            title: 'Informasi Umum',
+            title: 'Profil Pasien',
             content: [
               {'label': 'Nama Lengkap', 'value': 'John Doe'},
               {'label': 'NIK', 'value': '1234567890123456'},
