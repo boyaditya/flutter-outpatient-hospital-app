@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
+import 'package:tubes/cubits/appointment_cubit.dart';
 import 'package:tubes/cubits/doctor_cubit.dart';
 import 'package:tubes/cubits/patient_cubit.dart';
 import 'package:tubes/pages/lihat_janji_temu/rincian_janji_temu.dart';
@@ -35,9 +36,27 @@ class _PeriksaJanjiTemuState extends State<PeriksaJanjiTemu> {
 
   String spesialisasiValue = listSpesialisasi.first;
 
+  void showSuccessMessage(String message) {
+    final snackBar = SnackBar(
+      content: Text(message, style: const TextStyle(color: Colors.white)),
+      duration: const Duration(seconds: 2),
+      backgroundColor: Colors.green,
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+
+  void showErrorMessage(String message) {
+    final snackBar = SnackBar(
+      content: Text(message, style: const TextStyle(color: Colors.white)),
+      duration: const Duration(seconds: 2),
+      backgroundColor: Colors.red,
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+
   @override
   Widget build(BuildContext context) {
-    print(widget.patientId);
+    // print(widget.patientId);
     final patientListCubit = BlocProvider.of<PatientListCubit>(context);
     final patient = patientListCubit.getPatientById(widget.patientId);
     return Scaffold(
@@ -172,13 +191,7 @@ class _PeriksaJanjiTemuState extends State<PeriksaJanjiTemu> {
                 const SizedBox(height: 120),
                 ElevatedButton(
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) =>
-                            const RincianJanjiTemu(title: 'Rincian Janji Temu'),
-                      ),
-                    );
+                    performCreateAppointment(context);
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.blue,
@@ -198,6 +211,42 @@ class _PeriksaJanjiTemuState extends State<PeriksaJanjiTemu> {
         ],
       ),
     );
+  }
+
+  Future<void> performCreateAppointment(BuildContext context) async {
+    try {
+      final appointment = AppointmentModel(
+        id: 0,
+        timestamp: '',
+        doctorId: widget.doctorId,
+        patientId: widget.patientId,
+        date: widget.selectedDate,
+        time: widget.scheduleTime,
+        coverageType: spesialisasiValue,
+        status: 'Scheduled',
+        queueNumber: 0,
+      );
+
+      print(appointment.patientId);
+
+      await context.read<AppointmentCubit>().postAppointment(appointment);
+
+      showSuccessMessage('Janji temu berhasil dibuat');
+
+      // if (mounted) {
+      //   Navigator.push(
+      //     context,
+      //     MaterialPageRoute(
+      //       builder: (context) =>
+      //           const RincianJanjiTemu(title: 'Rincian Janji Temu'),
+      //     ),
+      //   );
+      // }
+    } catch (e) {
+      print(e);
+      showErrorMessage('Gagal membuat janji temu');
+      // Handle the error
+    }
   }
 }
 

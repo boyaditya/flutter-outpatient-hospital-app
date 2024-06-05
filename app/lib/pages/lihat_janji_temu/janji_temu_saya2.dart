@@ -55,7 +55,7 @@ class _JanjiTemuSaya2State extends State<JanjiTemuSaya2> {
                       ),
                     ),
                   ),
-									const SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   Positioned(
                     left: 20,
                     top: 60,
@@ -146,122 +146,124 @@ class _JanjiTemuSaya2State extends State<JanjiTemuSaya2> {
           ),
           const SizedBox(height: 20),
           TextButton(
-						onPressed: () {
-							Navigator.push(
-								context,
-								MaterialPageRoute(
-									builder: (context) => const RincianJanjiTemu(title: 'Rincian Janji Temu'),
-								),
-							);
-						},
-						style: TextButton.styleFrom(
-							padding: EdgeInsets.zero,
-							shape: RoundedRectangleBorder(
-								borderRadius: BorderRadius.circular(10),
-							),
-							backgroundColor: Colors.blue[50],
-							shadowColor: Colors.grey,
-							elevation: 4, // Add elevation for shadow effect
-						),
-						child: Container(
-							padding: const EdgeInsets.all(20),
-							decoration: BoxDecoration(
-								borderRadius: BorderRadius.circular(10),
-							),
-							child: Column(
-								crossAxisAlignment: CrossAxisAlignment.start,
-								children: [
-									const Row(
-										children: [
-											Icon(
-												Icons.person_4_outlined,
-												color: Colors.grey,
-											),
-											SizedBox(width: 8),
-											Text(
-												'Rawat Jalan',
-												style: TextStyle(
-													fontWeight: FontWeight.bold,
-													fontSize: 18,
-													color: Colors.grey,
-												),
-											),
-										],
-									),
-									const SizedBox(height: 10),
-									const Text(
-										"John Hendrick\n11 Mar 2024, 11:00-11.30\ndr. Alvin H Hardjawinata, MARS, SpAk",
-										style: TextStyle(
-											fontSize: 13,
-											color: Colors.black,
-											fontWeight: FontWeight.bold,
-										),
-										textAlign: TextAlign.left,
-									),
-									const Text(
-										"Spesialis akupuntur",
-										style: TextStyle(fontSize: 13, color: Colors.black),
-										textAlign: TextAlign.left,
-									),
-									const SizedBox(height: 10),
-									Container(
-										width: 300,
-										padding: const EdgeInsets.symmetric(
-											vertical: 8,
-											horizontal: 12,
-										),
-										decoration: BoxDecoration(
-											color: Colors.yellow,
-											borderRadius: BorderRadius.circular(8),
-										),
-										child: const Row(
-											children: [
-												Icon(
-													Icons.info_outline,
-													color: Colors.black,
-												),
-												SizedBox(width: 8),
-												Text(
-													'Silahkan menuju ke front office',
-													style: TextStyle(
-														fontSize: 13,
-														color: Colors.black,
-													),
-												),
-											],
-										),
-									),
-								],
-							),
-						),
-					),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) =>
+                      const RincianJanjiTemu(title: 'Rincian Janji Temu'),
+                ),
+              );
+            },
+            style: TextButton.styleFrom(
+              padding: EdgeInsets.zero,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+              backgroundColor: Colors.blue[50],
+              shadowColor: Colors.grey,
+              elevation: 4, // Add elevation for shadow effect
+            ),
+            child: Container(
+              padding: const EdgeInsets.all(20),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Row(
+                    children: [
+                      Icon(
+                        Icons.person_4_outlined,
+                        color: Colors.grey,
+                      ),
+                      SizedBox(width: 8),
+                      Text(
+                        'Rawat Jalan',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18,
+                          color: Colors.grey,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 10),
+                  const Text(
+                    "John Hendrick\n11 Mar 2024, 11:00-11.30\ndr. Alvin H Hardjawinata, MARS, SpAk",
+                    style: TextStyle(
+                      fontSize: 13,
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    textAlign: TextAlign.left,
+                  ),
+                  const Text(
+                    "Spesialis akupuntur",
+                    style: TextStyle(fontSize: 13, color: Colors.black),
+                    textAlign: TextAlign.left,
+                  ),
+                  const SizedBox(height: 10),
+                  Container(
+                    width: 300,
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 8,
+                      horizontal: 12,
+                    ),
+                    decoration: BoxDecoration(
+                      color: Colors.yellow,
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: const Row(
+                      children: [
+                        Icon(
+                          Icons.info_outline,
+                          color: Colors.black,
+                        ),
+                        SizedBox(width: 8),
+                        Text(
+                          'Silahkan menuju ke front office',
+                          style: TextStyle(
+                            fontSize: 13,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
           const SizedBox(height: 15),
           TextButton(
-						onPressed: () {
-							Navigator.push(
-								context,
-								MaterialPageRoute(
-									builder: (context) => const HistoriJanjiTemu(title: 'Histori Janji Temu'),
-								),
-							);
-						},
-						style: TextButton.styleFrom(
-							padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
-							backgroundColor: Colors.white,
-							shape: RoundedRectangleBorder(
-								borderRadius: BorderRadius.circular(20),
-							),
-						),
-						child: Text(
-							"LIHAT HISTORI JANJI TEMU",
-							style: TextStyle(
-								fontSize: 14,
-								color: Colors.blue[900],
-								fontWeight: FontWeight.bold,
-								decoration: TextDecoration.underline,
-							),
-						),
-					),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) =>
+                      const HistoriJanjiTemu(title: 'Histori Janji Temu'),
+                ),
+              );
+            },
+            style: TextButton.styleFrom(
+              padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
+              backgroundColor: Colors.white,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20),
+              ),
+            ),
+            child: Text(
+              "LIHAT HISTORI JANJI TEMU",
+              style: TextStyle(
+                fontSize: 14,
+                color: Colors.blue[900],
+                fontWeight: FontWeight.bold,
+                decoration: TextDecoration.underline,
+              ),
+            ),
+          ),
         ],
       ),
     );

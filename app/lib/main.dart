@@ -6,6 +6,7 @@ import 'package:tubes/cubits/doctor_cubit.dart';
 import 'package:tubes/cubits/doctor_schedule_cubit.dart';
 import 'package:tubes/cubits/patient_cubit.dart';
 import 'package:tubes/cubits/specialization_cubit.dart';
+import 'package:tubes/cubits/appointment_cubit.dart';
 import 'package:tubes/pages/authentication/buat_akun.dart';
 import 'package:tubes/pages/authentication/data_diri.dart';
 import 'package:tubes/pages/authentication/konfirm_email.dart';
@@ -64,6 +65,9 @@ void main() {
     ),
     BlocProvider<PatientListCubit>(
       create: (context) => PatientListCubit(),
+    ),
+    BlocProvider<AppointmentCubit>(
+      create: (context) => AppointmentCubit(),
     ),
   ], child: const MyApp()));
 }
