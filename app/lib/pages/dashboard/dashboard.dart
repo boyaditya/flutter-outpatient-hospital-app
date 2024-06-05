@@ -306,7 +306,7 @@ class _HomeState extends State<Home> {
                       context,
                       MaterialPageRoute(
                         builder: (context) =>
-                            const CariDokter(title: 'Cari Dokter'),
+                            const CariDokter(),
                       ),
                     );
                   },
@@ -363,7 +363,7 @@ class _HomeState extends State<Home> {
                     context,
                     MaterialPageRoute(
                       builder: (context) =>
-                          const CariDokter(title: 'Cari Dokter'),
+                          const CariDokter(),
                     ),
                   );
                 },

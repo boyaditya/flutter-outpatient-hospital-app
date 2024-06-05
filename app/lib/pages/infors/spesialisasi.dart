@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tubes/cubits/specialization_cubit.dart';
 
 void main() {
   runApp(const MyApp());
@@ -26,11 +28,11 @@ class Spesialisasi extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        // leading: IconButton(
-        //   icon: const Icon(Icons.arrow_back_ios_outlined),
-        //   onPressed: () {},
-        // ),
-      ),
+          // leading: IconButton(
+          //   icon: const Icon(Icons.arrow_back_ios_outlined),
+          //   onPressed: () {},
+          // ),
+          ),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -64,27 +66,29 @@ class Spesialisasi extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 20),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                CustomButton(
-                  icon: Icons.remove_red_eye,
-                  text: 'Oftalmologi',
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/detail_spesialisasi');
-                  },
-                ),
-                CustomButton(
-                  icon: Icons.remove_red_eye,
-                  text: 'Oftalmologi',
-                  onPressed: () {},
-                ),
-                CustomButton(
-                  icon: Icons.remove_red_eye,
-                  text: 'Oftalmologi',
-                  onPressed: () {},
-                ),
-              ],
+            BlocBuilder<SpecializationListCubit, List<SpecializationModel>>(
+              builder: (context, specializations) {
+                if (specializations.length <= 1 &&
+                    specializations.first.id == 0) {
+                  BlocProvider.of<SpecializationListCubit>(context)
+                      .fetchSpecializations(); // trigger the event to fetch data
+                  return const CircularProgressIndicator(); // show loading spinner while waiting for data
+                } else {
+                  return Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: specializations.map((item) {
+                      return CustomButton(
+                        icon: Icons.remove_red_eye,
+                        text: item.title,
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/detail_spesialisasi',
+                              arguments: item.id);
+                        },
+                      );
+                    }).toList(),
+                  );
+                }
+              },
             )
           ],
         ),
