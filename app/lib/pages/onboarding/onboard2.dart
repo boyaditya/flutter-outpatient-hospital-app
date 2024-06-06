@@ -50,10 +50,10 @@ class _OnBoarding2State extends State<OnBoarding2> {
                   showSkipButton: true, // Menampilkan tombol "Lewati" pada slide pertama
                 ),
                 OnBoardingSlide(
-                  image: 'assets/images/tanyadokter.png',
-                  title: 'Tanya Dokter',
+                  image: 'assets/images/rekammedis.png',
+                  title: 'Lihat Rekam Medis',
                   description:
-                      'Apakah Anda memiliki pertanyaan kesehatan atau ingin berkonsultasi langsung dengan dokter? Aplikasi kami menyediakan layanan konsultasi dokter secara online, memudahkan Anda untuk mendapatkan jawaban atas pertanyaan Anda tanpa harus datang langsung ke rumah sakit.',
+                      'Kelola kesehatan Anda dengan mudah dan aman. Aplikasi kami memungkinkan Anda mengakses rekam medis Anda kapan saja dan di mana saja.',
                   showSkipButton: false,
                 ),
               ],
