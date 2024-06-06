@@ -10,21 +10,16 @@ class Spesialisasi extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        // title: const Text('Spesialisasi'),
+        title: const Text('Spesialisasi'),
       ),
       body: SingleChildScrollView(
         child: Column(
           children: [
-            const SizedBox(height: 20),
-            const Text(
-              'Spesialisasi',
-              textAlign: TextAlign.left,
-              style: TextStyle(
-                fontSize: 22,
-                fontWeight: FontWeight.bold,
-              ),
+            const Divider(
+              thickness: 1,
+              color: Colors.grey, // Warna garis pemisah
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 50),
             BlocBuilder<SpecializationListCubit, List<SpecializationModel>>(
               builder: (context, specializations) {
                 if (specializations.length <= 1 &&
@@ -35,21 +30,16 @@ class Spesialisasi extends StatelessWidget {
                 } else {
                   return Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                    child: GridView.builder(
+                    child: ListView.builder(
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
-                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        childAspectRatio: 2 / 1, // Adjusted height based on width
-                        crossAxisSpacing: 10,
-                        mainAxisSpacing: 10,
-                      ),
                       itemCount: specializations.length,
                       itemBuilder: (context, index) {
                         final item = specializations[index];
                         return CustomButton(
-                          icon: Icons.remove_red_eye,
+                          imagePath: 'assets/images/akupuntur.png', // Gunakan imagePath dari model
                           text: item.title,
+                          subText: 'Lihat info detail spesialisasi', // Hardcoded subtext
                           onPressed: () {
                             Navigator.push(
                               context,
@@ -75,14 +65,16 @@ class Spesialisasi extends StatelessWidget {
 }
 
 class CustomButton extends StatelessWidget {
-  final IconData icon;
+  final String imagePath;
   final String text;
+  final String subText;
   final VoidCallback onPressed;
 
   const CustomButton({
     super.key,
-    required this.icon,
+    required this.imagePath,
     required this.text,
+    required this.subText,
     required this.onPressed,
   });
 
@@ -91,28 +83,41 @@ class CustomButton extends StatelessWidget {
     return InkWell(
       onTap: onPressed,
       child: Container(
-        margin: const EdgeInsets.all(10),
+        margin: const EdgeInsets.symmetric(vertical: 10),
+        padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
         decoration: BoxDecoration(
-          color: const Color.fromARGB(255, 190, 227, 255),
-          shape: BoxShape.rectangle,
-          borderRadius: BorderRadius.circular(10),
+          color: Colors.blue.shade100,
+          borderRadius: BorderRadius.circular(15),
         ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Icon(
-              icon,
-              color: Colors.blue,
-              size: 30,
+        child: Row(
+          children: [
+            Image.asset(
+              imagePath,
+              width: 70,
+              height: 70,
             ),
-            const SizedBox(height: 8),
-            Text(
-              text,
-              style: const TextStyle(
-                fontSize: 10,
-                color: Colors.black,
+            const SizedBox(width: 16),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    text,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 14,
+                    ),
+                  ),
+                  const SizedBox(height: 4), // Jarak antara teks utama dan subteks
+                  Text(
+                    subText,
+                    style: TextStyle(
+                      color: Colors.grey.shade600,
+                      fontSize: 12,
+                    ),
+                  ),
+                ],
               ),
-              textAlign: TextAlign.center,
             ),
           ],
         ),
