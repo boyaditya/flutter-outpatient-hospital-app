@@ -9,9 +9,7 @@ import 'package:tubes/pages/lihat_janji_temu/histori_janji_temu.dart';
 import 'package:tubes/pages/lihat_janji_temu/rincian_janji_temu.dart';
 
 class JanjiTemuSaya2 extends StatefulWidget {
-  const JanjiTemuSaya2({super.key, required this.title});
-
-  final String title;
+  const JanjiTemuSaya2({super.key});
 
   @override
   State<JanjiTemuSaya2> createState() => _JanjiTemuSaya2State();
@@ -222,14 +220,16 @@ class _JanjiTemuSaya2State extends State<JanjiTemuSaya2> {
                 final specialization = context
                     .read<SpecializationListCubit>()
                     .getSpecializationById(doctor.idSpecialization);
-                final specializationTitle = specialization?.title;
+                final specializationTitle = specialization.title;
                 return TextButton(
                   onPressed: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) =>
-                            const RincianJanjiTemu(),
+                        builder: (context) => RincianJanjiTemu(
+                          appointmentId: appointment.id,
+                          from: 'dashboard',
+                        ),
                       ),
                     );
                   },
@@ -278,7 +278,7 @@ class _JanjiTemuSaya2State extends State<JanjiTemuSaya2> {
                           textAlign: TextAlign.left,
                         ),
                         Text(
-                          specializationTitle!,
+                          specializationTitle,
                           style: const TextStyle(
                               fontSize: 13, color: Colors.black),
                           textAlign: TextAlign.left,

@@ -67,7 +67,7 @@ class AppointmentCubit extends Cubit<List<AppointmentModel>> {
 
   List<AppointmentModel> _appointmentCache = [];
 
-  Future<void> postAppointment(AppointmentModel appointment) async {
+  Future<int> postAppointment(AppointmentModel appointment) async {
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String? accessToken = prefs.getString('access_token');
@@ -97,6 +97,7 @@ class AppointmentCubit extends Cubit<List<AppointmentModel>> {
         AppointmentModel appointment =
             AppointmentModel.fromJson(json.decode(response.body));
         emit([...state, appointment]);
+        return appointment.id;
 
         // print(response.body);
       } else {
@@ -145,5 +146,11 @@ class AppointmentCubit extends Cubit<List<AppointmentModel>> {
 
   AppointmentModel getAppointmentById(int id) {
     return _appointmentCache[id];
+  }
+
+  int getAppointmentByStatus() {
+    return _appointmentCache
+        .lastWhere((element) => element.status == "Scheduled")
+        .id;
   }
 }

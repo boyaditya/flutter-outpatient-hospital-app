@@ -115,7 +115,7 @@ class _CariDokterState extends State<CariDokter> {
                         final specialization = specializationCubit
                             .getSpecializationById(doctor.idSpecialization);
                         final specializationTitle =
-                            specialization?.title ?? 'Unknown';
+                            specialization.title;
                         return DoctorButton(
                           icon: Icons.person,
                           dokter: doctor.name,

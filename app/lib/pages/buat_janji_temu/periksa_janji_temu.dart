@@ -190,8 +190,18 @@ class _PeriksaJanjiTemuState extends State<PeriksaJanjiTemu> {
                     initialSelection: spesialisasiValue),
                 const SizedBox(height: 120),
                 ElevatedButton(
-                  onPressed: () {
-                    performCreateAppointment(context);
+                  onPressed: () async {
+                    final navigator = Navigator.of(context);
+
+                    int newAppointmentId = await performCreateAppointment();
+                    navigator.push(
+                      MaterialPageRoute(
+                        builder: (context) => RincianJanjiTemu(
+                          appointmentId: newAppointmentId,
+                          from: 'periksa_janji_temu',
+                        ),
+                      ),
+                    );
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.blue,
@@ -213,38 +223,27 @@ class _PeriksaJanjiTemuState extends State<PeriksaJanjiTemu> {
     );
   }
 
-  Future<void> performCreateAppointment(BuildContext context) async {
+  Future<int> performCreateAppointment() async {
+    final appointment = AppointmentModel(
+      id: 0,
+      timestamp: '',
+      doctorId: widget.doctorId,
+      patientId: widget.patientId,
+      date: widget.selectedDate,
+      time: widget.scheduleTime,
+      coverageType: spesialisasiValue,
+      status: 'Scheduled',
+      queueNumber: 0,
+    );
+
     try {
-      final appointment = AppointmentModel(
-        id: 0,
-        timestamp: '',
-        doctorId: widget.doctorId,
-        patientId: widget.patientId,
-        date: widget.selectedDate,
-        time: widget.scheduleTime,
-        coverageType: spesialisasiValue,
-        status: 'Scheduled',
-        queueNumber: 0,
-      );
-
-      // print();
-
-      await context.read<AppointmentCubit>().postAppointment(appointment);
-
+      int id =
+          await context.read<AppointmentCubit>().postAppointment(appointment);
       showSuccessMessage('Janji temu berhasil dibuat');
-
-      if (mounted) {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) =>
-                const RincianJanjiTemu(),
-          ),
-        );
-      }
+      return id;
     } catch (e) {
-      print(e);
       showErrorMessage('Gagal membuat janji temu');
+      return 0;
       // Handle the error
     }
   }

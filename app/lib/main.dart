@@ -31,7 +31,7 @@ import 'package:tubes/pages/login_forgot_reset/kata_sandi_baru.dart';
 import 'package:tubes/pages/login_forgot_reset/reset_success.dart';
 import 'package:tubes/pages/lihat_janji_temu/histori_janji_temu.dart';
 // import 'package:tubes/pages/lihat_janji_temu/rincian_janji_temu.dart';
-import 'package:tubes/pages/lihat_janji_temu/janji_temu_saya2.dart';
+// import 'package:tubes/pages/lihat_janji_temu/janji_temu_saya2.dart';
 // import 'package:tubes/pages/profile/edit_profile.dart';
 
 import 'package:tubes/pages/registrasi_pasien/registrasi_pasien.dart';
@@ -145,13 +145,13 @@ class MyApp extends StatelessWidget {
         //     const ProfilPasien(title: 'Profil Pasien'),
         // '/periksa_janji_temu': (context) =>
         //     const PeriksaJanjiTemu(title: 'Periksa Janji Temu'),
-        '/dashboard': (context) => const Dashboard(title: 'Dashboard'),
+        // '/dashboard': (context) => const Dashboard(),
         '/histori_janji': (context) =>
             const HistoriJanjiTemu(title: 'Histori Janji Temu'),
         // '/rincian_janji': (context) =>
             // const RincianJanjiTemu(title: 'Rincian Janji Temu'),
-        '/janji_temu_saya2': (context) =>
-            const JanjiTemuSaya2(title: 'Janji Temu Saya 2'),
+        // '/janji_temu_saya2': (context) =>
+        //     const JanjiTemuSaya2(),
         '/buat_akun': (context) => const BuatAkun(),
         '/data_diri': (context) => const DataDiri(),
         '/konfirm_email': (context) => const KonfirmasiEmail(),

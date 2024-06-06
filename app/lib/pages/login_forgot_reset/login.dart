@@ -203,7 +203,7 @@ class _LoginState extends State<Login> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => const Dashboard(title: 'Dashboard'),
+            builder: (context) => const Dashboard(),
           ),
         );
       }
@@ -224,7 +224,7 @@ class _LoginState extends State<Login> {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-            builder: (context) => const Dashboard(title: 'Dashboard'),
+            builder: (context) => const Dashboard(),
           ),
         );
       }

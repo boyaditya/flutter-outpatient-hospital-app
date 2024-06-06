@@ -96,7 +96,7 @@ class SpecializationListCubit extends Cubit<List<SpecializationModel>> {
     }
   }
 
-  SpecializationModel? getSpecializationById(int id) {
-    return _specializationCache[id];
+  SpecializationModel getSpecializationById(int id) {
+    return _specializationCache[id]!;
   }
 }

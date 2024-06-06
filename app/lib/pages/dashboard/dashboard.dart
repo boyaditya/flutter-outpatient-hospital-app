@@ -19,8 +19,8 @@ import 'package:tubes/pages/profile/profile.dart';
 import '../../cubits/doctor_cubit.dart';
 
 class Dashboard extends StatefulWidget {
-  const Dashboard({super.key, required this.title});
-  final String title;
+  const Dashboard({super.key, this.initialIndex = 0});
+  final int initialIndex;
 
   @override
   State<Dashboard> createState() => _DashboardState();
@@ -33,7 +33,7 @@ class _DashboardState extends State<Dashboard> {
     const Home(
       title: "Dashboard",
     ),
-    const JanjiTemuSaya2(title: "Janji Temu Saya 2"),
+    const JanjiTemuSaya2(),
     const RekamMedis(),
     ProfilScreen(),
   ];
@@ -53,14 +53,13 @@ class _DashboardState extends State<Dashboard> {
   //   userCubit.fetchUserById();
   // }
 
-
-
   @override
   void initState() {
     super.initState();
+    _currentIndex = widget.initialIndex;
     fetchData();
   }
-  
+
   void fetchData() async {
     await context.read<UserCubit>().fetchUserById();
     await context.read<PatientListCubit>().fetchPatientsByUserId();
