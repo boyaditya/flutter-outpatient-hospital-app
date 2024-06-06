@@ -42,26 +42,30 @@ class AppointmentModel {
 }
 
 class AppointmentCubit extends Cubit<List<AppointmentModel>> {
-  AppointmentCubit() : super([
-    AppointmentModel(
-      id: 0,
-      doctorId: 0,
-      patientId: 0,
-      date: '',
-      time: '',
-      coverageType: '',
-      status: '',
-      timestamp: '',
-      queueNumber: 0,
-    )
-  ]);
+  AppointmentCubit()
+      : super([
+          AppointmentModel(
+            id: 0,
+            doctorId: 0,
+            patientId: 0,
+            date: '',
+            time: '',
+            coverageType: '',
+            status: '',
+            timestamp: '',
+            queueNumber: 0,
+          )
+        ]);
 
   void setFromJson(List<dynamic> json) {
     List<AppointmentModel> appointments =
         json.map((item) => AppointmentModel.fromJson(item)).toList();
 
+    _appointmentCache = appointments;
     emit(appointments);
   }
+
+  List<AppointmentModel> _appointmentCache = [];
 
   Future<void> postAppointment(AppointmentModel appointment) async {
     try {
@@ -90,7 +94,8 @@ class AppointmentCubit extends Cubit<List<AppointmentModel>> {
       );
 
       if (response.statusCode == 201) {
-        AppointmentModel appointment = AppointmentModel.fromJson(json.decode(response.body));
+        AppointmentModel appointment =
+            AppointmentModel.fromJson(json.decode(response.body));
         emit([...state, appointment]);
 
         // print(response.body);
@@ -102,17 +107,19 @@ class AppointmentCubit extends Cubit<List<AppointmentModel>> {
     }
   }
 
-  Future<void> fetchAppointments() async {
+  Future<void> fetchAppointmentsByPatientId() async {
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String? accessToken = prefs.getString('access_token');
+      int? patientId = prefs.getInt('patient_id');
+      print(patientId);
 
       if (accessToken == null) {
         throw Exception('No access token found');
       }
 
       final response = await http.get(
-        Uri.parse('http://127.0.0.1:8000/appointments/'),
+        Uri.parse('http://127.0.0.1:8000/appointments/patient/$patientId'),
         headers: {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer $accessToken',
@@ -123,10 +130,20 @@ class AppointmentCubit extends Cubit<List<AppointmentModel>> {
         List<dynamic> responseBody = json.decode(response.body);
         setFromJson(responseBody);
       } else {
-        throw Exception('Failed to load appointments');
+        if (response.statusCode == 404) {
+          emit([]);
+          print('No appointments found');
+        } else {
+          throw Exception(
+              'Failed to load appointmentszz: ${response.statusCode}');
+        }
       }
     } catch (e) {
-      throw Exception('Failed to load appointments: $e');
+      print('Failed to load appointments: $e');
     }
+  }
+
+  AppointmentModel getAppointmentById(int id) {
+    return _appointmentCache[id];
   }
 }

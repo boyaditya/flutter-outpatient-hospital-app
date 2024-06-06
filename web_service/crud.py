@@ -47,6 +47,8 @@ def get_specializations(db: Session):
 def get_specialization_by_id(db: Session, specialization_id: int):
     return db.query(models.Specialization).filter(models.Specialization.id == specialization_id).first()
 
+def get_doctor_schedules(db: Session):
+    return db.query(models.DoctorSchedule).all()
 
 def get_doctor_schedules_by_doctor_id(db: Session, doctor_id: int) -> models.DoctorSchedule:
     return db.query(models.DoctorSchedule).filter(models.DoctorSchedule.doctor_id == doctor_id).all()
@@ -137,6 +139,14 @@ def get_appointments_by_patient_id(db: Session, patient_id: int):
         db.query(models.Appointment)
         .filter(models.Appointment.patient_id == patient_id)
         .all()
+    )
+    
+def get_appointments_scheduled_by_patient_id(db: Session, patient_id: int):
+    return (
+        db.query(models.Appointment)
+        .filter(models.Appointment.patient_id == patient_id)
+        .filter(models.Appointment.status == "Scheduled")
+        .first()
     )
 
 

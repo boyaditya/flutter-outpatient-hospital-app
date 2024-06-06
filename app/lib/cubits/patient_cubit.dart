@@ -122,6 +122,12 @@ class PatientListCubit extends Cubit<List<PatientModel>> {
       await prefs.setString('patients', patientsJson);
 
       // print(response.body);
+      if (patients.isNotEmpty) {
+        await prefs.setInt('patient_id', patients[0].id);
+      }
+
+      int? patientId = prefs.getInt('patient_id');
+      print('Patient ID: $patientId');
 
       emit(patients);
     } else {

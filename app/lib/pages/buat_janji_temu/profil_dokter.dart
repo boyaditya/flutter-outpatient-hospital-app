@@ -27,25 +27,26 @@ class ProfilDokter extends StatefulWidget {
 class _ProfilDokterState extends State<ProfilDokter> {
   late Future<List<DoctorScheduleModel>> futureSchedule;
 
-  void initState() {
-    super.initState();
-    print('Doctor ID: ${widget.doctorId}'); // print the doctorId
-    futureSchedule = context
-        .read<DoctorScheduleCubit>()
-        .fetchDoctorSchedule(widget.doctorId);
-    futureSchedule.then((schedule) {
-      print('Schedule: $schedule'); // print the schedule
-      schedule.forEach((item) {
-        print(
-            'Day: ${item.day}, Time: ${item.time}'); // print the day and time of each item
-      });
-    }).catchError((error) {
-      print('Error: $error'); // print the error if any
-    });
-  }
+  // void initState() {
+  //   super.initState();
+  //   print('Doctor ID: ${widget.doctorId}'); // print the doctorId
+  //   futureSchedule = context
+  //       .read<DoctorScheduleCubit>()
+  //       .fetchDoctorScheduleByDoctorId(widget.doctorId);
+  //   futureSchedule.then((schedule) {
+  //     print('Schedule: $schedule'); // print the schedule
+  //     schedule.forEach((item) {
+  //       print(
+  //           'Day: ${item.day}, Time: ${item.time}'); // print the day and time of each item
+  //     });
+  //   }).catchError((error) {
+  //     print('Error: $error'); // print the error if any
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
+    // context.read<DoctorScheduleCubit>().getDoctorScheduleById(widget.doctorId);
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -124,25 +125,29 @@ class _ProfilDokterState extends State<ProfilDokter> {
                         "Jadwal Regular\n",
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
-                      FutureBuilder<List<DoctorScheduleModel>>(
-                        future: futureSchedule,
-                        builder: (context, snapshot) {
-                          if (snapshot.hasData) {
+                      BlocBuilder<DoctorScheduleCubit,
+                          List<DoctorScheduleModel>>(
+                        builder: (context, state) {
+                          try {
+                            // Get all schedules for the doctor
+                            List<DoctorScheduleModel> doctorSchedules = state
+                                .where((schedule) =>
+                                    schedule.doctorId == widget.doctorId)
+                                .toList();
+
+                            // Return a Column with a ScheduleItem for each schedule
                             return Column(
-                              children: snapshot.data!.map((item) {
+                              children: doctorSchedules.map((schedule) {
                                 return ScheduleItem(
-                                  day: item.day,
-                                  time: item.time,
+                                  day: schedule.day,
+                                  time: schedule.time,
                                 );
                               }).toList(),
                             );
-                          } else if (snapshot.hasError) {
+                          } catch (e) {
                             return Text(
-                                'Error: ${snapshot.error}'); // show error message if an error occurred
+                                'Error: $e'); // show error message if an error occurred
                           }
-                          return const Center(
-                            child: CircularProgressIndicator(),
-                          );
                         },
                       ),
                       const SizedBox(height: 30),

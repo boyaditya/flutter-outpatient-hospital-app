@@ -1,4 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
+import 'package:tubes/cubits/appointment_cubit.dart';
+import 'package:tubes/cubits/doctor_cubit.dart';
+import 'package:tubes/cubits/patient_cubit.dart';
+import 'package:tubes/cubits/specialization_cubit.dart';
 import 'package:tubes/pages/lihat_janji_temu/histori_janji_temu.dart';
 import 'package:tubes/pages/lihat_janji_temu/rincian_janji_temu.dart';
 
@@ -65,7 +71,7 @@ class _JanjiTemuSaya2State extends State<JanjiTemuSaya2> {
                           400, // Add this line to set the width of the Container
                       padding: const EdgeInsets.all(20),
                       decoration: BoxDecoration(
-                        color: Color.fromRGBO(96, 192, 227, 1),
+                        color: const Color.fromRGBO(96, 192, 227, 1),
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child: Center(
@@ -84,7 +90,7 @@ class _JanjiTemuSaya2State extends State<JanjiTemuSaya2> {
                     left: 60, // Atur posisi awal ke tepi kiri
                     right: 240, // Atur posisi akhir ke tepi kanan
                     child: AnimatedContainer(
-                      duration: Duration(milliseconds: 300),
+                      duration: const Duration(milliseconds: 300),
                       height:
                           _selectedTabIndex == 0 ? 4 : 0, // Set lebar awal ke 0
 
@@ -96,7 +102,7 @@ class _JanjiTemuSaya2State extends State<JanjiTemuSaya2> {
                     left: 240, // Atur posisi awal ke tepi kiri
                     right: 50, // Atur posisi akhir ke tepi kanan
                     child: AnimatedContainer(
-                      duration: Duration(milliseconds: 300),
+                      duration: const Duration(milliseconds: 300),
                       height:
                           _selectedTabIndex == 1 ? 4 : 0, // Set lebar awal ke 0
 
@@ -106,7 +112,50 @@ class _JanjiTemuSaya2State extends State<JanjiTemuSaya2> {
                 ],
               ),
               const SizedBox(height: 20),
-              _buildIsian()
+              Container(
+                padding: const EdgeInsets.only(top: 10, left: 20, right: 20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      "Janji temu yang akan datang",
+                      style: TextStyle(fontSize: 12, color: Colors.blue),
+                      textAlign: TextAlign.left,
+                    ),
+                    const SizedBox(height: 20),
+                    _buildIsian(),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 15),
+              TextButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          const HistoriJanjiTemu(title: 'Histori Janji Temu'),
+                    ),
+                  );
+                },
+                style: TextButton.styleFrom(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
+                  backgroundColor: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                ),
+                child: Text(
+                  "LIHAT HISTORI JANJI TEMU",
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: Colors.blue[900],
+                    fontWeight: FontWeight.bold,
+                    decoration: TextDecoration.underline,
+                  ),
+                ),
+              ),
             ],
           ),
         ],
@@ -134,138 +183,143 @@ class _JanjiTemuSaya2State extends State<JanjiTemuSaya2> {
   }
 
   Widget _buildIsian() {
-    return Container(
-      padding: const EdgeInsets.only(top: 10, left: 20, right: 20),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Text(
-            "Janji temu yang akan datang",
-            style: TextStyle(fontSize: 12, color: Colors.blue),
-            textAlign: TextAlign.left,
-          ),
-          const SizedBox(height: 20),
-          TextButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) =>
-                      const RincianJanjiTemu(title: 'Rincian Janji Temu'),
-                ),
-              );
-            },
-            style: TextButton.styleFrom(
-              padding: EdgeInsets.zero,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-              ),
-              backgroundColor: Colors.blue[50],
-              shadowColor: Colors.grey,
-              elevation: 4, // Add elevation for shadow effect
-            ),
+    return BlocBuilder<AppointmentCubit, List<AppointmentModel>>(
+      builder: (context, appointments) {
+        if (appointments.isEmpty) {
+          return Center(
             child: Container(
-              padding: const EdgeInsets.all(20),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
+              padding: const EdgeInsets.symmetric(
+                vertical: 8,
+                horizontal: 12,
               ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Row(
-                    children: [
-                      Icon(
-                        Icons.person_4_outlined,
-                        color: Colors.grey,
+              decoration: BoxDecoration(
+                color: Colors.yellow,
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: const Text(
+                'Tidak ada janji temu yang akan datang',
+                style: TextStyle(
+                  fontSize: 13,
+                  color: Colors.black,
+                ),
+              ),
+            ),
+          );
+        }
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            ...appointments
+                .where((appointment) => appointment.status == 'Scheduled')
+                .map(
+              (appointment) {
+                final patient = context
+                    .read<PatientListCubit>()
+                    .getPatientById(appointment.patientId);
+                final doctor = context
+                    .read<DoctorListCubit>()
+                    .getDoctorById(appointment.doctorId);
+                final specialization = context
+                    .read<SpecializationListCubit>()
+                    .getSpecializationById(doctor.idSpecialization);
+                final specializationTitle = specialization?.title;
+                return TextButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            const RincianJanjiTemu(),
                       ),
-                      SizedBox(width: 8),
-                      Text(
-                        'Rawat Jalan',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18,
-                          color: Colors.grey,
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 10),
-                  const Text(
-                    "John Hendrick\n11 Mar 2024, 11:00-11.30\ndr. Alvin H Hardjawinata, MARS, SpAk",
-                    style: TextStyle(
-                      fontSize: 13,
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
+                    );
+                  },
+                  style: TextButton.styleFrom(
+                    padding: EdgeInsets.zero,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
                     ),
-                    textAlign: TextAlign.left,
+                    backgroundColor: Colors.blue[50],
+                    shadowColor: Colors.grey,
+                    elevation: 4, // Add elevation for shadow effect
                   ),
-                  const Text(
-                    "Spesialis akupuntur",
-                    style: TextStyle(fontSize: 13, color: Colors.black),
-                    textAlign: TextAlign.left,
-                  ),
-                  const SizedBox(height: 10),
-                  Container(
-                    width: 300,
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 8,
-                      horizontal: 12,
-                    ),
+                  child: Container(
+                    padding: const EdgeInsets.all(20),
                     decoration: BoxDecoration(
-                      color: Colors.yellow,
-                      borderRadius: BorderRadius.circular(8),
+                      borderRadius: BorderRadius.circular(10),
                     ),
-                    child: const Row(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Icon(
-                          Icons.info_outline,
-                          color: Colors.black,
+                        const Row(
+                          children: [
+                            Icon(
+                              Icons.person_4_outlined,
+                              color: Colors.grey,
+                            ),
+                            SizedBox(width: 8),
+                            Text(
+                              'Rawat Jalan',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18,
+                                color: Colors.grey,
+                              ),
+                            ),
+                          ],
                         ),
-                        SizedBox(width: 8),
+                        const SizedBox(height: 10),
                         Text(
-                          'Silahkan menuju ke front office',
-                          style: TextStyle(
+                          "${patient.name}\n${DateFormat('EEEE, dd MMMM yyyy', 'id').format(DateTime.parse(appointment.date))}, ${appointment.time} WIB\n${doctor.name}",
+                          style: const TextStyle(
                             fontSize: 13,
                             color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          textAlign: TextAlign.left,
+                        ),
+                        Text(
+                          specializationTitle!,
+                          style: const TextStyle(
+                              fontSize: 13, color: Colors.black),
+                          textAlign: TextAlign.left,
+                        ),
+                        const SizedBox(height: 10),
+                        Container(
+                          width: 300,
+                          padding: const EdgeInsets.symmetric(
+                            vertical: 8,
+                            horizontal: 12,
+                          ),
+                          decoration: BoxDecoration(
+                            color: Colors.yellow,
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: const Row(
+                            children: [
+                              Icon(
+                                Icons.info_outline,
+                                color: Colors.black,
+                              ),
+                              SizedBox(width: 8),
+                              Text(
+                                'Silahkan menuju ke front office',
+                                style: TextStyle(
+                                  fontSize: 13,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       ],
                     ),
                   ),
-                ],
-              ),
+                );
+              },
             ),
-          ),
-          const SizedBox(height: 15),
-          TextButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) =>
-                      const HistoriJanjiTemu(title: 'Histori Janji Temu'),
-                ),
-              );
-            },
-            style: TextButton.styleFrom(
-              padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
-              backgroundColor: Colors.white,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20),
-              ),
-            ),
-            child: Text(
-              "LIHAT HISTORI JANJI TEMU",
-              style: TextStyle(
-                fontSize: 14,
-                color: Colors.blue[900],
-                fontWeight: FontWeight.bold,
-                decoration: TextDecoration.underline,
-              ),
-            ),
-          ),
-        ],
-      ),
+          ],
+        );
+      },
     );
   }
 }

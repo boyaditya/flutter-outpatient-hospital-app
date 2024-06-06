@@ -27,35 +27,36 @@ class _PilihJadwalState extends State<PilihJadwal> {
   List<int> days = [];
   Map<int, String> scheduleTimeMap = {};
 
-  @override
-  void initState() {
-    super.initState();
-    futureSchedule = context
-        .read<DoctorScheduleCubit>()
-        .fetchDoctorSchedule(widget.doctorId);
-    futureSchedule.then((schedule) {
-      setState(() {
-        // Mapping from Bahasa days to weekday numbers
-        Map<String, int> dayToNumber = {
-          'Minggu': 0,
-          'Senin': 1,
-          'Selasa': 2,
-          'Rabu': 3,
-          'Kamis': 4,
-          'Jumat': 5,
-          'Sabtu': 6,
-        };
-
-        days = schedule.map((item) => dayToNumber[item.day]!).toList();
-        scheduleTimeMap = {
-          for (var item in schedule) dayToNumber[item.day]!: item.time
-        };
-      });
-    });
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  // }
 
   @override
   Widget build(BuildContext context) {
+    // futureSchedule = context
+    //     .read<DoctorScheduleCubit>()
+    //     .fetchDoctorScheduleByDoctorId(widget.doctorId);
+    // futureSchedule.then((schedule) {
+    //   setState(() {
+    //     // Mapping from Bahasa days to weekday numbers
+    //     Map<String, int> dayToNumber = {
+    //       'Minggu': 0,
+    //       'Senin': 1,
+    //       'Selasa': 2,
+    //       'Rabu': 3,
+    //       'Kamis': 4,
+    //       'Jumat': 5,
+    //       'Sabtu': 6,
+    //     };
+
+    //     days = schedule.map((item) => dayToNumber[item.day]!).toList();
+    //     scheduleTimeMap = {
+    //       for (var item in schedule) dayToNumber[item.day]!: item.time
+    //     };
+    //   });
+    // });
+
     String dateString = _dates.toIso8601String().split('T')[0];
     String? scheduleTime = scheduleTimeMap[_dates.weekday];
     // print(dateString);
@@ -137,24 +138,42 @@ class _PilihJadwalState extends State<PilihJadwal> {
                         "Jadwal Regular\n",
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
-                      FutureBuilder<List<DoctorScheduleModel>>(
-                        future: futureSchedule,
-                        builder: (context, snapshot) {
-                          if (snapshot.hasData) {
-                            return Column(
-                              children: snapshot.data!.map((item) {
-                                return ScheduleItem(
-                                  day: item.day,
-                                  time: item.time,
-                                );
-                              }).toList(),
-                            );
-                          } else if (snapshot.hasError) {
-                            return Text(
-                                'Error: ${snapshot.error}'); // show error message if an error occurred
-                          }
-                          return const Center(
-                            child: CircularProgressIndicator(),
+                      BlocBuilder<DoctorScheduleCubit,
+                          List<DoctorScheduleModel>>(
+                        builder: (context, state) {
+                          // Get all schedules for the doctor
+                          List<DoctorScheduleModel> doctorSchedules = context
+                              .read<DoctorScheduleCubit>()
+                              .getDoctorScheduleByDoctorId(widget.doctorId);
+
+                          // Mapping from Bahasa days to weekday numbers
+                          Map<String, int> dayToNumber = {
+                            'Minggu': 0,
+                            'Senin': 1,
+                            'Selasa': 2,
+                            'Rabu': 3,
+                            'Kamis': 4,
+                            'Jumat': 5,
+                            'Sabtu': 6,
+                          };
+
+                          days = doctorSchedules
+                              .map((item) => dayToNumber[item.day]!)
+                              .toList();
+                          scheduleTimeMap = {
+                            for (var item in doctorSchedules)
+                              dayToNumber[item.day]!: item.time
+                          };
+
+                          // Use the 'days' and 'scheduleTimeMap' variables here to build your widget
+                          // ...
+                          return Column(
+                            children: doctorSchedules.map((item) {
+                              return ScheduleItem(
+                                day: item.day,
+                                time: item.time,
+                              );
+                            }).toList(),
                           );
                         },
                       ),

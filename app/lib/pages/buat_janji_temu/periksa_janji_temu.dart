@@ -227,21 +227,21 @@ class _PeriksaJanjiTemuState extends State<PeriksaJanjiTemu> {
         queueNumber: 0,
       );
 
-      print(appointment.patientId);
+      // print();
 
       await context.read<AppointmentCubit>().postAppointment(appointment);
 
       showSuccessMessage('Janji temu berhasil dibuat');
 
-      // if (mounted) {
-      //   Navigator.push(
-      //     context,
-      //     MaterialPageRoute(
-      //       builder: (context) =>
-      //           const RincianJanjiTemu(title: 'Rincian Janji Temu'),
-      //     ),
-      //   );
-      // }
+      if (mounted) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) =>
+                const RincianJanjiTemu(),
+          ),
+        );
+      }
     } catch (e) {
       print(e);
       showErrorMessage('Gagal membuat janji temu');

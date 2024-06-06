@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:tubes/pages/lihat_janji_temu/janji_temu_saya2.dart';
 
 class RincianJanjiTemu extends StatefulWidget {
-  const RincianJanjiTemu({super.key, required this.title});
+  const RincianJanjiTemu({super.key});
 
-  final String title;
 
   @override
   State<RincianJanjiTemu> createState() => _RincianJanjiTemuState();

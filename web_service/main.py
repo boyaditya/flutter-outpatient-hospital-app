@@ -235,6 +235,15 @@ async def read_specialization_image(
     return FileResponse(img_path)
 
 
+@app.get("/doctor_schedules/", response_model=List[schemas.DoctorSchedule])
+async def read_doctor_schedules(db: Session = Depends(get_db), token: str = Depends(oauth2_scheme)):
+    try:
+        payload = verify_token(token)
+    except HTTPException as e:
+        raise e
+    return crud.get_doctor_schedules(db)
+
+
 @app.get("/doctor_schedules/{doctor_id}", response_model=List[schemas.DoctorSchedule])
 async def read_doctor_schedules(
     doctor_id: int, db: Session = Depends(get_db), token: str = Depends(oauth2_scheme)
@@ -247,6 +256,8 @@ async def read_doctor_schedules(
     if not schedule:
         raise HTTPException(status_code=404, detail="Doctor schedules not found")
     return schedule
+
+
 
 
 @app.get("/medical_records/{record_id}", response_model=schemas.MedicalRecord)
@@ -422,6 +433,21 @@ async def read_appointments_by_patient_id(
         )
     return appointments
 
+
+@app.get("/appointments/scheduled/patient/{patient_id}", response_model=schemas.Appointment)
+async def read_appointments_scheduled_by_patient_id(
+    patient_id: int, db: db_dependency, token: str = Depends(oauth2_scheme)
+):
+    try:
+        payload = verify_token(token)
+    except HTTPException as e:
+        raise e
+    appointment = crud.get_appointments_scheduled_by_patient_id(db, patient_id)
+    if not appointment:
+        raise HTTPException(
+            status_code=404, detail="Scheduled appointment not found for this patient"
+        )
+    return appointment
 
 @app.post("/set_status_cancelled/{appointment_id}", response_model=schemas.Appointment)
 async def set_status_cancelled(

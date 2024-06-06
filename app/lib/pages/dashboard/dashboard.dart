@@ -1,14 +1,22 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tubes/cubits/appointment_cubit.dart';
 import 'package:tubes/cubits/patient_cubit.dart';
+import 'package:tubes/cubits/specialization_cubit.dart';
 import 'package:tubes/cubits/user_cubit.dart';
+import 'package:tubes/cubits/doctor_schedule_cubit.dart';
+
 import 'package:tubes/pages/buat_janji_temu/cari_dokter.dart';
 import 'package:tubes/pages/infors/infors.dart';
 import 'package:tubes/pages/lihat_janji_temu/janji_temu_saya2.dart';
 import 'package:tubes/pages/rekam_medis/rekam_medis.dart';
 import 'package:tubes/pages/profile/profile.dart';
+
+import '../../cubits/doctor_cubit.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({super.key, required this.title});
@@ -37,12 +45,29 @@ class _DashboardState extends State<Dashboard> {
   }
 
   @override
+  // void initState() {
+  //   super.initState();
+  //   // Get the UserCubit instance
+  //   final userCubit = BlocProvider.of<UserCubit>(context, listen: false);
+  //   // Call the fetchUserById function
+  //   userCubit.fetchUserById();
+  // }
+
+
+
+  @override
   void initState() {
     super.initState();
-    // Get the UserCubit instance
-    final userCubit = BlocProvider.of<UserCubit>(context, listen: false);
-    // Call the fetchUserById function
-    userCubit.fetchUserById();
+    fetchData();
+  }
+  
+  void fetchData() async {
+    await context.read<UserCubit>().fetchUserById();
+    await context.read<PatientListCubit>().fetchPatientsByUserId();
+    await context.read<DoctorListCubit>().fetchDoctors();
+    await context.read<SpecializationListCubit>().fetchSpecializations();
+    await context.read<DoctorScheduleCubit>().fetchDoctorSchedule();
+    await context.read<AppointmentCubit>().fetchAppointmentsByPatientId();
   }
 
   @override
@@ -155,15 +180,15 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   int _currentIndex = 0;
 
-  @override
-  void initState() {
-    super.initState();
-    // Get the PatientListCubit instance
-    final patientListCubit =
-        BlocProvider.of<PatientListCubit>(context, listen: false);
-    // Call the fetchPatientsByUserId function
-    patientListCubit.fetchPatientsByUserId();
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   // Get the PatientListCubit instance
+  //   final patientListCubit =
+  //       BlocProvider.of<PatientListCubit>(context, listen: false);
+  //   // Call the fetchPatientsByUserId function
+  //   patientListCubit.fetchPatientsByUserId();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -305,8 +330,7 @@ class _HomeState extends State<Home> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) =>
-                            const CariDokter(),
+                        builder: (context) => const CariDokter(),
                       ),
                     );
                   },
@@ -362,8 +386,7 @@ class _HomeState extends State<Home> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) =>
-                          const CariDokter(),
+                      builder: (context) => const CariDokter(),
                     ),
                   );
                 },
