@@ -1,9 +1,11 @@
 from sqlalchemy.orm import Session
 import models, schemas
 import bcrypt
+from sqlalchemy import func
 
 # SALT = b'$2b$12$0nFckzktMD0Fb16a8JsNA.'
-SALT = b'$2b$12$/bGt5NNwhngAxpF2Txdf5u'
+SALT = b"$2b$12$/bGt5NNwhngAxpF2Txdf5u"
+
 
 def get_user_by_email(db: Session, email: str):
     return db.query(models.User).filter(models.User.email == email).first()
@@ -25,8 +27,13 @@ def get_doctors(db: Session):
 def get_doctors_by_id(db: Session, doctors_id: int):
     return db.query(models.Doctor).filter(models.Doctor.id == doctors_id).first()
 
+
 def get_doctor_by_name(db: Session, doctor_name: str):
-    return db.query(models.Doctor).filter(models.Doctor.name.ilike(f"%{doctor_name}%")).all()
+    return (
+        db.query(models.Doctor)
+        .filter(models.Doctor.name.ilike(f"%{doctor_name}%"))
+        .all()
+    )
 
 
 def get_user_by_id(db: Session, user_id: int):
@@ -41,30 +48,59 @@ def delete_user_by_id(db: Session, user_id: int):
         return user
     return None
 
+
 def get_specializations(db: Session):
     return db.query(models.Specialization).all()
 
+
 def get_specialization_by_id(db: Session, specialization_id: int):
-    return db.query(models.Specialization).filter(models.Specialization.id == specialization_id).first()
+    return (
+        db.query(models.Specialization)
+        .filter(models.Specialization.id == specialization_id)
+        .first()
+    )
+
 
 def get_doctor_schedules(db: Session):
     return db.query(models.DoctorSchedule).all()
 
-def get_doctor_schedules_by_doctor_id(db: Session, doctor_id: int) -> models.DoctorSchedule:
-    return db.query(models.DoctorSchedule).filter(models.DoctorSchedule.doctor_id == doctor_id).all()
+
+def get_doctor_schedules_by_doctor_id(
+    db: Session, doctor_id: int
+) -> models.DoctorSchedule:
+    return (
+        db.query(models.DoctorSchedule)
+        .filter(models.DoctorSchedule.doctor_id == doctor_id)
+        .all()
+    )
 
 
 def get_medical_record_by_id(db: Session, record_id: int):
-    return db.query(models.MedicalRecord).filter(models.MedicalRecord.id == record_id).first()
+    return (
+        db.query(models.MedicalRecord)
+        .filter(models.MedicalRecord.id == record_id)
+        .first()
+    )
 
 
-def get_medical_record_by_patient_id(db: Session, patient_id: int) -> models.MedicalRecord:
-    medical_record = db.query(models.MedicalRecord).filter(models.MedicalRecord.appointment.has(patient_id=patient_id)).first()
+def get_medical_record_by_patient_id(
+    db: Session, patient_id: int
+) -> models.MedicalRecord:
+    medical_record = (
+        db.query(models.MedicalRecord)
+        .filter(models.MedicalRecord.appointment.has(patient_id=patient_id))
+        .first()
+    )
     return medical_record
 
 
 def create_rating(db: Session, ratings: schemas.RatingCreate):
-    db_ratings = models.Rating(patient_id = ratings.patient_id, rating = ratings.rating, comment = ratings.comment, category = ratings.category)
+    db_ratings = models.Rating(
+        patient_id=ratings.patient_id,
+        rating=ratings.rating,
+        comment=ratings.comment,
+        category=ratings.category,
+    )
     db.add(db_ratings)
     db.commit()
     db.refresh(db_ratings)
@@ -85,6 +121,7 @@ def create_patient(db: Session, patient: schemas.PatientCreate):
 
 def get_patients(db: Session):
     return db.query(models.Patient).all()
+
 
 def get_patients_by_user_id(db: Session, user_id: int):
     return db.query(models.Patient).filter(models.Patient.user_id == user_id).all()
@@ -118,11 +155,49 @@ def delete_patient_by_id(db: Session, patient_id: int):
     return None
 
 
+# def create_appointment(db: Session, appointment: schemas.AppointmentCreate):
+#     db_appointment = models.Appointment(**appointment.dict())
+#     db.add(db_appointment)
+#     db.commit()
+#     db.refresh(db_appointment)
+#     return db_appointment
+
+
 def create_appointment(db: Session, appointment: schemas.AppointmentCreate):
-    db_appointment = models.Appointment(**appointment.dict())
+    # Get the maximum queue number for the given doctor, date, and time
+    max_queue_number = (
+        db.query(func.max(models.Appointment.queue_number))
+        .filter(
+            models.Appointment.doctor_id == appointment.doctor_id,
+            models.Appointment.date == appointment.date,
+            models.Appointment.time == appointment.time,
+        )
+        .scalar()
+    )
+    
+    print(max_queue_number)
+
+    # If there are no appointments for the given doctor, date, and time, set the queue number to 1
+    if max_queue_number is None:
+        max_queue_number = 1
+    else:
+        max_queue_number += 1
+
+    # Create the new appointment
+    db_appointment = models.Appointment(
+        doctor_id=appointment.doctor_id,
+        patient_id=appointment.patient_id,
+        date=appointment.date,
+        time=appointment.time,
+        coverage_type=appointment.coverage_type,
+        status=appointment.status,
+        queue_number=max_queue_number,
+    )
+
     db.add(db_appointment)
     db.commit()
     db.refresh(db_appointment)
+
     return db_appointment
 
 
@@ -140,7 +215,8 @@ def get_appointments_by_patient_id(db: Session, patient_id: int):
         .filter(models.Appointment.patient_id == patient_id)
         .all()
     )
-    
+
+
 def get_appointments_scheduled_by_patient_id(db: Session, patient_id: int):
     return (
         db.query(models.Appointment)
@@ -173,7 +249,11 @@ def update_appointment_status(db: Session, appointment_id: int, new_status: str)
 
 
 def delete_appointment_by_id(db: Session, appointment_id: int):
-    appointment = db.query(models.Appointment).filter(models.Appointment.id == appointment_id).first()
+    appointment = (
+        db.query(models.Appointment)
+        .filter(models.Appointment.id == appointment_id)
+        .first()
+    )
     if not appointment:
         return None
     db.delete(appointment)

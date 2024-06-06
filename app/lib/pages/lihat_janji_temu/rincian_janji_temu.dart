@@ -7,7 +7,6 @@ import 'package:tubes/cubits/patient_cubit.dart';
 import 'package:tubes/cubits/specialization_cubit.dart';
 import 'package:tubes/pages/dashboard/dashboard.dart';
 
-
 class RincianJanjiTemu extends StatefulWidget {
   const RincianJanjiTemu(
       {super.key, required this.from, required this.appointmentId});
@@ -81,98 +80,107 @@ class _RincianJanjiTemuState extends State<RincianJanjiTemu> {
           ),
           Padding(
             padding: const EdgeInsets.all(20.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                // Barcode
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    boxShadow: const [
-                      BoxShadow(
-                        color: Colors.grey,
-                        blurRadius: 4.0,
-                        offset: Offset(-2, 2),
+            child: BlocBuilder<AppointmentCubit, List<AppointmentModel>>(
+                builder: (context, state) {
+              final appointment = state.firstWhere(
+                  (appointment) => appointment.id == widget.appointmentId);
+              final patient = context
+                  .read<PatientListCubit>()
+                  .getPatientById(appointment.patientId);
+              final doctor = context
+                  .read<DoctorListCubit>()
+                  .getDoctorById(appointment.doctorId);
+              final specialization = context
+                  .read<SpecializationListCubit>()
+                  .getSpecializationById(doctor.idSpecialization);
+
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  // Barcode
+                  Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      boxShadow: const [
+                        BoxShadow(
+                          color: Colors.grey,
+                          blurRadius: 4.0,
+                          offset: Offset(-2, 2),
+                        ),
+                      ],
+                    ),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child: Image.asset(
+                        '../../../assets/images/barcode.png',
+                        height: 250,
+                        width: 250,
                       ),
-                    ],
+                    ),
                   ),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(10),
-                    child: Image.asset(
-                      '../../../assets/images/barcode.png', // Ganti dengan path gambar barcode Anda
-                      height: 300, // Sesuaikan dengan kebutuhan
-                      width: 300, // Sesuaikan dengan kebutuhan
-                    ),
+                  const SizedBox(height: 8),
+                  const Text(
+                    'Nomor Antrian',
+                    style: TextStyle(fontSize: 14),
                   ),
-                ),
-                const SizedBox(
-                    height: 8), // Berikan jarak antara teks berikutnya
-                // Teks
-                const Text(
-                  'Nomor Antrian',
-                  style: TextStyle(fontSize: 14),
-                ),
-                const SizedBox(
-                    height: 8), // Berikan jarak antara teks berikutnya
-                // Teks bold
-                const Text(
-                  '16', // Ganti dengan ID Janji Temu yang sesuai
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                ),
-                const SizedBox(
-                    height: 8), // Berikan jarak antara teks berikutnya
-                const Text(
-                  'Pindai kode QR di Kios untuk Check In',
-                  style: TextStyle(fontSize: 14),
-                ),
-                const SizedBox(height: 20),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    // Teks INFO STATUS
-                    const Text(
-                      "INFO STATUS",
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                    const SizedBox(height: 10),
-                    // Container untuk info status
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: const Color.fromARGB(255, 245, 225, 10),
-                        boxShadow: const [
-                          BoxShadow(
-                            color: Colors.grey,
-                            blurRadius: 4.0,
-                            offset: Offset(-2, 2),
-                          ),
-                        ],
+                  const SizedBox(height: 8),
+                  Text(
+                    appointment.queueNumber.toString(),
+                    style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(height: 8),
+                  const Text(
+                    'Pindai kode QR di Kios untuk Check In',
+                    style: TextStyle(fontSize: 14),
+                  ),
+                  const SizedBox(height: 20),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      // Teks INFO STATUS
+                      const Text(
+                        "INFO STATUS",
+                        style: TextStyle(fontWeight: FontWeight.bold),
                       ),
-                      width: double.infinity,
-                      padding: const EdgeInsets.all(20),
-                      child: const Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Silahkan menuju ke QR Code scanner",
-                            style: TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.bold),
-                          ),
-                          SizedBox(height: 8),
-                          Text(
-                            "Menunggu verifikasi pasien",
-                            style: TextStyle(fontSize: 12),
-                          ),
-                        ],
+                      const SizedBox(height: 10),
+                      // Container untuk info status
+                      Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: const Color.fromARGB(255, 245, 225, 10),
+                          boxShadow: const [
+                            BoxShadow(
+                              color: Colors.grey,
+                              blurRadius: 4.0,
+                              offset: Offset(-2, 2),
+                            ),
+                          ],
+                        ),
+                        width: double.infinity,
+                        padding: const EdgeInsets.all(20),
+                        child: const Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Silahkan menuju ke QR Code scanner",
+                              style: TextStyle(
+                                  fontSize: 16, fontWeight: FontWeight.bold),
+                            ),
+                            SizedBox(height: 8),
+                            Text(
+                              "Menunggu verifikasi pasien",
+                              style: TextStyle(fontSize: 12),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: 20),
-                    const Text(
-                      "INFO PASIEN",
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                    const SizedBox(height: 10),
-                    Container(
+                      const SizedBox(height: 20),
+                      const Text(
+                        "INFO PASIEN",
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      const SizedBox(height: 10),
+                      Container(
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
                           color: Colors.blue[50],
@@ -186,159 +194,107 @@ class _RincianJanjiTemuState extends State<RincianJanjiTemu> {
                         ),
                         width: double.infinity,
                         padding: const EdgeInsets.all(20),
-                        child: BlocBuilder<AppointmentCubit,
-                            List<AppointmentModel>>(
-                          builder: (context, state) {
-                            final appointment = state.firstWhere(
-                                (appointment) =>
-                                    appointment.id == widget.appointmentId);
-                            final patient = context
-                                .read<PatientListCubit>()
-                                .getPatientById(appointment.patientId);
-
-                            return Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                InfoItem(
-                                  label: "NAMA LENGKAP",
-                                  value: patient.name,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            InfoItem(
+                              label: "NAMA LENGKAP",
+                              value: patient.name,
+                            ),
+                            InfoItem(
+                              label: "NOMOR INDUK KEPENDUDUKAN",
+                              value: patient.nik,
+                            ),
+                            InfoItem(
+                              label: "TANGGAL LAHIR",
+                              value: DateFormat('dd MMMM yyyy', 'id').format(
+                                DateTime.parse(
+                                  patient.dateOfBirth.toString(),
                                 ),
-                                InfoItem(
-                                  label: "NOMOR INDUK KEPENDUDUKAN",
-                                  value: patient.nik,
-                                ),
-                                InfoItem(
-                                  label: "TANGGAL LAHIR",
-                                  value:
-                                      DateFormat('dd MMMM yyyy', 'id').format(
-                                    DateTime.parse(
-                                      patient.dateOfBirth.toString(),
-                                    ),
-                                  ),
-                                ),
-                                InfoItem(
-                                  label: "JENIS KELAMIN",
-                                  value: patient.gender,
-                                ),
-                                InfoItem(
-                                  label: "NOMOR PONSEL",
-                                  value: patient.phone,
-                                ),
-                              ],
-                            );
-                          },
-                        )),
-                    const SizedBox(height: 20),
-                    const Text(
-                      "INFO JANJI TEMU",
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                    const SizedBox(height: 10),
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: Colors.blue[50],
-                        boxShadow: const [
-                          BoxShadow(
-                            color: Colors.grey,
-                            blurRadius: 4.0,
-                            offset: Offset(-2, 2),
-                          ),
-                        ],
-                      ),
-                      width: double.infinity,
-                      padding: const EdgeInsets.all(20),
-                      child:
-                          BlocBuilder<AppointmentCubit, List<AppointmentModel>>(
-                        builder: (context, state) {
-                          final appointment = state.firstWhere((appointment) =>
-                              appointment.id == widget.appointmentId);
-
-                          final doctor = context
-                              .read<DoctorListCubit>()
-                              .getDoctorById(appointment.doctorId);
-
-                          final specialization = context
-                              .read<SpecializationListCubit>()
-                              .getSpecializationById(doctor.idSpecialization);
-
-                          return Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              InfoItem(
-                                label: "TANGGAL DAN WAKTU JANJI TEMU",
-                                value:
-                                    "${DateFormat('EEEE, dd MMMM yyyy', 'id').format(DateTime.parse(appointment.date))}, ${appointment.time} WIB",
                               ),
-                              InfoItem(
-                                label: "DOKTER",
-                                value: doctor.name,
-                              ),
-                              InfoItem(
-                                label: "SPESIALIS",
-                                value: specialization.title,
-                              ),
-                            ],
-                          );
-                        },
-                      ),
-                    ),
-                    const SizedBox(height: 20),
-                    const Text(
-                      "INFORMASI PENJAMIN",
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: Colors.blue[50],
-                        boxShadow: const [
-                          BoxShadow(
-                            color: Colors.grey,
-                            blurRadius: 4.0,
-                            offset: Offset(-2, 2),
-                          ),
-                        ],
-                      ),
-                      width: double.infinity,
-                      padding: const EdgeInsets.all(20),
-                      child: const Text(
-                        "Private",
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                    const SizedBox(height: 35),
-                    ElevatedButton(
-                      onPressed: () {
-                        _showConfirmationDialog(context);
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.red,
-                        shape: const RoundedRectangleBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(8))),
-                        fixedSize: Size(
-                          MediaQuery.of(context).size.width,
-                          40,
+                            ),
+                            InfoItem(
+                              label: "JENIS KELAMIN",
+                              value: patient.gender,
+                            ),
+                            InfoItem(
+                              label: "NOMOR PONSEL",
+                              value: patient.phone,
+                            ),
+                          ],
                         ),
                       ),
-                      child: const Text('Batalkan Janji Temu',
-                          style: TextStyle(color: Colors.white)),
-                    ),
-                    const SizedBox(height: 20),
-                    if (widget.from == 'periksa_janji_temu')
+                      const SizedBox(height: 20),
+                      const Text(
+                        "INFO JANJI TEMU",
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      const SizedBox(height: 10),
+                      Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: Colors.blue[50],
+                          boxShadow: const [
+                            BoxShadow(
+                              color: Colors.grey,
+                              blurRadius: 4.0,
+                              offset: Offset(-2, 2),
+                            ),
+                          ],
+                        ),
+                        width: double.infinity,
+                        padding: const EdgeInsets.all(20),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            InfoItem(
+                              label: "TANGGAL DAN WAKTU JANJI TEMU",
+                              value:
+                                  "${DateFormat('EEEE, dd MMMM yyyy', 'id').format(DateTime.parse(appointment.date))}, ${appointment.time} WIB",
+                            ),
+                            InfoItem(
+                              label: "DOKTER",
+                              value: doctor.name,
+                            ),
+                            InfoItem(
+                              label: "SPESIALIS",
+                              value: specialization.title,
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                      const Text(
+                        "INFORMASI PENJAMIN",
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      const SizedBox(height: 10),
+                      Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: Colors.blue[50],
+                          boxShadow: const [
+                            BoxShadow(
+                              color: Colors.grey,
+                              blurRadius: 4.0,
+                              offset: Offset(-2, 2),
+                            ),
+                          ],
+                        ),
+                        width: double.infinity,
+                        padding: const EdgeInsets.all(20),
+                        child:  Text(
+                          appointment.coverageType,
+                          style: const TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      const SizedBox(height: 35),
                       ElevatedButton(
                         onPressed: () {
-                          Navigator.of(context).pushAndRemoveUntil(
-                            MaterialPageRoute(
-                              builder: (context) =>
-                                  const Dashboard(initialIndex: 1),
-                            ),
-                            (Route<dynamic> route) => false,
-                          );
+                          _showConfirmationDialog(context);
                         },
                         style: ElevatedButton.styleFrom(
-                          backgroundColor:
-                              const Color.fromARGB(255, 80, 130, 215),
+                          backgroundColor: Colors.red,
                           shape: const RoundedRectangleBorder(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(8))),
@@ -347,14 +303,41 @@ class _RincianJanjiTemuState extends State<RincianJanjiTemu> {
                             40,
                           ),
                         ),
-                        child: const Text('Lihat Halaman Janji Temu',
+                        child: const Text('Batalkan Janji Temu',
                             style: TextStyle(color: Colors.white)),
                       ),
-                  ],
-                ),
-              ],
-            ),
-          ),
+                      const SizedBox(height: 20),
+                      if (widget.from == 'periksa_janji_temu')
+                        ElevatedButton(
+                          onPressed: () {
+                            Navigator.of(context).pushAndRemoveUntil(
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    const Dashboard(initialIndex: 1),
+                              ),
+                              (Route<dynamic> route) => false,
+                            );
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor:
+                                const Color.fromARGB(255, 80, 130, 215),
+                            shape: const RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(8))),
+                            fixedSize: Size(
+                              MediaQuery.of(context).size.width,
+                              40,
+                            ),
+                          ),
+                          child: const Text('Lihat Halaman Janji Temu',
+                              style: TextStyle(color: Colors.white)),
+                        ),
+                    ],
+                  ),
+                ],
+              );
+            }),
+          )
         ],
       ),
     );
