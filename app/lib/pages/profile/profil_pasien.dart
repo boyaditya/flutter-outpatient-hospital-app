@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:tubes/pages/profile/detail_profile.dart';
-import 'package:tubes/pages/profile/edit_profile.dart';
 import 'package:tubes/pages/registrasi_pasien/registrasi_pasien.dart';
 
 
