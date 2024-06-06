@@ -229,79 +229,52 @@ class CustomContainer extends StatelessWidget {
                   backgroundImage: NetworkImage(imagePath),
                 ),
               ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    name,
-                    style: const TextStyle(
-                      fontSize: 12,
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(height: 6),
-                  Text(
-                    specializationTitle,
-                    style: const TextStyle(
-                      fontSize: 10,
-                      color: Colors.black,
-                    ),
-                  ),
-                  const SizedBox(height: 4),
-                  TextButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) =>
-                              ProfilLengkapDokter(doctorId: id),
-                        ),
-                      );
-                    },
-                    child: Text(
-                      'Lihat Profil Lengkap',
-                      style: TextStyle(
-                        color: Colors.blue[900],
-                        decoration: TextDecoration.underline,
+              const SizedBox(width: 10),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      name,
+                      style: const TextStyle(
+                        fontSize: 12,
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
-                  ),
-                ],
+                    const SizedBox(height: 6),
+                    Text(
+                      specializationTitle,
+                      style: const TextStyle(
+                        fontSize: 10,
+                        color: Colors.black,
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                ProfilLengkapDokter(doctorId: id),
+                          ),
+                        );
+                      },
+                      child: Text(
+                        'Lihat Profil Lengkap',
+                        style: TextStyle(
+                          color: Colors.blue[900],
+                          decoration: TextDecoration.underline,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
         ),
-      ],
-    );
-  }
-}
-
-class ScheduleItem extends StatelessWidget {
-  final String day;
-  final String time;
-
-  const ScheduleItem({
-    super.key,
-    required this.day,
-    required this.time,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-          padding: const EdgeInsets.fromLTRB(8, 2, 8, 2),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(day),
-              Text(time),
-            ],
-          ),
-        ),
-        const Divider(color: Colors.black),
       ],
     );
   }

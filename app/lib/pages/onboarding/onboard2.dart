@@ -50,25 +50,25 @@ class _OnBoarding2State extends State<OnBoarding2> {
                   showSkipButton: true, // Menampilkan tombol "Lewati" pada slide pertama
                 ),
                 OnBoardingSlide(
-                  image: 'assets/images/tanyadokter.png',
-                  title: 'Tanya Dokter',
+                  image: 'assets/images/rekammedis.png',
+                  title: 'Lihat Rekam Medis',
                   description:
-                      'Apakah Anda memiliki pertanyaan kesehatan atau ingin berkonsultasi langsung dengan dokter? Aplikasi kami menyediakan layanan konsultasi dokter secara online, memudahkan Anda untuk mendapatkan jawaban atas pertanyaan Anda tanpa harus datang langsung ke rumah sakit.',
-                  showSkipButton: false, // slide kedua tidak memerlukan tombol "Lewati"
+                      'Kelola kesehatan Anda dengan mudah dan aman. Aplikasi kami memungkinkan Anda mengakses rekam medis Anda kapan saja dan di mana saja.',
+                  showSkipButton: false,
                 ),
               ],
             ),
           ),
-          const SizedBox(height: 10), // Penambahan spasi agar tombol tidak terlalu dekat dengan slide
+          const SizedBox(height: 10), 
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: List.generate(2, (index) => buildDot(index)),
           ),
-          const SizedBox(height: 10), // Penambahan spasi agar tombol tidak terlalu dekat dengan indikator slide
+          const SizedBox(height: 10), 
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              if (_currentPage != 0 && _currentPage == 1) // hanya menampilkan tombol "Kembali" pada slide pertama saja
+              if (_currentPage != 0 && _currentPage == 1) 
                 TextButton(
                   onPressed: () {
                     _pageController.previousPage(
@@ -80,7 +80,7 @@ class _OnBoarding2State extends State<OnBoarding2> {
                     style: TextStyle(color: Colors.blue),
                   ),
                 ),
-              if (_currentPage == 0) // Menampilkan tombol "Lewati" hanya pada slide pertama
+              if (_currentPage == 0) 
                 TextButton(
                   onPressed: () {
                     Navigator.push(
@@ -113,7 +113,7 @@ class _OnBoarding2State extends State<OnBoarding2> {
                   side: const BorderSide(color: Colors.blue),
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 20), // Penambahan padding di sini
+                  padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 20), 
                   child: Text(
                     _currentPage < 1 ? 'Selanjutnya' : 'Mulai',
                     style: const TextStyle(color: Colors.white),
@@ -122,7 +122,7 @@ class _OnBoarding2State extends State<OnBoarding2> {
               ),
             ],
           ),
-          const SizedBox(height: 20), // Penambahan spasi agar tombol tidak terlalu dekat dengan bagian bawah layar
+          const SizedBox(height: 20), 
         ],
       ),
     );
@@ -146,13 +146,12 @@ class OnBoardingSlide extends StatelessWidget {
   final String image;
   final String title;
   final String description;
-  final bool showSkipButton; // Properti untuk menentukan apakah tombol "Lewati" akan ditampilkan
-
+  final bool showSkipButton; 
   const OnBoardingSlide({
     required this.image,
     required this.title,
     required this.description,
-    this.showSkipButton = false, // Default value untuk properti showSkipButton
+    this.showSkipButton = false, 
   });
 
   @override

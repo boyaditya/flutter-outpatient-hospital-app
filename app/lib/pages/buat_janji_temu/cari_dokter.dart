@@ -222,8 +222,7 @@ class DoctorButton extends StatelessWidget {
       style: ElevatedButton.styleFrom(
         foregroundColor: Colors.blue,
         disabledForegroundColor: Colors.grey.withOpacity(0.38),
-        disabledBackgroundColor: Colors.grey.withOpacity(
-            0.12), // This changes the color when the button is pressed
+        disabledBackgroundColor: Colors.grey.withOpacity(0.12),
         padding: const EdgeInsets.all(6),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
@@ -239,44 +238,50 @@ class DoctorButton extends StatelessWidget {
               backgroundImage: NetworkImage(imagePath),
             ),
           ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                dokter,
-                style: const TextStyle(
-                  fontSize: 13,
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const SizedBox(height: 6),
-              Text(
-                spesialis,
-                style: const TextStyle(
-                  fontSize: 11,
-                  color: Colors.black,
-                ),
-              ),
-              const SizedBox(height: 4),
-              Row(
-                children: [
-                  const Icon(
-                    Icons.check_circle,
-                    color: Colors.green,
-                    size: 20,
+          const SizedBox(width: 8),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  dokter,
+                  style: const TextStyle(
+                    fontSize: 13,
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
                   ),
-                  const SizedBox(width: 4),
-                  Text(
-                    availability,
-                    style: const TextStyle(
-                      fontSize: 11,
-                      color: Colors.black,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                const SizedBox(height: 6),
+                Text(
+                  spesialis,
+                  style: const TextStyle(
+                    fontSize: 11,
+                    color: Colors.black,
+                  ),
+                  overflow: TextOverflow.ellipsis,
+                ),
+                const SizedBox(height: 4),
+                Row(
+                  children: [
+                    const Icon(
+                      Icons.check_circle,
+                      color: Colors.green,
+                      size: 20,
                     ),
-                  ),
-                ],
-              ),
-            ],
+                    const SizedBox(width: 4),
+                    Text(
+                      availability,
+                      style: const TextStyle(
+                        fontSize: 11,
+                        color: Colors.black,
+                      ),
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ],
       ),
