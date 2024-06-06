@@ -11,6 +11,33 @@ class RincianJanjiTemu extends StatefulWidget {
 }
 
 class _RincianJanjiTemuState extends State<RincianJanjiTemu> {
+  void _showConfirmationDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Konfirmasi'),
+          content: const Text('Apakah Anda yakin ingin membatalkan janji temu?'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // Tutup dialog
+              },
+              child: const Text('Tidak'),
+            ),
+            TextButton(
+              onPressed: () {
+                // Tambahkan logika untuk membatalkan janji temu di sini
+                Navigator.of(context).pop(); // Tutup dialog
+              },
+              child: const Text('Ya'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   void _showBottomSheet(BuildContext context, List<String> options) {
     showModalBottomSheet(
       context: context,
@@ -63,7 +90,6 @@ class _RincianJanjiTemuState extends State<RincianJanjiTemu> {
           'Rincian Janji Temu',
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
         ),
-
         actions: [
           IconButton(
             onPressed: () {
@@ -71,7 +97,6 @@ class _RincianJanjiTemuState extends State<RincianJanjiTemu> {
             },
             icon: const Icon(Icons.help),
           ),
-          // Teks di sebelah kanan ikon
           const Padding(
             padding: EdgeInsets.only(right: 16.0),
             child: Text(
@@ -132,8 +157,7 @@ class _RincianJanjiTemuState extends State<RincianJanjiTemu> {
                 ),
                 const SizedBox(height: 20),
                 Column(
-                  crossAxisAlignment: CrossAxisAlignment
-                      .start, // Mengubah crossAxisAlignment menjadi start
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     // Teks INFO STATUS
                     const Text(
@@ -156,20 +180,15 @@ class _RincianJanjiTemuState extends State<RincianJanjiTemu> {
                       ),
                       width: double.infinity,
                       padding: const EdgeInsets.all(20),
-                      // Kolom untuk konten info status
                       child: const Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          // Teks pertama
                           Text(
                             "Silahkan menuju ke QR Code scanner",
                             style: TextStyle(
                                 fontSize: 16, fontWeight: FontWeight.bold),
                           ),
-                          SizedBox(
-                              height:
-                                  8), // Berikan jarak antara teks berikutnya
-                          // Teks kedua
+                          SizedBox(height: 8),
                           Text(
                             "Menunggu verifikasi pasien",
                             style: TextStyle(fontSize: 12),
@@ -284,12 +303,7 @@ class _RincianJanjiTemuState extends State<RincianJanjiTemu> {
                     const SizedBox(height: 35),
                     ElevatedButton(
                       onPressed: () {
-                        Navigator.push(
-												context,
-												MaterialPageRoute(
-													builder: (context) => const JanjiTemuSaya2(title: 'Janji Temu Saya 2'),
-												),
-											);
+                        _showConfirmationDialog(context);
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: const Color.fromRGBO(16, 52, 116, 1),
@@ -300,7 +314,7 @@ class _RincianJanjiTemuState extends State<RincianJanjiTemu> {
                           40,
                         ),
                       ),
-                      child: const Text('Lihat Halaman Janji Temu',
+                      child: const Text('Batalkan Janji Temu',
                           style: TextStyle(color: Colors.white)),
                     ),
                     const SizedBox(height: 20),
@@ -318,28 +332,49 @@ class _RincianJanjiTemuState extends State<RincianJanjiTemu> {
                     //   child: const Text('CHECK IN',
                     //       style: TextStyle(color: Colors.white)),
                     // ),
-                    ElevatedButton(
-											onPressed: () {
-												_showBottomSheet(context, [
-													'Batalkan Janji Temu',
-													'Cancel'
-												]);
-											},
-											style: ElevatedButton.styleFrom(
-												backgroundColor: Colors.blue[100], // Ganti dengan warna yang diinginkan
-												shape: RoundedRectangleBorder(
-													borderRadius: BorderRadius.circular(8),
+                    // ElevatedButton(
+										// 	onPressed: () {
+										// 		_showBottomSheet(context, [
+										// 			'Batalkan Janji Temu',
+										// 			'Cancel'
+										// 		]);
+										// 	},
+										// 	style: ElevatedButton.styleFrom(
+										// 		backgroundColor: Colors.blue[100], // Ganti dengan warna yang diinginkan
+										// 		shape: RoundedRectangleBorder(
+										// 			borderRadius: BorderRadius.circular(8),
+										// 		),
+										// 		fixedSize: Size(
+										// 			MediaQuery.of(context).size.width,
+										// 			40,
+										// 		),
+										// 	),
+										// 	child: const Text(
+										// 		'Pilihan Lain',
+										// 		style: TextStyle(color: Colors.black),
+										// 	),
+										// )
+										ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(
+												context,
+												MaterialPageRoute(
+													builder: (context) => const JanjiTemuSaya2(title: 'Janji Temu Saya 2'),
 												),
-												fixedSize: Size(
-													MediaQuery.of(context).size.width,
-													40,
-												),
-											),
-											child: const Text(
-												'Pilihan Lain',
-												style: TextStyle(color: Colors.black),
-											),
-										)
+											);
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Color.fromARGB(255, 80, 130, 215),
+                        shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(8))),
+                        fixedSize: Size(
+                          MediaQuery.of(context).size.width,
+                          40,
+                        ),
+                      ),
+                      child: const Text('Lihat Halaman Janji Temu',
+                          style: TextStyle(color: Colors.white)),
+                    ),
                   ],
                 ),
               ],

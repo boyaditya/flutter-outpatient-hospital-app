@@ -1,20 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tubes/pages/onboarding/onboard1.dart';
 
-// void main() {
-//   runApp(_MyApp());
-// }
-
-// class _MyApp extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return const MaterialApp(
-//       title: 'Athena Hospital',
-//       home: Onboarding3(),
-//     );
-//   }
-// }
-
 class Onboarding3 extends StatefulWidget{
   const Onboarding3({super.key});
 
