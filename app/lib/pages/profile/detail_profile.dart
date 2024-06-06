@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tubes/pages/profile/edit_profile.dart';
 
 class DetailProfilPasien extends StatelessWidget {
   @override
@@ -8,7 +9,6 @@ class DetailProfilPasien extends StatelessWidget {
         title: const Text(
           'Detail Profil Pasien',
           style: TextStyle(
-            fontWeight: FontWeight.bold,
             fontSize: 18,
             color: Colors.white,
           ),
@@ -19,16 +19,6 @@ class DetailProfilPasien extends StatelessWidget {
       body: ListView(
         padding: const EdgeInsets.all(20),
         children: [
-          Center(
-            child: Container(
-              margin: const EdgeInsets.only(top: 20),
-              padding: const EdgeInsets.all(10),
-              child: const CircleAvatar(
-                radius: 60,
-                backgroundImage: AssetImage('assets/images/patient.jpeg'), // Ganti dengan path gambar pasien
-              ),
-            ),
-          ),
           const SizedBox(height: 20),
           const InfoCard(
             icon: Icons.person,
@@ -40,6 +30,30 @@ class DetailProfilPasien extends StatelessWidget {
               {'label': 'Jenis Kelamin', 'value': 'Laki-laki'},
               {'label': 'Tanggal Lahir', 'value': '01 Januari 1990'},
             ],
+          ),
+          const SizedBox(height: 20),
+          Center(
+            child: ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+									context,
+									MaterialPageRoute(
+										builder: (context) => const EditProfileScreen(),
+									),
+								);
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.blue,
+                padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 25),
+                textStyle: const TextStyle(
+                  fontSize: 16,
+                ),
+								shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+              child: const Text('Permintaan Perubahan Data', style: TextStyle(color: Colors.white),),
+            ),
           ),
         ],
       ),
@@ -115,7 +129,8 @@ class InfoCard extends StatelessWidget {
                     ),
                   ],
                 ),
-              )),
+              )
+						),
         ],
       ),
     );

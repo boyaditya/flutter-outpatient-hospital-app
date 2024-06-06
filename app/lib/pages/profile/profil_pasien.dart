@@ -54,53 +54,32 @@ class _ProfilPasienScreenState extends State<ProfilPasienScreen> {
               ),
               child: Container(
                 width: containerWidth, // Lebar 80% dari layar
-                child: Column(
+                child: const Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
+                    Text(
                       'John Hendrick',
                       style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    const SizedBox(height: 4.0),
-                    const Text(
+                    SizedBox(height: 4.0),
+                    Text(
                       '22 Feb 2003',
                       style: TextStyle(color: Colors.white),
                     ),
-                    const SizedBox(height: 4.0),
-                    const Text(
+                    SizedBox(height: 4.0),
+                    Text(
                       'john.hendrick@gmail.com',
                       style: TextStyle(color: Colors.white),
                     ),
-                    const SizedBox(height: 4.0),
-                    const Text(
+                    SizedBox(height: 4.0),
+                    Text(
                       '08000000000',
                       style: TextStyle(color: Colors.white),
                     ),
-                    const SizedBox(height: 8.0),
-                    TextButton(
-											onPressed: () {
-												Navigator.push(
-													context,
-													MaterialPageRoute(
-														builder: (context) => const EditProfileScreen(),
-													),
-												);
-											},
-											style: TextButton.styleFrom(
-												tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-											),
-											child: const Text(
-												'PERMINTAAN PERUBAHAN DATA',
-												style: TextStyle(
-													color: Colors.black,
-													fontWeight: FontWeight.bold,
-													decoration: TextDecoration.underline,
-												),
-											),
-										),
+                    SizedBox(height: 8.0),
                   ],
                 ),
               ),
