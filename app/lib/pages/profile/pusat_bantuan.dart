@@ -22,7 +22,7 @@ class PusatBantuan extends StatelessWidget {
               SizedBox(height: 16.0),
               Divider(
                 color: Colors.blue,  // Warna garis divider
-                thickness: 2.0,       // Ketebalan garis divider
+                thickness: 2.0,      // Ketebalan garis divider
               ),
               SizedBox(height: 16.0),
               Text(
@@ -34,24 +34,35 @@ class PusatBantuan extends StatelessWidget {
               
               SizedBox(height: 16.0),
               ExpansionTile(
-                title: Text('Memulai'),
+                title: Text('Bagaimana caranya saya membuat janji temu dengan dokter?'),
                 children: [
                   ListTile(
-                    title: Text('Panduan Penggunaan'),
-                  ),
-                  ListTile(
-                    title: Text('Persyaratan Sistem'),
+                    title: Text(
+                      'Ikuti langkah berikut untuk membuat janji temu pada aplikasi:\n'
+                      '1. Pilih "Buat Janji Temu" pada beranda aplikasi\n'
+                      '2. Pilih dokter yang tersedia\n'
+                      '3. Selanjutnya akan diarahkan ke jadwal dokter\n'
+                      '4. Pilih "Buat Janji Temu"\n'
+                      '5. Pilih tanggal dan jam janji temu\n'
+                      '6. Selanjutnya pilih profil pasien untuk janji temu\n'
+                      '7. Periksa detail janji temu dan konfirmasi\n'
+                      '8. Janji temu berhasil dibuat dan anda bisa melihat detailnya di bagian menu janji temu',
+                    ),
                   ),
                 ],
               ),
               ExpansionTile(
-                title: Text('Fitur dan Kegiatan'),
+                title: Text('Bagaimana caranya agar saya bisa menambahkan anggota lain?'),
                 children: [
                   ListTile(
-                    title: Text('Fitur Utama'),
-                  ),
-                  ListTile(
-                    title: Text('Kegiatan Terakhir'),
+                    title: Text(
+                      'Anda bisa menambahkan anggota lain dengan cara berikut:\n'
+                      '1. Pilih menu "Profil"\n'
+                      '2. Pilih "Profil Pasien"\n'
+                      '3. Pilih "Tambah Profil Lain"\n'
+                      '4. Isi data anggota yang ingin Anda tambahkan\n'
+                      '5. Profil anggota lain akan tampil di bagian "Profil Pasien" di bagian "Orang Lain"',
+                    ),
                   ),
                 ],
               ),
@@ -82,18 +93,20 @@ class PusatBantuan extends StatelessWidget {
                 children: [
                   Icon(Icons.email, color: Colors.black, size: 30.0),
                   SizedBox(width: 8.0),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Email',
-                        style: TextStyle(fontSize: 14.0),
-                      ),
-                      Text(
-                        'admin@pusat.co.id',
-                        style: TextStyle(fontSize: 12.0),
-                      ),
-                    ],
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Email',
+                          style: TextStyle(fontSize: 14.0),
+                        ),
+                        Text(
+                          'admin@pusat.co.id',
+                          style: TextStyle(fontSize: 12.0),
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
@@ -102,18 +115,20 @@ class PusatBantuan extends StatelessWidget {
                 children: [
                   Icon(Icons.phone, color: Colors.black, size: 30.0),
                   SizedBox(width: 8.0),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Telepon',
-                        style: TextStyle(fontSize: 14.0),
-                      ),
-                      Text(
-                        '0812345678',
-                        style: TextStyle(fontSize: 12.0),
-                      ),
-                    ],
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Telepon',
+                          style: TextStyle(fontSize: 14.0),
+                        ),
+                        Text(
+                          '0812345678',
+                          style: TextStyle(fontSize: 12.0),
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
