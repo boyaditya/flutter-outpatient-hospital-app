@@ -113,6 +113,10 @@ class PatientListCubit extends Cubit<List<PatientModel>> {
       List<PatientModel> patients =
           body.map((dynamic item) => PatientModel.fromJson(item)).toList();
 
+      if (patients.isNotEmpty) {
+        await prefs.setInt('patient_id', patients[0].id);
+      }
+
       for (var patient in patients) {
         _patientCache[patient.id] = patient;
       }
@@ -120,14 +124,6 @@ class PatientListCubit extends Cubit<List<PatientModel>> {
       String patientsJson =
           jsonEncode(patients.map((patient) => patient.toJson()).toList());
       await prefs.setString('patients', patientsJson);
-
-      // print(response.body);
-      if (patients.isNotEmpty) {
-        await prefs.setInt('patient_id', patients[0].id);
-      }
-
-      int? patientId = prefs.getInt('patient_id');
-      print('Patient ID: $patientId');
 
       emit(patients);
     } else {

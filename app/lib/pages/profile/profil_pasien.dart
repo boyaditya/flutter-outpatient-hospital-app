@@ -1,144 +1,195 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
+import 'package:tubes/cubits/patient_cubit.dart';
 import 'package:tubes/pages/profile/detail_profile.dart';
 import 'package:tubes/pages/registrasi_pasien/registrasi_pasien.dart';
 
-
 class ProfilPasienScreen extends StatefulWidget {
+  const ProfilPasienScreen({super.key});
+
   @override
-  _ProfilPasienScreenState createState() => _ProfilPasienScreenState();
+  State<ProfilPasienScreen> createState() => _ProfilPasienScreenState();
 }
 
 class _ProfilPasienScreenState extends State<ProfilPasienScreen> {
-  String statusMessage = ''; // State untuk menyimpan pesan status
-
   @override
   Widget build(BuildContext context) {
-    // Mendapatkan lebar layar
-    double screenWidth = MediaQuery.of(context).size.width;
-    double containerWidth = screenWidth * 0.8; // Lebar container 80% dari layar
-
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Profil Pasien', style: TextStyle(fontWeight: FontWeight.bold)),
+        title: const Text('Profil Pasien',
+            style: TextStyle(fontWeight: FontWeight.bold)),
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Padding(
-            padding: EdgeInsets.all(16.0),
-            child: Text(
+      body: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text(
               'SAYA SENDIRI',
               style: TextStyle(
                 color: Colors.grey,
                 fontSize: 14.0,
               ),
             ),
-          ),
-          Center(
-            child: TextButton(
-              onPressed: () {
-                Navigator.push(
-													context,
-													MaterialPageRoute(
-														builder: (context) => DetailProfilPasien(),
-													),
-												);
-              },
-              style: TextButton.styleFrom(
-                padding: const EdgeInsets.all(16.0),
-                backgroundColor: Colors.blue,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8.0),
-                ),
-              ),
-              child: Container(
-                width: containerWidth, // Lebar 80% dari layar
-                child: const Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'John Hendrick',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
+            BlocBuilder<PatientListCubit, List<PatientModel>>(
+              builder: (context, patients) {
+                if (patients.isEmpty) {
+                  return const Text('No patients found');
+                }
+                final patient = patients[0];
+                return PatientDetailButton(
+                  patient: patient,
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => DetailProfilPasien(),
                       ),
-                    ),
-                    SizedBox(height: 4.0),
-                    Text(
-                      '22 Feb 2003',
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    SizedBox(height: 4.0),
-                    Text(
-                      'john.hendrick@gmail.com',
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    SizedBox(height: 4.0),
-                    Text(
-                      '08000000000',
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    SizedBox(height: 8.0),
-                  ],
-                ),
-              ),
+                    );
+                  },
+                );
+              },
             ),
-          ),
-          const Padding(
-            padding: EdgeInsets.all(16.0),
-            child: Text(
+            const SizedBox(height: 20.0),
+            const Text(
               'Orang Lain',
               style: TextStyle(
                 color: Colors.grey,
                 fontSize: 14.0,
               ),
             ),
-          ),
-          const Expanded(
-            child: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(
-                    Icons.people,
-                    size: 30,
-                    color: Colors.grey,
-                  ),
-                  SizedBox(height: 8.0),
-                  Text(
-                    'Anda belum menambahkan profil untuk orang lain',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(color: Colors.grey),
-                  ),
-                ],
+            BlocBuilder<PatientListCubit, List<PatientModel>>(
+              builder: (context, patients) {
+                if (patients.length <= 1) {
+                  return const Expanded(
+                    child: Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.people,
+                            size: 30,
+                            color: Colors.grey,
+                          ),
+                          SizedBox(height: 8.0),
+                          Text(
+                            'Anda belum menambahkan profil untuk orang lain',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(color: Colors.grey),
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                } else {
+                  return Expanded(
+                    child: ListView.builder(
+                      itemCount: patients.length > 1 ? patients.length - 1 : 0,
+                      itemBuilder: (context, index) {
+                        final patient = patients[index + 1];
+
+                        return PatientDetailButton(
+                          patient: patient,
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => DetailProfilPasien(),
+                              ),
+                            );
+                          },
+                        );
+                      },
+                    ),
+                  );
+                }
+              },
+            ),
+          ],
+        ),
+      ),
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: ElevatedButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const RegistrationScreen(),
               ),
+            );
+          },
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.blue,
+            minimumSize: const Size(double.infinity, 50),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
             ),
           ),
-          const SizedBox(height: 5.0), // Jarak tambahan sebelum tombol "Tambah Profil Lain"
-          Center(
-            child: SizedBox(
-              width: MediaQuery.of(context).size.width * 0.8,
-              child: ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-													context,
-													MaterialPageRoute(
-														builder: (context) => const RegistrationScreen(),
-													),
-												);
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.blue,
-                  foregroundColor: Colors.white,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8.0),
-                  ),
+          child: const Text(
+            'Tambah Profil Lain',
+            style: TextStyle(color: Colors.white),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class PatientDetailButton extends StatelessWidget {
+  final PatientModel patient;
+  final VoidCallback onPressed;
+
+  const PatientDetailButton({
+    super.key,
+    required this.patient,
+    required this.onPressed,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: TextButton(
+        onPressed: onPressed,
+        style: TextButton.styleFrom(
+          foregroundColor: Colors.blue,
+          disabledForegroundColor: Colors.grey.withOpacity(0.38),
+          disabledBackgroundColor: Colors.grey.withOpacity(0.12),
+          backgroundColor: Colors.blue[50],
+          padding: const EdgeInsets.all(6),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+          side: const BorderSide(color: Colors.grey, width: 0.3),
+        ),
+        child: Container(
+          width: double.infinity,
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                patient.name,
+                style: const TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
                 ),
-                child: const Text('TAMBAH PROFIL LAIN'),
               ),
-            ),
+              const SizedBox(height: 4.0),
+              Text(
+                DateFormat('dd MMM yyyy').format(patient.dateOfBirth),
+                style: const TextStyle(color: Colors.black),
+              ),
+              const SizedBox(height: 4.0),
+              Text(
+                patient.gender,
+                style: const TextStyle(color: Colors.black),
+              ),
+              const SizedBox(height: 4.0),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }

@@ -28,6 +28,7 @@ class Dashboard extends StatefulWidget {
 
 class _DashboardState extends State<Dashboard> {
   int _currentIndex = 0;
+  late Future<void> _fetchDataFuture;
 
   final List<Widget> _children = [
     const Home(
@@ -45,63 +46,77 @@ class _DashboardState extends State<Dashboard> {
   }
 
   @override
-  // void initState() {
-  //   super.initState();
-  //   // Get the UserCubit instance
-  //   final userCubit = BlocProvider.of<UserCubit>(context, listen: false);
-  //   // Call the fetchUserById function
-  //   userCubit.fetchUserById();
-  // }
-
-  @override
   void initState() {
     super.initState();
     _currentIndex = widget.initialIndex;
-    fetchData();
+    _fetchDataFuture = fetchData();
   }
 
-  void fetchData() async {
+  Future<void> fetchData() async {
     await context.read<UserCubit>().fetchUserById();
     await context.read<PatientListCubit>().fetchPatientsByUserId();
-    await context.read<DoctorListCubit>().fetchDoctors();
-    await context.read<SpecializationListCubit>().fetchSpecializations();
-    await context.read<DoctorScheduleCubit>().fetchDoctorSchedule();
-    await context.read<AppointmentCubit>().fetchAppointmentsByPatientId();
+    
+    await Future.wait([
+      context.read<DoctorListCubit>().fetchDoctors(),
+      context.read<SpecializationListCubit>().fetchSpecializations(),
+      context.read<DoctorScheduleCubit>().fetchDoctorSchedule(),
+      context.read<AppointmentCubit>().fetchAppointmentsByPatientId(),
+    ]);
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: _children[_currentIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Beranda',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.edit_calendar),
-            label: 'Janji Temu',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.medical_information),
-            label: 'Rekam Medis',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.account_circle),
-            label: 'Profil',
-          ),
-        ],
-        currentIndex: _currentIndex,
-        selectedItemColor: const Color.fromARGB(255, 108, 176, 255),
-        unselectedItemColor: const Color.fromARGB(255, 121, 121, 121),
-        unselectedLabelStyle: const TextStyle(
-          color: Color.fromARGB(255, 121, 121,
-              121), // Warna abu-abu untuk label yang tidak terpilih
-        ),
-        showUnselectedLabels: true, // Menampilkan label yang tidak terpilih
-        onTap: _onItemTapped,
-      ),
+    return FutureBuilder(
+      future: _fetchDataFuture,
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Scaffold(
+            body: Center(
+              child: CircularProgressIndicator(), // Loading indicator
+            ),
+          );
+        } else if (snapshot.hasError) {
+          return Scaffold(
+            body: Center(
+              child: Text('Error: ${snapshot.error}'),
+            ),
+          );
+        } else {
+          return Scaffold(
+            body: _children[_currentIndex],
+            bottomNavigationBar: BottomNavigationBar(
+              items: const <BottomNavigationBarItem>[
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.home),
+                  label: 'Beranda',
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.edit_calendar),
+                  label: 'Janji Temu',
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.medical_information),
+                  label: 'Rekam Medis',
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.account_circle),
+                  label: 'Profil',
+                ),
+              ],
+              currentIndex: _currentIndex,
+              selectedItemColor: const Color.fromARGB(255, 108, 176, 255),
+              unselectedItemColor: const Color.fromARGB(255, 121, 121, 121),
+              unselectedLabelStyle: const TextStyle(
+                color: Color.fromARGB(255, 121, 121,
+                    121), // Warna abu-abu untuk label yang tidak terpilih
+              ),
+              showUnselectedLabels:
+                  true, // Menampilkan label yang tidak terpilih
+              onTap: _onItemTapped,
+            ),
+          );
+        }
+      },
     );
   }
 }

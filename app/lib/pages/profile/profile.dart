@@ -1,26 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:tubes/pages/profile/keluar.dart';
 import 'package:tubes/pages/profile/syarat_ketentuan.dart';
-import 'hapus_akun.dart';
 import 'profil_pasien.dart';
 import 'berikan_penilaian.dart';
 import 'pusat_bantuan.dart';
 
-// void main() {
-//   runApp(MyApp());
-// }
-
-// class MyApp extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       title: 'Profil',
-//       home: ProfilScreen(),
-//     );
-//   }
-// }
 
 class ProfilScreen extends StatelessWidget {
+  const ProfilScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -146,43 +134,8 @@ class ProfilScreen extends StatelessWidget {
               );
             },
           ),
-          // ListTile(
-          //   leading: const Icon(Icons.delete, color: Colors.blue, size: 40),
-          //   title: const Text('Hapus Akun'),
-          //   trailing: const Icon(Icons.chevron_right),
-          //   onTap: () {
-          //    Navigator.push(
-          //       context,
-          //       MaterialPageRoute(builder: (context) => HapusAkunScreen()),
-          //     );
-          //   },
-          // ),
         ],
       ),
-      // bottomNavigationBar: BottomNavigationBar(
-      //   items: [
-      //     BottomNavigationBarItem(
-      //       icon: Icon(Icons.home),
-      //       label: 'Beranda',
-      //     ),
-      //     BottomNavigationBarItem(
-      //       icon: Icon(Icons.search),
-      //       label: 'Cari',
-      //     ),
-      //     BottomNavigationBarItem(
-      //       icon: Icon(Icons.photo_library),
-      //       label: 'Media',
-      //     ),
-      //     BottomNavigationBarItem(
-      //       icon: Icon(Icons.menu),
-      //       label: 'Menu',
-      //     ),
-      //     BottomNavigationBarItem(
-      //       icon: Icon(Icons.person),
-      //       label: 'Profil',
-      //     ),
-      //   ],
-      // ),
     );
   }
 }
