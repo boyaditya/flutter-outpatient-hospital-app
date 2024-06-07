@@ -55,41 +55,6 @@ class _JanjiTemuSaya2State extends State<JanjiTemuSaya2> {
                     ),
                   ),
                 ),
-                Positioned(
-                  bottom: 20,
-                  left: 20,
-                  right: 20,
-                  child: SizedBox(
-                    width: double.infinity, // Membuat tombol selebar layar
-                    child: TextButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) =>
-                                const HistoriJanjiTemu(title: 'Histori Janji Temu'),
-                          ),
-                        );
-                      },
-                      style: TextButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(vertical: 12),
-                        backgroundColor: Colors.blue[100],
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                      ),
-                      child: Text(
-                        "LIHAT HISTORI JANJI TEMU",
-                        style: TextStyle(
-                          fontSize: 14,
-                          color: Colors.blue[900],
-                          fontWeight: FontWeight.bold,
-                          decoration: TextDecoration.underline,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
               ],
             ),
           ),
