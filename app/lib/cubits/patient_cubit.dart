@@ -47,38 +47,39 @@ class PatientModel {
   }
 }
 
-class PatientCubit extends Cubit<PatientModel?> {
-  PatientCubit() : super(null);
+// class PatientCubit extends Cubit<PatientModel?> {
+//   PatientCubit() : super(null);
 
-  Future<void> createPatient(PatientModel patient) async {
-    final prefs = await SharedPreferences.getInstance();
-    final userId = prefs.getInt('user_id');
+//   Future<void> createPatient(PatientModel patient) async {
+//     final prefs = await SharedPreferences.getInstance();
+//     final userId = prefs.getInt('user_id');
 
-    if (userId == null) {
-      throw Exception('No user ID found');
-    }
+//     if (userId == null) {
+//       throw Exception('No user ID found');
+//     }
 
-    patient.userId = userId;
+//     patient.userId = userId;
 
-    final response = await http.post(
-      Uri.parse('http://127.0.0.1:8000/patients/'),
-      headers: {
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-      body: jsonEncode(
-        patient.toJson(),
-      ),
-    );
+//     final response = await http.post(
+//       Uri.parse('http://127.0.0.1:8000/patients/'),
+//       headers: {
+//         'Content-Type': 'application/json; charset=UTF-8',
+//       },
+//       body: jsonEncode(
+//         patient.toJson(),
+//       ),
+//     );
 
-    if (response.statusCode == 201) {
-      PatientModel patient = PatientModel.fromJson(json.decode(response.body));
-      emit(patient);
-      // print(response.body);
-    } else {
-      throw Exception('Failed to create patient');
-    }
-  }
-}
+//     if (response.statusCode == 201) {
+//       PatientModel patient = PatientModel.fromJson(json.decode(response.body));
+//       // emit([...state, patient]);
+//       emit(patient);
+//       // print(response.body);
+//     } else {
+//       throw Exception('Failed to create patient');
+//     }
+//   }
+// }
 
 class PatientListCubit extends Cubit<List<PatientModel>> {
   PatientListCubit() : super([]);
@@ -88,6 +89,39 @@ class PatientListCubit extends Cubit<List<PatientModel>> {
   //       json.map((item) => PatientModel.fromJson(item)).toList();
   //   emit(patients);
   // }
+
+  Future<void> postPatient(PatientModel patient) async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final userId = prefs.getInt('user_id');
+
+      if (userId == null) {
+        throw Exception('No user ID found');
+      }
+
+      patient.userId = userId;
+
+      final response = await http.post(
+        Uri.parse('http://127.0.0.1:8000/patients/'),
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(
+          patient.toJson(),
+        ),
+      );
+
+      if (response.statusCode == 201) {
+        PatientModel patient =
+            PatientModel.fromJson(json.decode(response.body));
+        emit([...state, patient]);
+      } else {
+        throw Exception('Failed to post patient: ${response.statusCode}');
+      }
+    } catch (e) {
+      throw Exception('Failed to post patient: $e');
+    }
+  }
 
   final Map<int, PatientModel> _patientCache = {};
 

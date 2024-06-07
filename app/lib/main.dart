@@ -61,8 +61,8 @@ void main() {
     BlocProvider<DoctorScheduleCubit>(
       create: (context) => DoctorScheduleCubit(),
     ),
-    BlocProvider<PatientCubit>(
-      create: (context) => PatientCubit(),
+    BlocProvider<PatientListCubit>(
+      create: (context) => PatientListCubit(),
     ),
     BlocProvider<PatientListCubit>(
       create: (context) => PatientListCubit(),

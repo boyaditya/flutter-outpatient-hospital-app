@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:tubes/cubits/patient_cubit.dart';
 import 'package:tubes/pages/profile/detail_profile.dart';
-import 'package:tubes/pages/registrasi_pasien/registrasi_pasien.dart';
+import 'package:tubes/pages/profile/tambah_profil.dart';
 
 class ProfilPasienScreen extends StatefulWidget {
   const ProfilPasienScreen({super.key});
@@ -17,8 +17,9 @@ class _ProfilPasienScreenState extends State<ProfilPasienScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Profil Pasien',
-            style: TextStyle(fontWeight: FontWeight.bold)),
+        title: const Text(
+          'Profil Pasien',
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
@@ -120,7 +121,7 @@ class _ProfilPasienScreenState extends State<ProfilPasienScreen> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => const RegistrationScreen(),
+                builder: (context) => const TambahProfilPasien(),
               ),
             );
           },

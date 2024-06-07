@@ -261,7 +261,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     );
 
     try {
-      await context.read<PatientCubit>().createPatient(patient);
+      await context.read<PatientListCubit>().postPatient(patient);
       if (!mounted) return;
       showSuccessMessage(context, 'Registrasi pasien berhasil!');
       Navigator.push(

@@ -6,14 +6,14 @@ import 'package:tubes/cubits/patient_cubit.dart';
 import 'package:tubes/utils/snackbar.dart';
 import 'package:tubes/pages/authentication/welcome_page.dart';
 
-class EditProfileScreen extends StatefulWidget {
-  const EditProfileScreen({super.key});
+class TambahProfilPasien extends StatefulWidget {
+  const TambahProfilPasien({super.key});
 
   @override
-  State<EditProfileScreen> createState() => _EditProfileScreenState();
+  State<TambahProfilPasien> createState() => _TambahProfilPasienState();
 }
 
-class _EditProfileScreenState extends State<EditProfileScreen> {
+class _TambahProfilPasienState extends State<TambahProfilPasien> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _nikController = TextEditingController();
@@ -46,7 +46,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Ubah Data Pasien'),
+        title: const Text('Tambah Profil Pasien Baru'),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -237,7 +237,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     ), // Lebar 50% dari lebar layar
                   ),
                   child: const Text(
-                    'Ubah Data Pasien',
+                    'Tambah Profil Pasien',
                     style: TextStyle(color: Colors.white),
                   ),
                 ),
@@ -263,17 +263,12 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     try {
       await context.read<PatientListCubit>().postPatient(patient);
       if (!mounted) return;
-      showSuccessMessage(context, 'Ubah data pasien berhasil!');
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => const SelamatDatang(),
-        ),
-      );
+      showSuccessMessage(context, 'Tambah profil pasien berhasil!');
+      Navigator.pop(context);
     } catch (e) {
       if (!mounted) return;
       // print(e);
-      showErrorMessage(context, 'Ubah data pasien gagal!');
+      showErrorMessage(context, 'Tambah profil pasien gagal!');
       // Handle the error
     }
   }
