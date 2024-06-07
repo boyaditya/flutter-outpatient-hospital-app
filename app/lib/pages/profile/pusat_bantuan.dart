@@ -47,6 +47,7 @@ class PusatBantuan extends StatelessWidget {
                       '6. Selanjutnya pilih profil pasien untuk janji temu\n'
                       '7. Periksa detail janji temu dan konfirmasi\n'
                       '8. Janji temu berhasil dibuat dan anda bisa melihat detailnya di bagian menu janji temu',
+											style: TextStyle(fontSize: 14.0),
                     ),
                   ),
                 ],
@@ -62,6 +63,7 @@ class PusatBantuan extends StatelessWidget {
                       '3. Pilih "Tambah Profil Lain"\n'
                       '4. Isi data anggota yang ingin Anda tambahkan\n'
                       '5. Profil anggota lain akan tampil di bagian "Profil Pasien" di bagian "Orang Lain"',
+											style: TextStyle(fontSize: 14.0),
                     ),
                   ),
                 ],
