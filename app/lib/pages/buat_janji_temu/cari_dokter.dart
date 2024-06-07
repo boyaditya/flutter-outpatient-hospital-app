@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import 'package:tubes/cubits/doctor_cubit.dart';
+import 'package:tubes/cubits/doctor_schedule_cubit.dart';
 import 'package:tubes/cubits/specialization_cubit.dart';
 import 'package:tubes/pages/buat_janji_temu/profil_dokter.dart';
 
@@ -15,47 +15,26 @@ class CariDokter extends StatefulWidget {
 class _CariDokterState extends State<CariDokter> {
   TextEditingController _controller = TextEditingController();
   String _selectedDay = 'Senin'; // default to Monday
+  List<String> _days = ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu'];
 
   @override
-  // void initState() {
-  //   super.initState();
-  //   // context.read<DoctorListCubit>().fetchDoctors();
-  //   // context.read<SpecializationListCubit>().fetchSpecializations();
-  //   print("test aja sih2");
-  // }
-
-  // int count = 0;
-
-  // void increment(){
-  //   setState(() {
-  //     count++;
-  //   });
-  // }
+  void initState() {
+    super.initState();
+    context.read<DoctorListCubit>().fetchDoctors();
+    context.read<DoctorScheduleCubit>().fetchDoctorSchedule();
+  }
 
   @override
   Widget build(BuildContext context) {
-    final Map<String, String> data =
-        (ModalRoute.of(context)?.settings.arguments as Map<String, String>?) ??
-            {};
+    final Map<String, String> data = (ModalRoute.of(context)?.settings.arguments as Map<String, String>?) ?? {};
+
     return Scaffold(
       appBar: AppBar(
-          title: const Text(
-        'Cari Dokter',
-        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-      )),
+        title: const Text('Cari Dokter', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
+      ),
       body: ListView(
         children: [
-          const Divider(
-            color: Colors.black,
-            thickness: 0.2,
-          ),
-          // ElevatedButton(
-          //   onPressed: () {
-          //     context.read<DoctorListCubit>().fetchDoctors();
-          //   },
-          //   child: Text('Fetch Doctors'),
-          // ),
-          // Text(count.toString()),
+          const Divider(color: Colors.black, thickness: 0.2),
           Padding(
             padding: const EdgeInsets.all(20.0),
             child: Column(
@@ -71,16 +50,13 @@ class _CariDokterState extends State<CariDokter> {
                   ),
                   child: TextFormField(
                     controller: _controller,
-                    initialValue: data['namaDokter'],
+                    onChanged: (value) {
+                      setState(() {});
+                    },
                     decoration: InputDecoration(
                       hintText: 'Cari nama dokter atau spesialisasi',
                       hintStyle: TextStyle(fontSize: 13),
-                      suffixIcon: IconButton(
-                        icon: Icon(Icons.search),
-                        onPressed: () {
-                          setState(() {});
-                        },
-                      ),
+                      suffixIcon: Icon(Icons.search),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.all(
                           Radius.circular(10),
@@ -90,51 +66,69 @@ class _CariDokterState extends State<CariDokter> {
                   ),
                 ),
                 const SizedBox(height: 20),
-                CustomButton(
-                    icon: Icons.filter_alt, text: "Filter", onPressed: () {}),
-                const SizedBox(height: 20),
-                const Text(
-                  'Dokter',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 15,
-                  ),
-                ),
-                const SizedBox(height: 20),
-                BlocBuilder<DoctorListCubit, List<DoctorModel>>(
-                  builder: (context, state) {
-                    final specializationCubit =
-                        context.read<SpecializationListCubit>();
-                    final searchQuery = _controller.text.toLowerCase();
-                    final filteredDoctors = state.where((doctor) {
-                      return doctor.name.toLowerCase().contains(searchQuery);
-                    }).toList();
-
-                    return Column(
-                      children: filteredDoctors.map((doctor) {
-                        final specialization = specializationCubit
-                            .getSpecializationById(doctor.idSpecialization);
-                        final specializationTitle =
-                            specialization.title;
-                        return DoctorButton(
-                          icon: Icons.person,
-                          dokter: doctor.name,
-                          spesialis: specializationTitle,
-                          availability: 'Available',
-                          imagePath: doctor.imgPath,
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => ProfilDokter(
-                                  doctorId: doctor.id,
-                                  specialization: specializationTitle,
-                                ),
+                Row(
+                  children: [
+                    CustomButton(icon: Icons.filter_alt, text: "Filter", onPressed: () {}),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Row(
+                          children: _days.map((day) {
+                            return Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                              child: ChoiceChip(
+                                label: Text(day),
+                                selected: _selectedDay == day,
+                                onSelected: (selected) {
+                                  setState(() {
+                                    _selectedDay = day;
+                                  });
+                                },
                               ),
                             );
-                          },
+                          }).toList(),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 20),
+                const Text('Dokter', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
+                const SizedBox(height: 20),
+                BlocBuilder<DoctorScheduleCubit, List<DoctorScheduleModel>>(
+                  builder: (context, schedules) {
+                    final filteredSchedules = schedules.where((schedule) => schedule.day == _selectedDay).toList();
+                    final doctorIds = filteredSchedules.map((schedule) => schedule.doctorId).toSet();
+                    return BlocBuilder<DoctorListCubit, List<DoctorModel>>(
+                      builder: (context, doctors) {
+                        final searchQuery = _controller.text.toLowerCase();
+                        final filteredDoctors = doctors.where((doctor) => 
+                          doctorIds.contains(doctor.id) && 
+                          doctor.name.toLowerCase().contains(searchQuery)
+                        ).toList();
+                        return Column(
+                          children: filteredDoctors.map((doctor) {
+                            final specialization = context.read<SpecializationListCubit>().getSpecializationById(doctor.idSpecialization);
+                            final specializationTitle = specialization?.title ?? 'Unknown';
+                            return DoctorButton(
+                              icon: Icons.person,
+                              dokter: doctor.name,
+                              spesialis: specializationTitle,
+                              availability: 'Available',
+                              imagePath: doctor.imgPath,
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => ProfilDokter(doctorId: doctor.id, specialization: specializationTitle),
+                                  ),
+                                );
+                              },
+                            );
+                          }).toList(),
                         );
-                      }).toList(),
+                      },
                     );
                   },
                 ),
@@ -143,11 +137,6 @@ class _CariDokterState extends State<CariDokter> {
           ),
         ],
       ),
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: increment,
-      //   tooltip: 'Increment',
-      //   child: const Icon(Icons.add),
-      // ),
     );
   }
 }
@@ -170,26 +159,11 @@ class CustomButton extends StatelessWidget {
       onTap: onPressed,
       child: Container(
         width: 80,
-        decoration: BoxDecoration(
-          color: Colors.grey[200],
-          borderRadius: BorderRadius.circular(10),
-        ),
+        decoration: BoxDecoration(color: Colors.grey[200], borderRadius: BorderRadius.circular(10)),
         child: Row(
           children: <Widget>[
-            Container(
-              padding: const EdgeInsets.all(8),
-              child: Icon(
-                icon,
-                size: 20,
-              ),
-            ),
-            Text(
-              text,
-              style: const TextStyle(
-                fontSize: 11,
-                color: Colors.black,
-              ),
-            ),
+            Container(padding: const EdgeInsets.all(8), child: Icon(icon, size: 20)),
+            Text(text, style: const TextStyle(fontSize: 11, color: Colors.black)),
           ],
         ),
       ),
@@ -224,60 +198,29 @@ class DoctorButton extends StatelessWidget {
         disabledForegroundColor: Colors.grey.withOpacity(0.38),
         disabledBackgroundColor: Colors.grey.withOpacity(0.12),
         padding: const EdgeInsets.all(6),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         side: const BorderSide(color: Colors.grey, width: 0.3),
       ),
       child: Row(
         children: <Widget>[
           Container(
             padding: const EdgeInsets.all(8),
-            child: CircleAvatar(
-              radius: 40,
-              backgroundImage: NetworkImage(imagePath),
-            ),
+            child: CircleAvatar(radius: 40, backgroundImage: NetworkImage(imagePath)),
           ),
           const SizedBox(width: 8),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  dokter,
-                  style: const TextStyle(
-                    fontSize: 13,
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  overflow: TextOverflow.ellipsis,
-                ),
+                Text(dokter, style: const TextStyle(fontSize: 13, color: Colors.black, fontWeight: FontWeight.bold), overflow: TextOverflow.ellipsis),
                 const SizedBox(height: 6),
-                Text(
-                  spesialis,
-                  style: const TextStyle(
-                    fontSize: 11,
-                    color: Colors.black,
-                  ),
-                  overflow: TextOverflow.ellipsis,
-                ),
+                Text(spesialis, style: const TextStyle(fontSize: 11, color: Colors.black), overflow: TextOverflow.ellipsis),
                 const SizedBox(height: 4),
                 Row(
                   children: [
-                    const Icon(
-                      Icons.check_circle,
-                      color: Colors.green,
-                      size: 20,
-                    ),
+                    const Icon(Icons.check_circle, color: Colors.green, size: 20),
                     const SizedBox(width: 4),
-                    Text(
-                      availability,
-                      style: const TextStyle(
-                        fontSize: 11,
-                        color: Colors.black,
-                      ),
-                      overflow: TextOverflow.ellipsis,
-                    ),
+                    Text(availability, style: const TextStyle(fontSize: 11, color: Colors.black), overflow: TextOverflow.ellipsis),
                   ],
                 ),
               ],
