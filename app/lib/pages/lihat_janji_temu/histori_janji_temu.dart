@@ -70,7 +70,7 @@ class _HistoriJanjiTemuState extends State<HistoriJanjiTemu> {
                   const Padding(
                     padding: EdgeInsets.only(left: 20),
                     child: Text(
-                      "Histori Janji Temu",
+                      "Riwayat Janji Temu",
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 22,
