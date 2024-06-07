@@ -22,99 +22,75 @@ class _JanjiTemuSaya2State extends State<JanjiTemuSaya2> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        automaticallyImplyLeading: false,
-        elevation: 0,
-        backgroundColor: Colors.blue,
+        title: const Text('Janji Temu Saya'),
       ),
-      body: Stack(
+      body: Column(
         children: [
-          SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.only(bottom: 80), // Spasi untuk tombol
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Stack(
-                    children: [
-                      Container(
-                        height: 120,
-                        padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
-                        decoration: const BoxDecoration(
-                          color: Colors.blue,
-                          borderRadius: BorderRadius.vertical(
-                            bottom: Radius.elliptical(230, 30),
-                          ),
-                        ),
-                        child: const Row(
-                          children: [
-                            SizedBox(height: 80),
-                          ],
-                        ),
-                      ),
-                      const Padding(
-                        padding: EdgeInsets.only(left: 20),
-                        child: Text(
-                          "Janji Temu Saya",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 24,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 20),
-                  Container(
-                    padding: const EdgeInsets.only(top: 10, left: 20, right: 20),
+          Container(
+            height: 1, // Garis batas
+            color: Colors.grey[300],
+          ),
+          Expanded(
+            child: Stack(
+              children: [
+                SingleChildScrollView(
+                  child: Padding(
+                    padding: const EdgeInsets.only(bottom: 80), // Spasi untuk tombol
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
-                          "Janji temu yang akan datang",
-                          style: TextStyle(fontSize: 12, color: Colors.blue),
-                          textAlign: TextAlign.left,
-                        ),
                         const SizedBox(height: 20),
-                        _buildIsian(),
+                        Container(
+                          padding: const EdgeInsets.only(top: 10, left: 20, right: 20),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const SizedBox(height: 20),
+                              _buildIsian(),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(height: 15),
                       ],
                     ),
                   ),
-                  const SizedBox(height: 15),
-                ],
-              ),
-            ),
-          ),
-          Positioned(
-            bottom: 20,
-            left: 20,
-            right: 20,
-            child: TextButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) =>
-                        const HistoriJanjiTemu(title: 'Histori Janji Temu'),
+                ),
+                Positioned(
+                  bottom: 20,
+                  left: 20,
+                  right: 20,
+                  child: SizedBox(
+                    width: double.infinity, // Membuat tombol selebar layar
+                    child: TextButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                const HistoriJanjiTemu(title: 'Histori Janji Temu'),
+                          ),
+                        );
+                      },
+                      style: TextButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(vertical: 12),
+                        backgroundColor: Colors.blue[100],
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      ),
+                      child: Text(
+                        "LIHAT HISTORI JANJI TEMU",
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Colors.blue[900],
+                          fontWeight: FontWeight.bold,
+                          decoration: TextDecoration.underline,
+                        ),
+                      ),
+                    ),
                   ),
-                );
-              },
-              style: TextButton.styleFrom(
-                padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
-                backgroundColor: Colors.white,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20),
                 ),
-              ),
-              child: Text(
-                "LIHAT HISTORI JANJI TEMU",
-                style: TextStyle(
-                  fontSize: 14,
-                  color: Colors.blue[900],
-                  fontWeight: FontWeight.bold,
-                  decoration: TextDecoration.underline,
-                ),
-              ),
+              ],
             ),
           ),
         ],
@@ -182,99 +158,104 @@ class _JanjiTemuSaya2State extends State<JanjiTemuSaya2> {
                     .read<SpecializationListCubit>()
                     .getSpecializationById(doctor.idSpecialization);
                 final specializationTitle = specialization.title;
-                return TextButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => RincianJanjiTemu(
-                          appointmentId: appointment.id,
-                          from: 'dashboard',
-                        ),
-                      ),
-                    );
-                  },
-                  style: TextButton.styleFrom(
-                    padding: EdgeInsets.zero,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    backgroundColor: Colors.blue[50],
-                    shadowColor: Colors.grey,
-                    elevation: 4, // Add elevation for shadow effect
-                  ),
-                  child: Container(
-                    padding: const EdgeInsets.all(20),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Row(
-                          children: [
-                            Icon(
-                              Icons.person_4_outlined,
-                              color: Colors.grey,
+                return Column(
+                  children: [
+                    TextButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => RincianJanjiTemu(
+                              appointmentId: appointment.id,
+                              from: 'dashboard',
                             ),
-                            SizedBox(width: 8),
+                          ),
+                        );
+                      },
+                      style: TextButton.styleFrom(
+                        padding: EdgeInsets.zero,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        backgroundColor: Colors.blue[50],
+                        shadowColor: Colors.grey,
+                        elevation: 4, // Add elevation for shadow effect
+                      ),
+                      child: Container(
+                        padding: const EdgeInsets.all(20),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Row(
+                              children: [
+                                Icon(
+                                  Icons.person_4_outlined,
+                                  color: Colors.grey,
+                                ),
+                                SizedBox(width: 8),
+                                Text(
+                                  'Rawat Jalan',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 18,
+                                    color: Colors.grey,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 10),
                             Text(
-                              'Rawat Jalan',
-                              style: TextStyle(
+                              "${patient.name}\n${DateFormat('EEEE, dd MMMM yyyy', 'id').format(DateTime.parse(appointment.date))}, ${appointment.time} WIB\n${doctor.name}",
+                              style: const TextStyle(
+                                fontSize: 13,
+                                color: Colors.black,
                                 fontWeight: FontWeight.bold,
-                                fontSize: 18,
-                                color: Colors.grey,
+                              ),
+                              textAlign: TextAlign.left,
+                            ),
+                            Text(
+                              specializationTitle,
+                              style: const TextStyle(
+                                  fontSize: 13, color: Colors.black),
+                              textAlign: TextAlign.left,
+                            ),
+                            const SizedBox(height: 10),
+                            Container(
+                              width: 300,
+                              padding: const EdgeInsets.symmetric(
+                                vertical: 8,
+                                horizontal: 10,
+                              ),
+                              decoration: BoxDecoration(
+                                color: Colors.yellow,
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              child: const Row(
+                                children: [
+                                  Icon(
+                                    Icons.info_outline,
+                                    color: Colors.black,
+                                  ),
+                                  SizedBox(width: 8),
+                                  Text(
+                                    'Silahkan menuju ke QR Code scanner',
+                                    style: TextStyle(
+                                      fontSize: 10,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
                           ],
                         ),
-                        const SizedBox(height: 10),
-                        Text(
-                          "${patient.name}\n${DateFormat('EEEE, dd MMMM yyyy', 'id').format(DateTime.parse(appointment.date))}, ${appointment.time} WIB\n${doctor.name}",
-                          style: const TextStyle(
-                            fontSize: 13,
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                          ),
-                          textAlign: TextAlign.left,
-                        ),
-                        Text(
-                          specializationTitle,
-                          style: const TextStyle(
-                              fontSize: 13, color: Colors.black),
-                          textAlign: TextAlign.left,
-                        ),
-                        const SizedBox(height: 10),
-                        Container(
-                          width: 300,
-                          padding: const EdgeInsets.symmetric(
-                            vertical: 8,
-                            horizontal: 10,
-                          ),
-                          decoration: BoxDecoration(
-                            color: Colors.yellow,
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          child: const Row(
-                            children: [
-                              Icon(
-                                Icons.info_outline,
-                                color: Colors.black,
-                              ),
-                              SizedBox(width: 8),
-                              Text(
-                                'Silahkan menuju ke QR Code scanner',
-                                style: TextStyle(
-                                  fontSize: 10,
-                                  color: Colors.black,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
+                      ),
                     ),
-                  ),
+                    const SizedBox(height: 10), // SizedBox ditambahkan di sini
+                  ],
                 );
               },
             ),
