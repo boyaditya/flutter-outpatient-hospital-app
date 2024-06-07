@@ -60,7 +60,7 @@ class _DashboardState extends State<Dashboard> {
       context.read<DoctorListCubit>().fetchDoctors(),
       context.read<SpecializationListCubit>().fetchSpecializations(),
       context.read<DoctorScheduleCubit>().fetchDoctorSchedule(),
-      context.read<AppointmentCubit>().fetchAppointmentsByPatientId(),
+      context.read<AppointmentCubit>().fetchAppointmentsByUserId(),
     ]);
   }
 

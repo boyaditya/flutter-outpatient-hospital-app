@@ -13,6 +13,7 @@ class ProfilPasienScreen extends StatefulWidget {
 }
 
 class _ProfilPasienScreenState extends State<ProfilPasienScreen> {
+    PatientModel? selectedPatient;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,18 +41,27 @@ class _ProfilPasienScreenState extends State<ProfilPasienScreen> {
                           fontSize: 14.0,
                         ),
                       ),
-                      PatientDetailButton(
+                      // PatientDetailButton(
+                      //   patient: patients[0],
+                      //   onPressed: () {
+                      //     Navigator.push(
+                      //       context,
+                      //       MaterialPageRoute(
+                      //         builder: (context) => DetailProfilPasien(
+                      //           patientId: patients[0].id,
+                      //         ),
+                      //       ),
+                      //     );
+                      //   },
+                      // ),
+               PatientDetailButton(
                         patient: patients[0],
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => DetailProfilPasien(
-                                patientId: patients[0].id,
-                              ),
-                            ),
-                          );
+                        onChanged: (value) {
+                          setState(() {
+                            selectedPatient = patients[0];
+                          });
                         },
+                        groupValue: selectedPatient == patients[0],
                       ),
                       const Text(
                         'Orang Lain',
@@ -79,18 +89,27 @@ class _ProfilPasienScreenState extends State<ProfilPasienScreen> {
                       else
                         ...patients.skip(1).map(
                           (patient) {
+                            // return PatientDetailButton(
+                            //   patient: patient,
+                            //   onPressed: () {
+                            //     Navigator.push(
+                            //       context,
+                            //       MaterialPageRoute(
+                            //         builder: (context) => DetailProfilPasien(
+                            //           patientId: patient.id,
+                            //         ),
+                            //       ),
+                            //     );
+                            //   },
+                            // );
                             return PatientDetailButton(
                               patient: patient,
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => DetailProfilPasien(
-                                      patientId: patient.id,
-                                    ),
-                                  ),
-                                );
+                              onChanged: (value) {
+                                setState(() {
+                                  selectedPatient = patient;
+                                });
                               },
+                              groupValue: selectedPatient == patient,
                             );
                           },
                         ),
@@ -129,62 +148,61 @@ class _ProfilPasienScreenState extends State<ProfilPasienScreen> {
     );
   }
 }
-
 class PatientDetailButton extends StatelessWidget {
   final PatientModel patient;
-  final VoidCallback onPressed;
+  final ValueChanged<bool?> onChanged;
+  final bool groupValue;
 
   const PatientDetailButton({
-    super.key,
+    Key? key,
     required this.patient,
-    required this.onPressed,
-  });
+    required this.onChanged,
+    required this.groupValue,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Center(
-          child: TextButton(
-            onPressed: onPressed,
-            style: TextButton.styleFrom(
-              padding: EdgeInsets.zero,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-              ),
-              backgroundColor: Colors.blue[50],
-              shadowColor: Colors.grey,
-              elevation: 4, // Add elevation for shadow effect
+        RadioListTile<bool>(
+          value: true,
+          groupValue: groupValue,
+          onChanged: onChanged,
+          activeColor: Colors.blue,
+          title: Container(
+            padding: const EdgeInsets.all(20),
+            decoration: BoxDecoration(
+              color: Colors.blue[50],
+              borderRadius: BorderRadius.circular(10),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey,
+                  blurRadius: 4, // Add blur effect
+                ),
+              ],
             ),
-            child: Container(
-              width: double.infinity,
-              padding: const EdgeInsets.all(20),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    patient.name,
-                    style: const TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                    ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  patient.name,
+                  style: const TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
                   ),
-                  const SizedBox(height: 4.0),
-                  Text(
-                    DateFormat('dd MMM yyyy').format(patient.dateOfBirth),
-                    style: const TextStyle(color: Colors.black),
-                  ),
-                  const SizedBox(height: 4.0),
-                  Text(
-                    patient.gender,
-                    style: const TextStyle(color: Colors.black),
-                  ),
-                  const SizedBox(height: 4.0),
-                ],
-              ),
+                ),
+                const SizedBox(height: 4.0),
+                Text(
+                  DateFormat('dd MMM yyyy').format(patient.dateOfBirth),
+                  style: const TextStyle(color: Colors.black),
+                ),
+                const SizedBox(height: 4.0),
+                Text(
+                  patient.gender,
+                  style: const TextStyle(color: Colors.black),
+                ),
+                const SizedBox(height: 4.0),
+              ],
             ),
           ),
         ),

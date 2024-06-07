@@ -2,6 +2,7 @@ from sqlalchemy.orm import Session
 import models, schemas
 import bcrypt
 from sqlalchemy import func
+from sqlalchemy.orm import joinedload
 
 # SALT = b'$2b$12$0nFckzktMD0Fb16a8JsNA.'
 SALT = b"$2b$12$/bGt5NNwhngAxpF2Txdf5u"
@@ -174,7 +175,7 @@ def create_appointment(db: Session, appointment: schemas.AppointmentCreate):
         )
         .scalar()
     )
-    
+
     print(max_queue_number)
 
     # If there are no appointments for the given doctor, date, and time, set the queue number to 1
@@ -199,6 +200,16 @@ def create_appointment(db: Session, appointment: schemas.AppointmentCreate):
     db.refresh(db_appointment)
 
     return db_appointment
+
+
+def get_appointments_by_user_id(db: Session, user_id: int):
+    return (
+        db.query(models.Appointment)
+        .join(models.Patient)
+        .filter(models.Patient.user_id == user_id)
+        .options(joinedload(models.Appointment.patient))
+        .all()
+    )
 
 
 def get_appointment_by_id(db: Session, appointment_id: int):

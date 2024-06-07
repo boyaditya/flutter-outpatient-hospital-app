@@ -417,6 +417,20 @@ async def read_appointment(
         raise HTTPException(status_code=404, detail="Appointment not found")
     return appointment
 
+@app.get("/appointments/user/{user_id}", response_model=List[schemas.Appointment])
+async def read_appointments_by_user_id(
+    user_id: int, db: db_dependency, token: str = Depends(oauth2_scheme)
+):
+    try:
+        payload = verify_token(token)
+    except HTTPException as e:
+        raise e
+    appointments = crud.get_appointments_by_user_id(db, user_id)
+    if not appointments:
+        raise HTTPException(
+            status_code=404, detail="Appointments not found for this user"
+        )
+    return appointments
 
 @app.get("/appointments/patient/{patient_id}", response_model=List[schemas.Appointment])
 async def read_appointments_by_patient_id(

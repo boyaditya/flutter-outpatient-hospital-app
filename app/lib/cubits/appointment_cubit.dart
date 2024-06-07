@@ -108,6 +108,41 @@ class AppointmentCubit extends Cubit<List<AppointmentModel>> {
     }
   }
 
+  Future<void> fetchAppointmentsByUserId() async {
+    try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      String? accessToken = prefs.getString('access_token');
+      int? userId = prefs.getInt('user_id'); // Change patientId to userId
+
+      if (accessToken == null) {
+        throw Exception('No access token found');
+      }
+
+      final response = await http.get(
+        Uri.parse(
+            'http://127.0.0.1:8000/appointments/user/$userId'), // Change the endpoint to /user/
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $accessToken',
+        },
+      );
+
+      if (response.statusCode == 200) {
+        List<dynamic> responseBody = json.decode(response.body);
+        setFromJson(responseBody);
+      } else {
+        if (response.statusCode == 404) {
+          emit([]);
+        } else {
+          throw Exception(
+              'Failed to load appointments: ${response.statusCode}');
+        }
+      }
+    } catch (e) {
+      print('Failed to load appointments: $e');
+    }
+  }
+
   Future<void> fetchAppointmentsByPatientId() async {
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -185,5 +220,11 @@ class AppointmentCubit extends Cubit<List<AppointmentModel>> {
     return _appointmentCache
         .lastWhere((element) => element.status == "Scheduled")
         .id;
+  }
+
+  bool patientHasActiveAppointment(int patientId) {
+    return _appointmentCache.any((appointment) =>
+        appointment.patientId == patientId &&
+        appointment.status == 'Scheduled');
   }
 }
