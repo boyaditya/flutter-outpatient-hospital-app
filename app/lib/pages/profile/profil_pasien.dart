@@ -23,95 +23,80 @@ class _ProfilPasienScreenState extends State<ProfilPasienScreen> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text(
-              'SAYA SENDIRI',
-              style: TextStyle(
-                color: Colors.grey,
-                fontSize: 14.0,
-              ),
-            ),
-            BlocBuilder<PatientListCubit, List<PatientModel>>(
-              builder: (context, patients) {
-                if (patients.isEmpty) {
-                  return const Text('No patients found');
-                }
-                final patient = patients[0];
-                return PatientDetailButton(
-                  patient: patient,
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => DetailProfilPasien(
-                          patientId: patient.id,
-                        ),
-                      ),
-                    );
-                  },
-                );
-              },
-            ),
-            const SizedBox(height: 20.0),
-            const Text(
-              'Orang Lain',
-              style: TextStyle(
-                color: Colors.grey,
-                fontSize: 14.0,
-              ),
-            ),
-            BlocBuilder<PatientListCubit, List<PatientModel>>(
-              builder: (context, patients) {
-                if (patients.length <= 1) {
-                  return const Expanded(
-                    child: Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.people,
-                            size: 30,
-                            color: Colors.grey,
-                          ),
-                          SizedBox(height: 8.0),
-                          Text(
-                            'Anda belum menambahkan profil untuk orang lain',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(color: Colors.grey),
-                          ),
-                        ],
-                      ),
+        child: BlocBuilder<PatientListCubit, List<PatientModel>>(
+          builder: (context, patients) {
+            if (patients.isEmpty) {
+              return const Text('No patients found');
+            }
+            return ListView.builder(
+              itemCount: patients.length + 2, // Add 2 for the headers
+              itemBuilder: (context, index) {
+                if (index == 0) {
+                  return const Text(
+                    'SAYA SENDIRI',
+                    style: TextStyle(
+                      color: Colors.grey,
+                      fontSize: 14.0,
                     ),
+                  );
+                } else if (index == 1) {
+                  final patient = patients[0];
+                  return PatientDetailButton(
+                    patient: patient,
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => DetailProfilPasien(
+                            patientId: patient.id,
+                          ),
+                        ),
+                      );
+                    },
+                  );
+                } else if (index == 2) {
+                  return const Text(
+                    'Orang Lain',
+                    style: TextStyle(
+                      color: Colors.grey,
+                      fontSize: 14.0,
+                    ),
+                  );
+                } else if (patients.length == 1) {
+                  return const Column(
+                    children: [
+                      Icon(
+                        Icons.people,
+                        size: 30,
+                        color: Colors.grey,
+                      ),
+                      SizedBox(height: 8.0),
+                      Text(
+                        'Anda belum menambahkan profil untuk orang lain',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(color: Colors.grey),
+                      ),
+                    ],
                   );
                 } else {
-                  return Expanded(
-                    child: ListView.builder(
-                      itemCount: patients.length > 1 ? patients.length - 1 : 0,
-                      itemBuilder: (context, index) {
-                        final patient = patients[index + 1];
-
-                        return PatientDetailButton(
-                          patient: patient,
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => DetailProfilPasien(
-                                  patientId: patient.id,
-                                ),
-                              ),
-                            );
-                          },
-                        );
-                      },
-                    ),
+                  final patient = patients[index - 2];
+                  return PatientDetailButton(
+                    patient: patient,
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => DetailProfilPasien(
+                            patientId: patient.id,
+                          ),
+                        ),
+                      );
+                    },
                   );
                 }
               },
-            ),
-          ],
+            );
+          },
         ),
       ),
       bottomNavigationBar: Padding(

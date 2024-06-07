@@ -40,98 +40,88 @@ class _RekamMedisState extends State<RekamMedis> {
         title: const Text('Rekam Medis'),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.fromLTRB( 16.0, 0.0, 16.0, 0.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const SizedBox(height: 16.0),
+            const Divider(color: Colors.black, thickness: 0.2),
             Expanded(
               child: ListView.builder(
                 itemCount: _medicalRecords.length,
                 itemBuilder: (context, index) {
                   return Card(
-                    color: Colors.blue[100], // Mengubah warna background Card menjadi putih
+                    color: Colors.blue[
+                        0], // Mengubah warna background Card menjadi putih
                     elevation: 4, // Menambahkan sedikit bayangan pada Card
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8.0), // Mengatur radius sudut Card
+                      borderRadius: BorderRadius.circular(
+                          10), // Mengatur radius sudut Card
                     ),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        boxShadow: [
-                          BoxShadow(
-                            color: Color.fromARGB(255, 229, 229, 229).withOpacity(0.5),
-                            spreadRadius: 2,
-                            blurRadius: 7,
-                            offset: const Offset(0, 3), // changes position of shadow
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            _medicalRecords[index]['doctorName']!,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 14.0,
+                            ),
+                          ),
+                          const SizedBox(height: 8.0),
+                          Text(
+                            'Pasien: ${_medicalRecords[index]['patientName']!}',
+                            style: const TextStyle(
+                              fontSize: 12.0,
+                            ),
+                          ),
+                          const SizedBox(height: 8.0),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                width: 3.0,
+                                height: 50.0,
+                                color: Colors.grey,
+                              ),
+                              const SizedBox(width: 8.0),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    _medicalRecords[index]['dateTime']!,
+                                  ),
+                                  Text(
+                                    _medicalRecords[index]['poli']!,
+                                  )
+                                ],
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 8.0),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              ElevatedButton(
+                                onPressed: () {
+                                  Navigator.pushNamed(context, '/detail_rm');
+                                  // Aksi tombol lihat detail
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.blue[700],
+                                  shape: const RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(15))),
+                                ),
+                                child: const Text(
+                                  'Lihat Detail',
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                              ),
+                            ],
                           ),
                         ],
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              _medicalRecords[index]['doctorName']!,
-                              style: const TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 14.0,
-                              ),
-                            ),
-                            const SizedBox(height: 8.0),
-                            Text(
-                              'Pasien: ${_medicalRecords[index]['patientName']!}',
-                              style: const TextStyle(
-                                fontSize: 12.0,
-                              ),
-                            ),
-                            const SizedBox(height: 8.0),
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Container(
-                                  width: 3.0,
-                                  height: 50.0,
-                                  color: Colors.black,
-                                ),
-                                const SizedBox(width: 8.0),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      _medicalRecords[index]['dateTime']!,
-                                    ),
-                                    Text(
-                                      _medicalRecords[index]['poli']!,
-                                    )
-                                  ],
-                                ),
-                              ],
-                            ),
-                            const SizedBox(height: 8.0),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                ElevatedButton(
-                                  onPressed: () {
-                                    Navigator.pushNamed(context, '/detail_rm');
-                                    // Aksi tombol lihat detail
-                                  },
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: Colors.blue[700],
-                                    shape: const RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(15))),
-                                  ),
-                                  child: const Text(
-                                    'Lihat Detail',
-                                    style: TextStyle(color: Colors.white),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
                       ),
                     ),
                   );
