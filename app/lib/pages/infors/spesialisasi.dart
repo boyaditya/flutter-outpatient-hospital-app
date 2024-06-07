@@ -3,8 +3,20 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tubes/cubits/specialization_cubit.dart';
 import 'package:tubes/pages/infors/detail_spesialisasi.dart';
 
-class Spesialisasi extends StatelessWidget {
+class Spesialisasi extends StatefulWidget {
   const Spesialisasi({super.key});
+
+  @override
+  State<Spesialisasi> createState() => _SpesialisasiState();
+}
+
+class _SpesialisasiState extends State<Spesialisasi> {
+  List<String> images = [
+    'assets/images/spesialisasi/akupuntur.png',
+    'assets/images/spesialisasi/dermatologi.png',
+    'assets/images/spesialisasi/orlam.png',
+    'assets/images/spesialisasi/gigi.png',
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -37,9 +49,10 @@ class Spesialisasi extends StatelessWidget {
                       itemBuilder: (context, index) {
                         final item = specializations[index];
                         return CustomButton(
-                          imagePath: 'assets/images/akupuntur.png', // Gunakan imagePath dari model
+                          imagePath: images[index],
                           text: item.title,
-                          subText: 'Lihat info detail spesialisasi', // Hardcoded subtext
+                          subText:
+                              'Lihat info detail spesialisasi', // Hardcoded subtext
                           onPressed: () {
                             Navigator.push(
                               context,
@@ -108,7 +121,8 @@ class CustomButton extends StatelessWidget {
                       fontSize: 14,
                     ),
                   ),
-                  const SizedBox(height: 4), // Jarak antara teks utama dan subteks
+                  const SizedBox(
+                      height: 4), // Jarak antara teks utama dan subteks
                   Text(
                     subText,
                     style: TextStyle(
