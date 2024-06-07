@@ -44,7 +44,9 @@ class _ProfilPasienScreenState extends State<ProfilPasienScreen> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => DetailProfilPasien(),
+                        builder: (context) => DetailProfilPasien(
+                          patientId: patient.id,
+                        ),
                       ),
                     );
                   },
@@ -95,7 +97,9 @@ class _ProfilPasienScreenState extends State<ProfilPasienScreen> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => DetailProfilPasien(),
+                                builder: (context) => DetailProfilPasien(
+                                  patientId: patient.id,
+                                ),
                               ),
                             );
                           },
@@ -149,48 +153,53 @@ class PatientDetailButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: TextButton(
-        onPressed: onPressed,
-        style: TextButton.styleFrom(
-          foregroundColor: Colors.blue,
-          disabledForegroundColor: Colors.grey.withOpacity(0.38),
-          disabledBackgroundColor: Colors.grey.withOpacity(0.12),
-          backgroundColor: Colors.blue[50],
-          padding: const EdgeInsets.all(6),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
+    return Column(
+      children: [
+        Center(
+          child: TextButton(
+            onPressed: onPressed,
+            style: TextButton.styleFrom(
+              foregroundColor: Colors.blue,
+              disabledForegroundColor: Colors.grey.withOpacity(0.38),
+              disabledBackgroundColor: Colors.grey.withOpacity(0.12),
+              backgroundColor: Colors.blue[50],
+              padding: const EdgeInsets.all(6),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+              side: const BorderSide(color: Colors.grey, width: 0.3),
+            ),
+            child: Container(
+              width: double.infinity,
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    patient.name,
+                    style: const TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 4.0),
+                  Text(
+                    DateFormat('dd MMM yyyy').format(patient.dateOfBirth),
+                    style: const TextStyle(color: Colors.black),
+                  ),
+                  const SizedBox(height: 4.0),
+                  Text(
+                    patient.gender,
+                    style: const TextStyle(color: Colors.black),
+                  ),
+                  const SizedBox(height: 4.0),
+                ],
+              ),
+            ),
           ),
-          side: const BorderSide(color: Colors.grey, width: 0.3),
         ),
-        child: Container(
-          width: double.infinity,
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                patient.name,
-                style: const TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const SizedBox(height: 4.0),
-              Text(
-                DateFormat('dd MMM yyyy').format(patient.dateOfBirth),
-                style: const TextStyle(color: Colors.black),
-              ),
-              const SizedBox(height: 4.0),
-              Text(
-                patient.gender,
-                style: const TextStyle(color: Colors.black),
-              ),
-              const SizedBox(height: 4.0),
-            ],
-          ),
-        ),
-      ),
+        const SizedBox(height: 10.0),
+      ],
     );
   }
 }

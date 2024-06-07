@@ -1,7 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
+import 'package:tubes/cubits/patient_cubit.dart';
 import 'package:tubes/pages/profile/edit_profile.dart';
 
-class DetailProfilPasien extends StatelessWidget {
+class DetailProfilPasien extends StatefulWidget {
+  const DetailProfilPasien({super.key, required this.patientId});
+
+  final int patientId;
+
+  @override
+  State<DetailProfilPasien> createState() => _DetailProfilPasienState();
+}
+
+class _DetailProfilPasienState extends State<DetailProfilPasien> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,46 +28,63 @@ class DetailProfilPasien extends StatelessWidget {
         backgroundColor: Colors.blue,
         iconTheme: const IconThemeData(color: Colors.white),
       ),
-      body: ListView(
-        padding: const EdgeInsets.all(20),
-        children: [
-          const SizedBox(height: 20),
-          const InfoCard(
-            icon: Icons.person,
-            title: 'Profil Pasien',
-            content: [
-              {'label': 'Nama Lengkap', 'value': 'John Doe'},
-              {'label': 'NIK', 'value': '1234567890123456'},
-              {'label': 'No Telepon', 'value': '081234567890'},
-              {'label': 'Jenis Kelamin', 'value': 'Laki-laki'},
-              {'label': 'Tanggal Lahir', 'value': '01 Januari 1990'},
-            ],
-          ),
-          const SizedBox(height: 20),
-          Center(
-            child: ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-									context,
-									MaterialPageRoute(
-										builder: (context) => const EditProfileScreen(),
-									),
-								);
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.blue,
-                padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 25),
-                textStyle: const TextStyle(
-                  fontSize: 16,
-                ),
-								shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
+      body: BlocBuilder<PatientListCubit, List<PatientModel>>(
+        builder: (context, patients) {
+          if (patients.isEmpty) {
+            return const Text('No patients found');
+          }
+          final patient =
+              patients.firstWhere((patient) => patient.id == widget.patientId);
+          return ListView(
+            padding: const EdgeInsets.all(20),
+            children: [
+              const SizedBox(height: 20),
+              InfoCard(
+                icon: Icons.person,
+                title: 'Profil Pasien',
+                content: [
+                  {'label': 'Nama Lengkap', 'value': patient.name},
+                  {'label': 'NIK', 'value': patient.nik},
+                  {'label': 'Jenis Kelamin', 'value': patient.gender},
+                  {
+                    'label': 'Tanggal Lahir',
+                    'value':
+                        DateFormat('dd MMM yyyy').format(patient.dateOfBirth)
+                  },
+                  {'label': 'No Telepon', 'value': patient.phone},
+                ],
+              ),
+              const SizedBox(height: 20),
+              Center(
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const EditProfileScreen(),
+                      ),
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.blue,
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 40, vertical: 25),
+                    textStyle: const TextStyle(
+                      fontSize: 16,
+                    ),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  child: const Text(
+                    'Permintaan Perubahan Data',
+                    style: TextStyle(color: Colors.white),
+                  ),
                 ),
               ),
-              child: const Text('Permintaan Perubahan Data', style: TextStyle(color: Colors.white),),
-            ),
-          ),
-        ],
+            ],
+          );
+        },
       ),
     );
   }
@@ -67,11 +96,11 @@ class InfoCard extends StatelessWidget {
   final List<Map<String, String>> content;
 
   const InfoCard({
-    Key? key,
+    super.key,
     required this.icon,
     required this.title,
     required this.content,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -129,8 +158,7 @@ class InfoCard extends StatelessWidget {
                     ),
                   ],
                 ),
-              )
-						),
+              )),
         ],
       ),
     );
