@@ -26,135 +26,96 @@ class _JanjiTemuSaya2State extends State<JanjiTemuSaya2> {
         elevation: 0,
         backgroundColor: Colors.blue,
       ),
-      body: ListView(
+      body: Stack(
         children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Stack(
+          SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 80), // Spasi untuk tombol
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Container(
-                    height: 120,
-                    padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
-                    decoration: const BoxDecoration(
-                      color: Colors.blue,
-                      borderRadius: BorderRadius.vertical(
-                        bottom: Radius.elliptical(230, 30),
-                      ),
-                    ),
-                    child: const Row(
-                      children: [
-                        SizedBox(height: 80),
-                      ],
-                    ),
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.only(left: 20),
-                    child: Text(
-                      "Janji Temu Saya",
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 24,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 10),
-                  Positioned(
-                    left: 20,
-                    top: 60,
-                    right: 20,
-                    child: Container(
-                      width:
-                          400, // Add this line to set the width of the Container
-                      padding: const EdgeInsets.all(20),
-                      decoration: BoxDecoration(
-                        color: const Color.fromRGBO(96, 192, 227, 1),
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: Center(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  Stack(
+                    children: [
+                      Container(
+                        height: 120,
+                        padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
+                        decoration: const BoxDecoration(
+                          color: Colors.blue,
+                          borderRadius: BorderRadius.vertical(
+                            bottom: Radius.elliptical(230, 30),
+                          ),
+                        ),
+                        child: const Row(
                           children: [
-                            _buildText("Saya Sendiri", 0),
-                            _buildText("Orang Lain", 1),
+                            SizedBox(height: 80),
                           ],
                         ),
                       ),
+                      const Padding(
+                        padding: EdgeInsets.only(left: 20),
+                        child: Text(
+                          "Janji Temu Saya",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 24,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 20),
+                  Container(
+                    padding: const EdgeInsets.only(top: 10, left: 20, right: 20),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          "Janji temu yang akan datang",
+                          style: TextStyle(fontSize: 12, color: Colors.blue),
+                          textAlign: TextAlign.left,
+                        ),
+                        const SizedBox(height: 20),
+                        _buildIsian(),
+                      ],
                     ),
                   ),
-                  Positioned(
-                    bottom: 0,
-                    left: 60, // Atur posisi awal ke tepi kiri
-                    right: 240, // Atur posisi akhir ke tepi kanan
-                    child: AnimatedContainer(
-                      duration: const Duration(milliseconds: 300),
-                      height:
-                          _selectedTabIndex == 0 ? 4 : 0, // Set lebar awal ke 0
-
-                      color: Colors.blue,
-                    ),
-                  ),
-                  Positioned(
-                    bottom: 0,
-                    left: 240, // Atur posisi awal ke tepi kiri
-                    right: 50, // Atur posisi akhir ke tepi kanan
-                    child: AnimatedContainer(
-                      duration: const Duration(milliseconds: 300),
-                      height:
-                          _selectedTabIndex == 1 ? 4 : 0, // Set lebar awal ke 0
-
-                      color: Colors.blue,
-                    ),
-                  ),
+                  const SizedBox(height: 15),
                 ],
               ),
-              const SizedBox(height: 20),
-              Container(
-                padding: const EdgeInsets.only(top: 10, left: 20, right: 20),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      "Janji temu yang akan datang",
-                      style: TextStyle(fontSize: 12, color: Colors.blue),
-                      textAlign: TextAlign.left,
-                    ),
-                    const SizedBox(height: 20),
-                    _buildIsian(),
-                  ],
+            ),
+          ),
+          Positioned(
+            bottom: 20,
+            left: 20,
+            right: 20,
+            child: TextButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) =>
+                        const HistoriJanjiTemu(title: 'Histori Janji Temu'),
+                  ),
+                );
+              },
+              style: TextButton.styleFrom(
+                padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
+                backgroundColor: Colors.white,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20),
                 ),
               ),
-              const SizedBox(height: 15),
-              TextButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) =>
-                          const HistoriJanjiTemu(title: 'Histori Janji Temu'),
-                    ),
-                  );
-                },
-                style: TextButton.styleFrom(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
-                  backgroundColor: Colors.white,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                ),
-                child: Text(
-                  "LIHAT HISTORI JANJI TEMU",
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: Colors.blue[900],
-                    fontWeight: FontWeight.bold,
-                    decoration: TextDecoration.underline,
-                  ),
+              child: Text(
+                "LIHAT HISTORI JANJI TEMU",
+                style: TextStyle(
+                  fontSize: 14,
+                  color: Colors.blue[900],
+                  fontWeight: FontWeight.bold,
+                  decoration: TextDecoration.underline,
                 ),
               ),
-            ],
+            ),
           ),
         ],
       ),
@@ -288,7 +249,7 @@ class _JanjiTemuSaya2State extends State<JanjiTemuSaya2> {
                           width: 300,
                           padding: const EdgeInsets.symmetric(
                             vertical: 8,
-                            horizontal: 12,
+                            horizontal: 10,
                           ),
                           decoration: BoxDecoration(
                             color: Colors.yellow,
@@ -302,9 +263,9 @@ class _JanjiTemuSaya2State extends State<JanjiTemuSaya2> {
                               ),
                               SizedBox(width: 8),
                               Text(
-                                'Silahkan menuju ke front office',
+                                'Silahkan menuju ke QR Code scanner',
                                 style: TextStyle(
-                                  fontSize: 13,
+                                  fontSize: 10,
                                   color: Colors.black,
                                 ),
                               ),
