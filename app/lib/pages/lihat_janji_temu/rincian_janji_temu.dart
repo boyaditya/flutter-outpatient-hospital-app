@@ -25,8 +25,7 @@ class _RincianJanjiTemuState extends State<RincianJanjiTemu> {
       builder: (BuildContext context) {
         return AlertDialog(
           title: const Text('Konfirmasi'),
-          content:
-              const Text('Apakah Anda yakin ingin membatalkan janji temu?'),
+          content: const Text('Apakah Anda yakin ingin membatalkan janji temu?'),
           actions: <Widget>[
             TextButton(
               onPressed: () {
@@ -40,10 +39,36 @@ class _RincianJanjiTemuState extends State<RincianJanjiTemu> {
                     .read<AppointmentCubit>()
                     .setStatusCancelled(widget.appointmentId);
                 if (context.mounted) {
-                  Navigator.of(context).pop(); // Tutup dialog
+                  Navigator.of(context).pop(); // Tutup dialog konfirmasi
+                  _showCancellationSuccessDialog(context);
                 }
               },
               child: const Text('Ya'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _showCancellationSuccessDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Pembatalan Berhasil'),
+          content: const Text('Janji temu berhasil dibatalkan.'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pushAndRemoveUntil(
+                  MaterialPageRoute(
+                    builder: (context) => const Dashboard(initialIndex: 1),
+                  ),
+                  (Route<dynamic> route) => false,
+                );
+              },
+              child: const Text('OK'),
             ),
           ],
         );
