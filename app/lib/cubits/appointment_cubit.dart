@@ -144,6 +144,39 @@ class AppointmentCubit extends Cubit<List<AppointmentModel>> {
     }
   }
 
+  Future<void> setStatusCancelled(int appointmentId) async {
+    try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      String? accessToken = prefs.getString('access_token');
+
+      if (accessToken == null) {
+        throw Exception('No access token found');
+      }
+
+      final response = await http.patch(
+        Uri.parse('http://127.0.0.1:8000/set_status_cancelled/$appointmentId'),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $accessToken',
+        },
+      );
+
+      if (response.statusCode == 200) {
+        AppointmentModel updatedAppointment =
+            AppointmentModel.fromJson(json.decode(response.body));
+        final updatedState = state
+            .map((item) =>
+                item.id == updatedAppointment.id ? updatedAppointment : item)
+            .toList();
+        emit(updatedState);
+      } else {
+        throw Exception('Failed to post appointment: ${response.statusCode}');
+      }
+    } catch (e) {
+      throw Exception('Failed to post appointment: $e');
+    }
+  }
+
   AppointmentModel getAppointmentById(int id) {
     return _appointmentCache[id];
   }

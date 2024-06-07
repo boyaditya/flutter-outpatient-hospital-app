@@ -35,9 +35,13 @@ class _RincianJanjiTemuState extends State<RincianJanjiTemu> {
               child: const Text('Tidak'),
             ),
             TextButton(
-              onPressed: () {
-                // Tambahkan logika untuk membatalkan janji temu di sini
-                Navigator.of(context).pop(); // Tutup dialog
+              onPressed: () async {
+                await context
+                    .read<AppointmentCubit>()
+                    .setStatusCancelled(widget.appointmentId);
+                if (context.mounted) {
+                  Navigator.of(context).pop(); // Tutup dialog
+                }
               },
               child: const Text('Ya'),
             ),
@@ -126,7 +130,8 @@ class _RincianJanjiTemuState extends State<RincianJanjiTemu> {
                   const SizedBox(height: 8),
                   Text(
                     appointment.queueNumber.toString(),
-                    style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                    style: const TextStyle(
+                        fontSize: 24, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 8),
                   const Text(
@@ -266,6 +271,24 @@ class _RincianJanjiTemuState extends State<RincianJanjiTemu> {
                       const SizedBox(height: 35),
                       ElevatedButton(
                         onPressed: () {
+                          // _showConfirmationDialog(context);
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.green,
+                          shape: const RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(8))),
+                          fixedSize: Size(
+                            MediaQuery.of(context).size.width,
+                            40,
+                          ),
+                        ),
+                        child: const Text('Check In Sekarang',
+                            style: TextStyle(color: Colors.white)),
+                      ),
+                      const SizedBox(height: 10),
+                      ElevatedButton(
+                        onPressed: () {
                           _showConfirmationDialog(context);
                         },
                         style: ElevatedButton.styleFrom(
@@ -281,6 +304,7 @@ class _RincianJanjiTemuState extends State<RincianJanjiTemu> {
                         child: const Text('Batalkan Janji Temu',
                             style: TextStyle(color: Colors.white)),
                       ),
+
                       const SizedBox(height: 20),
                       if (widget.from == 'periksa_janji_temu')
                         ElevatedButton(

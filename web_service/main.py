@@ -449,7 +449,7 @@ async def read_appointments_scheduled_by_patient_id(
         )
     return appointment
 
-@app.post("/set_status_cancelled/{appointment_id}", response_model=schemas.Appointment)
+@app.patch("/set_status_cancelled/{appointment_id}", response_model=schemas.Appointment)
 async def set_status_cancelled(
     appointment_id: int,
     db: Session = Depends(get_db),
@@ -467,7 +467,7 @@ async def set_status_cancelled(
     return appointment
 
 
-@app.post("/set_status_scheduled/{appointment_id}", response_model=schemas.Appointment)
+@app.patch("/set_status_scheduled/{appointment_id}", response_model=schemas.Appointment)
 async def set_status_scheduled(
     appointment_id: int,
     db: Session = Depends(get_db),
@@ -485,7 +485,7 @@ async def set_status_scheduled(
     return appointment
 
 
-@app.post("/set_status_complete/{appointment_id}", response_model=schemas.Appointment)
+@app.patch("/set_status_complete/{appointment_id}", response_model=schemas.Appointment)
 async def set_status_complete(
     appointment_id: int,
     db: Session = Depends(get_db),
