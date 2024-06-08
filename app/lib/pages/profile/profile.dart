@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tubes/cubits/patient_cubit.dart';
-import 'package:tubes/pages/lihat_janji_temu/histori_janji_temu.dart';
+import 'package:tubes/pages/profile/histori_janji_temu.dart';
 import 'package:tubes/pages/profile/detail_profile.dart';
 import 'package:tubes/pages/profile/keluar.dart';
 import 'package:tubes/pages/profile/syarat_ketentuan.dart';

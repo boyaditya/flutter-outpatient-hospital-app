@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tubes/pages/lihat_janji_temu/histori_janji_temu.dart';
+import 'package:tubes/pages/profile/histori_janji_temu.dart';
 
 // void main() {
 //   runApp(const MyApp());

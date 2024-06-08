@@ -30,7 +30,7 @@ import 'package:tubes/pages/login_forgot_reset/lupa_kata_sandi.dart';
 import 'package:tubes/pages/login_forgot_reset/cek_email.dart';
 import 'package:tubes/pages/login_forgot_reset/kata_sandi_baru.dart';
 import 'package:tubes/pages/login_forgot_reset/reset_success.dart';
-import 'package:tubes/pages/lihat_janji_temu/histori_janji_temu.dart';
+import 'package:tubes/pages/profile/histori_janji_temu.dart';
 // import 'package:tubes/pages/lihat_janji_temu/rincian_janji_temu.dart';
 // import 'package:tubes/pages/lihat_janji_temu/janji_temu_saya2.dart';
 // import 'package:tubes/pages/profile/edit_profile.dart';

@@ -127,4 +127,8 @@ class MedicalRecordCubit extends Cubit<List<MedicalRecordModel>> {
   MedicalRecordModel getMedicalRecordById(int id) {
     return state.firstWhere((record) => record.id == id);
   }
+
+  MedicalRecordModel getMedicalRecordByAppointmentId(int appointmentId) {
+    return state.firstWhere((record) => record.appointmentId == appointmentId);
+  }
 }

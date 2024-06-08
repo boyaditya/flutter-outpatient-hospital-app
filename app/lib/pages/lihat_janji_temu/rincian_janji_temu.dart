@@ -247,7 +247,13 @@ class _RincianJanjiTemuState extends State<RincianJanjiTemu> {
                       Container(
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
-                          color: const Color.fromARGB(255, 245, 225, 10),
+                          color: appointment.status == 'cancelled'
+                              ? Colors.red[300]
+                              : appointment.status == 'scheduled'
+                                  ? Colors.blue[300]
+                                  : appointment.status == 'complete'
+                                      ? Colors.green[300]
+                                      : const Color.fromARGB(255, 245, 225, 10),
                           boxShadow: const [
                             BoxShadow(
                               color: Colors.grey,
@@ -258,18 +264,30 @@ class _RincianJanjiTemuState extends State<RincianJanjiTemu> {
                         ),
                         width: double.infinity,
                         padding: const EdgeInsets.all(20),
-                        child: const Column(
+                        child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "Silahkan menuju ke QR Code scanner",
-                              style: TextStyle(
+                              appointment.status == 'cancelled'
+                                  ? 'Janji telah dibatalkan'
+                                  : appointment.status == 'scheduled'
+                                      ? 'Janji telah dijadwalkan'
+                                      : appointment.status == 'complete'
+                                          ? 'Janji telah selesai'
+                                          : 'Silahkan menuju ke QR Code scanner',
+                              style: const TextStyle(
                                   fontSize: 16, fontWeight: FontWeight.bold),
                             ),
-                            SizedBox(height: 8),
+                            const SizedBox(height: 8),
                             Text(
-                              "Menunggu verifikasi pasien",
-                              style: TextStyle(fontSize: 12),
+                              appointment.status == 'cancelled'
+                                  ? 'Janji temu ini telah dibatalkan'
+                                  : appointment.status == 'scheduled'
+                                      ? 'Menunggu verifikasi pasien'
+                                      : appointment.status == 'complete'
+                                          ? 'Janji temu ini telah selesai'
+                                          : 'Menunggu verifikasi pasien',
+                              style: const TextStyle(fontSize: 12),
                             ),
                           ],
                         ),
@@ -364,107 +382,110 @@ class _RincianJanjiTemuState extends State<RincianJanjiTemu> {
                         ),
                       ),
                       const SizedBox(height: 35),
-                      ElevatedButton(
-                        onPressed: () {
-                          List<MedicalRecordModel> medicalRecords = [
-                            if (specialization.title == 'Akupuntur')
-                              MedicalRecordModel(
-                                id: 0,
-                                appointmentId: appointment.id,
-                                complaint: 'Sakit kepala',
-                                diagnosis: 'Migrain',
-                                treatment: 'Terapi akupuntur',
-                                notes: 'Lakukan terapi secara rutin',
-                              ),
-                            if (specialization.title == 'Dermatologi')
-                              MedicalRecordModel(
-                                id: 0,
-                                appointmentId: appointment.id,
-                                complaint: 'Kulit gatal dan merah',
-                                diagnosis: 'Eksim',
-                                treatment: 'Krim topikal',
-                                notes: 'Hindari kontak dengan alergen',
-                              ),
-                            if (specialization.title == 'Penyakit Dalam')
-                              MedicalRecordModel(
-                                id: 0,
-                                appointmentId: appointment.id,
-                                complaint: 'Sesak napas',
-                                diagnosis: 'Asma',
-                                treatment: 'Inhaler',
-                                notes: 'Hindari asap dan debu',
-                              ),
-                            if (specialization.title == 'Kedokteran Gigi')
-                              MedicalRecordModel(
-                                id: 0,
-                                appointmentId: appointment.id,
-                                complaint: 'Gigi berlubang',
-                                diagnosis: 'Karies',
-                                treatment: 'Tambal gigi',
-                                notes: 'Perbanyak konsumsi air putih',
-                              ),
-                          ];
+                      if (widget.from != 'histori')
+                        Column(
+                          children: [
+                            ElevatedButton(
+                              onPressed: () {
+                                List<MedicalRecordModel> medicalRecords = [
+                                  if (specialization.title == 'Akupuntur')
+                                    MedicalRecordModel(
+                                      id: 0,
+                                      appointmentId: appointment.id,
+                                      complaint: 'Sakit kepala',
+                                      diagnosis: 'Migrain',
+                                      treatment: 'Terapi akupuntur',
+                                      notes: 'Lakukan terapi secara rutin',
+                                    ),
+                                  if (specialization.title == 'Dermatologi')
+                                    MedicalRecordModel(
+                                      id: 0,
+                                      appointmentId: appointment.id,
+                                      complaint: 'Kulit gatal dan merah',
+                                      diagnosis: 'Eksim',
+                                      treatment: 'Krim topikal',
+                                      notes: 'Hindari kontak dengan alergen',
+                                    ),
+                                  if (specialization.title == 'Penyakit Dalam')
+                                    MedicalRecordModel(
+                                      id: 0,
+                                      appointmentId: appointment.id,
+                                      complaint: 'Sesak napas',
+                                      diagnosis: 'Asma',
+                                      treatment: 'Inhaler',
+                                      notes: 'Hindari asap dan debu',
+                                    ),
+                                  if (specialization.title == 'Kedokteran Gigi')
+                                    MedicalRecordModel(
+                                      id: 0,
+                                      appointmentId: appointment.id,
+                                      complaint: 'Gigi berlubang',
+                                      diagnosis: 'Karies',
+                                      treatment: 'Tambal gigi',
+                                      notes: 'Perbanyak konsumsi air putih',
+                                    ),
+                                ];
 
-                          _showCheckInDialog(
-                              context, medicalRecords[0]);
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.green,
-                          shape: const RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(8))),
-                          fixedSize: Size(
-                            MediaQuery.of(context).size.width,
-                            40,
-                          ),
-                        ),
-                        child: const Text('Check In Sekarang',
-                            style: TextStyle(color: Colors.white)),
-                      ),
-                      const SizedBox(height: 10),
-                      ElevatedButton(
-                        onPressed: () {
-                          _showConfirmationDialog(context);
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.red,
-                          shape: const RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(8))),
-                          fixedSize: Size(
-                            MediaQuery.of(context).size.width,
-                            40,
-                          ),
-                        ),
-                        child: const Text('Batalkan Janji Temu',
-                            style: TextStyle(color: Colors.white)),
-                      ),
-
-                      const SizedBox(height: 20),
-                      if (widget.from == 'periksa_janji_temu')
-                        ElevatedButton(
-                          onPressed: () {
-                            Navigator.of(context).pushAndRemoveUntil(
-                              MaterialPageRoute(
-                                builder: (context) =>
-                                    const Dashboard(initialIndex: 1),
+                                _showCheckInDialog(context, medicalRecords[0]);
+                              },
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.green,
+                                shape: const RoundedRectangleBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(8))),
+                                fixedSize: Size(
+                                  MediaQuery.of(context).size.width,
+                                  40,
+                                ),
                               ),
-                              (Route<dynamic> route) => false,
-                            );
-                          },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor:
-                                const Color.fromARGB(255, 80, 130, 215),
-                            shape: const RoundedRectangleBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(8))),
-                            fixedSize: Size(
-                              MediaQuery.of(context).size.width,
-                              40,
+                              child: const Text('Check In Sekarang',
+                                  style: TextStyle(color: Colors.white)),
                             ),
-                          ),
-                          child: const Text('Lihat Halaman Janji Temu',
-                              style: TextStyle(color: Colors.white)),
+                            const SizedBox(height: 10),
+                            ElevatedButton(
+                              onPressed: () {
+                                _showConfirmationDialog(context);
+                              },
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.red,
+                                shape: const RoundedRectangleBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(8))),
+                                fixedSize: Size(
+                                  MediaQuery.of(context).size.width,
+                                  40,
+                                ),
+                              ),
+                              child: const Text('Batalkan Janji Temu',
+                                  style: TextStyle(color: Colors.white)),
+                            ),
+                            const SizedBox(height: 20),
+                            if (widget.from == 'periksa_janji_temu')
+                              ElevatedButton(
+                                onPressed: () {
+                                  Navigator.of(context).pushAndRemoveUntil(
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          const Dashboard(initialIndex: 1),
+                                    ),
+                                    (Route<dynamic> route) => false,
+                                  );
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor:
+                                      const Color.fromARGB(255, 80, 130, 215),
+                                  shape: const RoundedRectangleBorder(
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(8))),
+                                  fixedSize: Size(
+                                    MediaQuery.of(context).size.width,
+                                    40,
+                                  ),
+                                ),
+                                child: const Text('Lihat Halaman Janji Temu',
+                                    style: TextStyle(color: Colors.white)),
+                              ),
+                          ],
                         ),
                     ],
                   ),
