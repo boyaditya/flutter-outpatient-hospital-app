@@ -123,6 +123,44 @@ class PatientListCubit extends Cubit<List<PatientModel>> {
     }
   }
 
+  Future<void> putPatient(PatientModel patient) async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      String? accessToken = prefs.getString('access_token');
+      final userId = prefs.getInt('user_id');
+
+      if (userId == null) {
+        throw Exception('No user ID found');
+      }
+
+      patient.userId = userId;
+
+      final response = await http.put(
+        Uri.parse('http://127.0.0.1:8000/patients/${patient.id}'),
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization': 'Bearer $accessToken',
+        },
+        body: jsonEncode(
+          patient.toJson(),
+        ),
+      );
+
+      if (response.statusCode == 200) {
+        PatientModel updatedPatient =
+            PatientModel.fromJson(json.decode(response.body));
+        final updatedState = state
+            .map((p) => p.id == updatedPatient.id ? updatedPatient : p)
+            .toList();
+        emit(updatedState);
+      } else {
+        throw Exception('Failed to update patient: ${response.statusCode}');
+      }
+    } catch (e) {
+      throw Exception('Failed to update patient: $e');
+    }
+  }
+
   final Map<int, PatientModel> _patientCache = {};
 
   Future<void> fetchPatientsByUserId() async {
@@ -135,7 +173,7 @@ class PatientListCubit extends Cubit<List<PatientModel>> {
     }
 
     final response = await http.get(
-      Uri.parse('http://127.0.0.1:8000/user_patients/$userId'),
+      Uri.parse('http://127.0.0.1:8000/patients/user/$userId'),
       headers: <String, String>{
         'Content-Type': 'application/json',
         'Authorization': 'Bearer $accessToken',

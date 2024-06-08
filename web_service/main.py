@@ -384,8 +384,21 @@ async def read_patients(db: db_dependency, token: str = Depends(oauth2_scheme)):
         raise e
     return crud.get_patients(db)
 
+@app.put("/patients/{patient_id}", response_model=schemas.Patient)
+async def update_patient(
+    patient_id: int, patient: schemas.PatientCreate, db: db_dependency, token: str = Depends(oauth2_scheme)
+):
+    try:
+        payload = verify_token(token)
+    except HTTPException as e:
+        raise e
+    updated_patient = crud.update_patient(db, patient_id, patient)
+    if updated_patient is None:
+        raise HTTPException(status_code=404, detail="Patient not found")
+    return updated_patient
 
-@app.get("/user_patients/{user_id}", response_model=List[schemas.Patient])
+
+@app.get("/patients/user/{user_id}", response_model=List[schemas.Patient])
 async def read_patients(
     user_id: int, db: db_dependency, token: str = Depends(oauth2_scheme)
 ):

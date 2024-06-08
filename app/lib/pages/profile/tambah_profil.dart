@@ -4,7 +4,6 @@ import 'package:intl/intl.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tubes/cubits/patient_cubit.dart';
 import 'package:tubes/utils/snackbar.dart';
-import 'package:tubes/pages/authentication/welcome_page.dart';
 
 class TambahProfilPasien extends StatefulWidget {
   const TambahProfilPasien({super.key});

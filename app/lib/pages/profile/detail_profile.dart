@@ -61,7 +61,9 @@ class _DetailProfilPasienState extends State<DetailProfilPasien> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const EditProfileScreen(),
+                        builder: (context) => EditProfileScreen(
+                          patientId: patient.id,
+                        ),
                       ),
                     );
                   },

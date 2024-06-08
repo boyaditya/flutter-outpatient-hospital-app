@@ -4,10 +4,11 @@ import 'package:intl/intl.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tubes/cubits/patient_cubit.dart';
 import 'package:tubes/utils/snackbar.dart';
-import 'package:tubes/pages/authentication/welcome_page.dart';
 
 class EditProfileScreen extends StatefulWidget {
-  const EditProfileScreen({super.key});
+  const EditProfileScreen({super.key, required this.patientId});
+
+  final int patientId;
 
   @override
   State<EditProfileScreen> createState() => _EditProfileScreenState();
@@ -40,6 +41,28 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         _isDobEntered = true;
       });
     }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchPatientData();
+  }
+
+  void _fetchPatientData() {
+    final patient = context
+        .read<PatientListCubit>()
+        .state
+        .firstWhere((element) => element.id == widget.patientId);
+    _nameController.text = patient.name;
+    _nikController.text = patient.nik;
+    _phoneController.text = patient.phone;
+    _dobController.text = DateFormat('dd/MM/yyyy').format(patient.dateOfBirth);
+    _gender = patient.gender;
+    _isNameEntered = true;
+    _isNikEntered = true;
+    _isPhoneEntered = true;
+    _isDobEntered = true;
   }
 
   @override
@@ -217,7 +240,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           _isDobEntered &&
                           _agreeTerms
                       ? () {
-                          performRegister();
+                          performUpdate();
                         }
                       : null,
                   style: ElevatedButton.styleFrom(
@@ -249,9 +272,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     );
   }
 
-  Future<void> performRegister() async {
+  Future<void> performUpdate() async {
     final patient = PatientModel(
-      id: 0,
+      id: widget.patientId,
       userId: 0,
       name: _nameController.text,
       dateOfBirth: DateFormat('dd/MM/yyyy').parse(_dobController.text),
@@ -261,15 +284,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     );
 
     try {
-      await context.read<PatientListCubit>().postPatient(patient);
+      await context.read<PatientListCubit>().putPatient(patient);
       if (!mounted) return;
       showSuccessMessage(context, 'Ubah data pasien berhasil!');
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => const SelamatDatang(),
-        ),
-      );
+      Navigator.pop(context);
     } catch (e) {
       if (!mounted) return;
       // print(e);
