@@ -25,8 +25,6 @@ class ProfilDokter extends StatefulWidget {
 }
 
 class _ProfilDokterState extends State<ProfilDokter> {
-  late Future<List<DoctorScheduleModel>> futureSchedule;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
