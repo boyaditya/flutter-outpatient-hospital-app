@@ -9,6 +9,7 @@ import 'package:tubes/cubits/patient_cubit.dart';
 import 'package:tubes/cubits/specialization_cubit.dart';
 import 'package:tubes/cubits/user_cubit.dart';
 import 'package:tubes/cubits/doctor_schedule_cubit.dart';
+import 'package:tubes/cubits/medical_record_cubit.dart';
 
 import 'package:tubes/pages/buat_janji_temu/cari_dokter.dart';
 import 'package:tubes/pages/infors/infors.dart';
@@ -55,12 +56,13 @@ class _DashboardState extends State<Dashboard> {
   Future<void> fetchData() async {
     await context.read<UserCubit>().fetchUserById();
     await context.read<PatientListCubit>().fetchPatientsByUserId();
-    
+    await context.read<AppointmentCubit>().fetchAppointmentsByUserId();
+    await context.read<MedicalRecordCubit>().fetchMedicalRecordsByUserId();
+
     await Future.wait([
       context.read<DoctorListCubit>().fetchDoctors(),
       context.read<SpecializationListCubit>().fetchSpecializations(),
       context.read<DoctorScheduleCubit>().fetchDoctorSchedule(),
-      context.read<AppointmentCubit>().fetchAppointmentsByUserId(),
     ]);
   }
 

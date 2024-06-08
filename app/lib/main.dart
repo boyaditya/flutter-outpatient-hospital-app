@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:tubes/cubits/doctor_cubit.dart';
 import 'package:tubes/cubits/doctor_schedule_cubit.dart';
+import 'package:tubes/cubits/medical_record_cubit.dart';
 import 'package:tubes/cubits/patient_cubit.dart';
 import 'package:tubes/cubits/specialization_cubit.dart';
 import 'package:tubes/cubits/appointment_cubit.dart';
@@ -23,7 +24,7 @@ import 'package:tubes/pages/buat_janji_temu/cari_dokter.dart';
 // import 'package:tubes/pages/buat_janji_temu/pilih_jadwal.dart';
 // import 'package:tubes/pages/buat_janji_temu/periksa_janji_temu.dart';
 // import 'package:tubes/pages/buat_janji_temu/profil_pasien.dart';
-import 'package:tubes/pages/dashboard/dashboard.dart';
+// import 'package:tubes/pages/dashboard/dashboard.dart';
 import 'package:tubes/pages/login_forgot_reset/login.dart';
 import 'package:tubes/pages/login_forgot_reset/lupa_kata_sandi.dart';
 import 'package:tubes/pages/login_forgot_reset/cek_email.dart';
@@ -69,6 +70,9 @@ void main() {
     ),
     BlocProvider<AppointmentCubit>(
       create: (context) => AppointmentCubit(),
+    ),
+    BlocProvider<MedicalRecordCubit>(
+      create: (context) => MedicalRecordCubit(),
     ),
   ], child: const MyApp()));
 }
@@ -164,7 +168,7 @@ class MyApp extends StatelessWidget {
         '/spesialisasi': (context) => const Spesialisasi(),
         // '/detail_spesialisasi': (context) => const DetailSpesialisasi(),
         '/rekam_medis': (context) => const RekamMedis(),
-        '/detail_rm': (context) => const DetailRekamMedis(),
+        // '/detail_rm': (context) => const DetailRekamMedis(),
         '/onboard1': (context) => const OnBoarding1(),
         '/onboard2': (context) => const OnBoarding2(),
         '/onboard3': (context) => const Onboarding3(),

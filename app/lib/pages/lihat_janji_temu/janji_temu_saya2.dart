@@ -28,24 +28,35 @@ class _JanjiTemuSaya2State extends State<JanjiTemuSaya2> {
             appBar: AppBar(
               title: const Text('Janji Temu Saya'),
             ),
-            body: Center(
-              child: Container(
-                padding: const EdgeInsets.symmetric(
-                  vertical: 8,
-                  horizontal: 12,
+            body: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  height: 1, // Garis batas
+                  color: Colors.grey[300],
                 ),
-                decoration: BoxDecoration(
-                  color: Colors.yellow,
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: const Text(
-                  'Tidak ada janji temu yang akan datang',
-                  style: TextStyle(
-                    fontSize: 13,
-                    color: Colors.black,
+                Expanded(
+                  child: Center(
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 8,
+                        horizontal: 12,
+                      ),
+                      decoration: BoxDecoration(
+                        color: Colors.yellow,
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: const Text(
+                        'Tidak ada janji temu yang akan datang',
+                        style: TextStyle(
+                          fontSize: 13,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ),
                   ),
                 ),
-              ),
+              ],
             ),
           );
         } else {
@@ -56,10 +67,7 @@ class _JanjiTemuSaya2State extends State<JanjiTemuSaya2> {
             ),
             body: ListView(
               children: [
-                Container(
-                  height: 1, // Garis batas
-                  color: Colors.grey[300],
-                ),
+                const Divider(color: Colors.black, thickness: 0.1),
                 Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Column(

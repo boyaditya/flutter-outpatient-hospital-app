@@ -13,9 +13,17 @@ class CariDokter extends StatefulWidget {
 }
 
 class _CariDokterState extends State<CariDokter> {
-  TextEditingController _controller = TextEditingController();
+  final TextEditingController _controller = TextEditingController();
   String _selectedDay = 'Senin'; // default to Monday
-  List<String> _days = ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu'];
+  final List<String> _days = [
+    'Senin',
+    'Selasa',
+    'Rabu',
+    'Kamis',
+    'Jumat',
+    'Sabtu',
+    'Minggu'
+  ];
 
   @override
   void initState() {
@@ -26,15 +34,17 @@ class _CariDokterState extends State<CariDokter> {
 
   @override
   Widget build(BuildContext context) {
-    final Map<String, String> data = (ModalRoute.of(context)?.settings.arguments as Map<String, String>?) ?? {};
-
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Cari Dokter', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
+        title: const Text('Cari Dokter',
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
       ),
       body: ListView(
         children: [
-          const Divider(color: Colors.black, thickness: 0.2),
+          Container(
+            height: 1, // Garis batas
+            color: Colors.grey[300],
+          ),
           Padding(
             padding: const EdgeInsets.all(20.0),
             child: Column(
@@ -53,7 +63,7 @@ class _CariDokterState extends State<CariDokter> {
                     onChanged: (value) {
                       setState(() {});
                     },
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       hintText: 'Cari nama dokter atau spesialisasi',
                       hintStyle: TextStyle(fontSize: 13),
                       suffixIcon: Icon(Icons.search),
@@ -68,7 +78,10 @@ class _CariDokterState extends State<CariDokter> {
                 const SizedBox(height: 20),
                 Row(
                   children: [
-                    CustomButton(icon: Icons.filter_alt, text: "Filter", onPressed: () {}),
+                    CustomButton(
+                        icon: Icons.filter_alt,
+                        text: "Filter",
+                        onPressed: () {}),
                     const SizedBox(width: 10),
                     Expanded(
                       child: SingleChildScrollView(
@@ -76,7 +89,8 @@ class _CariDokterState extends State<CariDokter> {
                         child: Row(
                           children: _days.map((day) {
                             return Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 4.0),
                               child: ChoiceChip(
                                 label: Text(day),
                                 selected: _selectedDay == day,
@@ -94,23 +108,33 @@ class _CariDokterState extends State<CariDokter> {
                   ],
                 ),
                 const SizedBox(height: 20),
-                const Text('Dokter', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
+                const Text('Dokter',
+                    style:
+                        TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
                 const SizedBox(height: 20),
                 BlocBuilder<DoctorScheduleCubit, List<DoctorScheduleModel>>(
                   builder: (context, schedules) {
-                    final filteredSchedules = schedules.where((schedule) => schedule.day == _selectedDay).toList();
-                    final doctorIds = filteredSchedules.map((schedule) => schedule.doctorId).toSet();
+                    final filteredSchedules = schedules
+                        .where((schedule) => schedule.day == _selectedDay)
+                        .toList();
+                    final doctorIds = filteredSchedules
+                        .map((schedule) => schedule.doctorId)
+                        .toSet();
                     return BlocBuilder<DoctorListCubit, List<DoctorModel>>(
                       builder: (context, doctors) {
                         final searchQuery = _controller.text.toLowerCase();
-                        final filteredDoctors = doctors.where((doctor) => 
-                          doctorIds.contains(doctor.id) && 
-                          doctor.name.toLowerCase().contains(searchQuery)
-                        ).toList();
+                        final filteredDoctors = doctors
+                            .where((doctor) =>
+                                doctorIds.contains(doctor.id) &&
+                                doctor.name.toLowerCase().contains(searchQuery))
+                            .toList();
                         return Column(
                           children: filteredDoctors.map((doctor) {
-                            final specialization = context.read<SpecializationListCubit>().getSpecializationById(doctor.idSpecialization);
-                            final specializationTitle = specialization?.title ?? 'Unknown';
+                            final specialization = context
+                                .read<SpecializationListCubit>()
+                                .getSpecializationById(doctor.idSpecialization);
+                            final specializationTitle =
+                                specialization.title;
                             return DoctorButton(
                               icon: Icons.person,
                               dokter: doctor.name,
@@ -121,7 +145,9 @@ class _CariDokterState extends State<CariDokter> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => ProfilDokter(doctorId: doctor.id, specialization: specializationTitle),
+                                    builder: (context) => ProfilDokter(
+                                        doctorId: doctor.id,
+                                        specialization: specializationTitle),
                                   ),
                                 );
                               },
@@ -159,11 +185,14 @@ class CustomButton extends StatelessWidget {
       onTap: onPressed,
       child: Container(
         width: 80,
-        decoration: BoxDecoration(color: Colors.grey[200], borderRadius: BorderRadius.circular(10)),
+        decoration: BoxDecoration(
+            color: Colors.grey[200], borderRadius: BorderRadius.circular(10)),
         child: Row(
           children: <Widget>[
-            Container(padding: const EdgeInsets.all(8), child: Icon(icon, size: 20)),
-            Text(text, style: const TextStyle(fontSize: 11, color: Colors.black)),
+            Container(
+                padding: const EdgeInsets.all(8), child: Icon(icon, size: 20)),
+            Text(text,
+                style: const TextStyle(fontSize: 11, color: Colors.black)),
           ],
         ),
       ),
@@ -205,22 +234,34 @@ class DoctorButton extends StatelessWidget {
         children: <Widget>[
           Container(
             padding: const EdgeInsets.all(8),
-            child: CircleAvatar(radius: 40, backgroundImage: NetworkImage(imagePath)),
+            child: CircleAvatar(
+                radius: 40, backgroundImage: NetworkImage(imagePath)),
           ),
           const SizedBox(width: 8),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(dokter, style: const TextStyle(fontSize: 13, color: Colors.black, fontWeight: FontWeight.bold), overflow: TextOverflow.ellipsis),
+                Text(dokter,
+                    style: const TextStyle(
+                        fontSize: 13,
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold),
+                    overflow: TextOverflow.ellipsis),
                 const SizedBox(height: 6),
-                Text(spesialis, style: const TextStyle(fontSize: 11, color: Colors.black), overflow: TextOverflow.ellipsis),
+                Text(spesialis,
+                    style: const TextStyle(fontSize: 11, color: Colors.black),
+                    overflow: TextOverflow.ellipsis),
                 const SizedBox(height: 4),
                 Row(
                   children: [
-                    const Icon(Icons.check_circle, color: Colors.green, size: 20),
+                    const Icon(Icons.check_circle,
+                        color: Colors.green, size: 20),
                     const SizedBox(width: 4),
-                    Text(availability, style: const TextStyle(fontSize: 11, color: Colors.black), overflow: TextOverflow.ellipsis),
+                    Text(availability,
+                        style:
+                            const TextStyle(fontSize: 11, color: Colors.black),
+                        overflow: TextOverflow.ellipsis),
                   ],
                 ),
               ],

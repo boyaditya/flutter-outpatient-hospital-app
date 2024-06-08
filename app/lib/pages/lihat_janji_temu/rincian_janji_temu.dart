@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:tubes/cubits/appointment_cubit.dart';
 import 'package:tubes/cubits/doctor_cubit.dart';
+import 'package:tubes/cubits/medical_record_cubit.dart';
 import 'package:tubes/cubits/patient_cubit.dart';
 import 'package:tubes/cubits/specialization_cubit.dart';
 import 'package:tubes/pages/dashboard/dashboard.dart';
@@ -25,7 +26,8 @@ class _RincianJanjiTemuState extends State<RincianJanjiTemu> {
       builder: (BuildContext context) {
         return AlertDialog(
           title: const Text('Konfirmasi'),
-          content: const Text('Apakah Anda yakin ingin membatalkan janji temu?'),
+          content:
+              const Text('Apakah Anda yakin ingin membatalkan janji temu?'),
           actions: <Widget>[
             TextButton(
               onPressed: () {
@@ -76,6 +78,73 @@ class _RincianJanjiTemuState extends State<RincianJanjiTemu> {
     );
   }
 
+  void _showCheckInDialog(
+      BuildContext context, MedicalRecordModel appointment) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Konfirmasi Check-In'),
+          content: const Text(
+              'Apakah Anda yakin ingin melakukan check-in? Anda tidak dapat membatalkan check-in setelah ini.'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // Close dialog
+              },
+              child: const Text('No'),
+            ),
+            TextButton(
+              onPressed: () async {
+                await context.read<AppointmentCubit>().setStatusComplete(widget
+                    .appointmentId); // Change this to the function that checks in the patient
+
+                if (context.mounted) {
+                  await context.read<MedicalRecordCubit>().postMedicalRecord(
+                      appointment); // Change this to the function that checks in the patient
+                }
+
+                if (context.mounted) {
+                  Navigator.of(context).pop(); // Close confirmation dialog
+                  _showCheckInSuccessDialog(
+                      context); // Show a success dialog after check-in
+                }
+              },
+              child: const Text('Yes'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _showCheckInSuccessDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Check-In Berhasil'),
+          content: const Text('Anda telah berhasil melakukan check-in.'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pushAndRemoveUntil(
+                  MaterialPageRoute(
+                    builder: (context) => const Dashboard(initialIndex: 1),
+                  ),
+                  (Route<dynamic> route) => false,
+                );
+              },
+              child: const Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  late int idSpecialization;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -122,6 +191,7 @@ class _RincianJanjiTemuState extends State<RincianJanjiTemu> {
               final specialization = context
                   .read<SpecializationListCubit>()
                   .getSpecializationById(doctor.idSpecialization);
+              idSpecialization = doctor.idSpecialization;
 
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -296,7 +366,47 @@ class _RincianJanjiTemuState extends State<RincianJanjiTemu> {
                       const SizedBox(height: 35),
                       ElevatedButton(
                         onPressed: () {
-                          // _showConfirmationDialog(context);
+                          List<MedicalRecordModel> medicalRecords = [
+                            if (specialization.title == 'Akupuntur')
+                              MedicalRecordModel(
+                                id: 0,
+                                appointmentId: appointment.id,
+                                complaint: 'Sakit kepala',
+                                diagnosis: 'Migrain',
+                                treatment: 'Terapi akupuntur',
+                                notes: 'Lakukan terapi secara rutin',
+                              ),
+                            if (specialization.title == 'Dermatologi')
+                              MedicalRecordModel(
+                                id: 0,
+                                appointmentId: appointment.id,
+                                complaint: 'Kulit gatal dan merah',
+                                diagnosis: 'Eksim',
+                                treatment: 'Krim topikal',
+                                notes: 'Hindari kontak dengan alergen',
+                              ),
+                            if (specialization.title == 'Penyakit Dalam')
+                              MedicalRecordModel(
+                                id: 0,
+                                appointmentId: appointment.id,
+                                complaint: 'Sesak napas',
+                                diagnosis: 'Asma',
+                                treatment: 'Inhaler',
+                                notes: 'Hindari asap dan debu',
+                              ),
+                            if (specialization.title == 'Kedokteran Gigi')
+                              MedicalRecordModel(
+                                id: 0,
+                                appointmentId: appointment.id,
+                                complaint: 'Gigi berlubang',
+                                diagnosis: 'Karies',
+                                treatment: 'Tambal gigi',
+                                notes: 'Perbanyak konsumsi air putih',
+                              ),
+                          ];
+
+                          _showCheckInDialog(
+                              context, medicalRecords[0]);
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.green,

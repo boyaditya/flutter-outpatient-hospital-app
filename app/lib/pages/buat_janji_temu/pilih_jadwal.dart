@@ -69,9 +69,9 @@ class _PilihJadwalState extends State<PilihJadwal> {
       )),
       body: ListView(
         children: [
-          const Divider(
-            color: Colors.black,
-            thickness: 0.2,
+          Container(
+            height: 1, // Garis batas
+            color: Colors.grey[300],
           ),
           Padding(
             padding: const EdgeInsets.all(20.0),

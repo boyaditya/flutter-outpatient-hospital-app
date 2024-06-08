@@ -40,19 +40,43 @@ class _ProfilPasienState extends State<ProfilPasien> {
           } else {
             return ListView(
               children: [
+                Container(
+                  height: 1, // Garis batas
+                  color: Colors.grey[300],
+                ),
                 Padding(
                   padding: const EdgeInsets.only(left: 8.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Padding(
-                        padding: EdgeInsets.fromLTRB(12, 10, 0, 10),
-                        child: Text(
-                          'SAYA SENDIRI',
-                          style: TextStyle(
-                            color: Colors.grey,
-                            fontSize: 14.0,
-                          ),
+                       Padding(
+                        padding: const EdgeInsets.fromLTRB(12, 10, 0, 10),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.all(16.0),
+                              decoration: BoxDecoration(
+                                color: Colors.yellow[100], // Light yellow background
+                                borderRadius: BorderRadius.circular(8.0), // Rounded corners
+                              ),
+                              child: const Text(
+                                'Silahkan pilih profil pasien yang akan melakukan janji temu',
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 14.0,
+                                ),
+                              ),
+                            ),
+                            const SizedBox(height: 5.0),
+                            const Text(
+                              'SAYA SENDIRI',
+                              style: TextStyle(
+                                color: Colors.grey,
+                                fontSize: 14.0,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                       PatientDetailButton(
@@ -201,7 +225,7 @@ class PatientDetailButton extends StatelessWidget {
               children: [
                 if (hasActiveAppointment) // Only display this text if the patient has an active appointment
                   const Text(
-                    "Pasien memiliki janji temu yang aktif",
+                    "Profil pasien ini memiliki janji temu yang aktif",
                     style: TextStyle(
                       color: Colors.red,
                       fontSize: 12.0,

@@ -121,8 +121,11 @@ async def read_doctors(
         raise HTTPException(status_code=404, detail="Doctor not found")
     return doctors
 
+
 @app.get("/doctors/name/{doctor_name}", response_model=List[schemas.Doctor])
-async def read_doctor_by_name(doctor_name: str, db: Session = Depends(get_db), token: str = Depends(oauth2_scheme)):
+async def read_doctor_by_name(
+    doctor_name: str, db: Session = Depends(get_db), token: str = Depends(oauth2_scheme)
+):
     try:
         payload = verify_token(token)
     except HTTPException as e:
@@ -236,7 +239,9 @@ async def read_specialization_image(
 
 
 @app.get("/doctor_schedules/", response_model=List[schemas.DoctorSchedule])
-async def read_doctor_schedules(db: Session = Depends(get_db), token: str = Depends(oauth2_scheme)):
+async def read_doctor_schedules(
+    db: Session = Depends(get_db), token: str = Depends(oauth2_scheme)
+):
     try:
         payload = verify_token(token)
     except HTTPException as e:
@@ -258,8 +263,6 @@ async def read_doctor_schedules(
     return schedule
 
 
-
-
 @app.get("/medical_records/{record_id}", response_model=schemas.MedicalRecord)
 async def read_medical_record(
     record_id: int, db: Session = Depends(get_db), token: str = Depends(oauth2_scheme)
@@ -272,6 +275,22 @@ async def read_medical_record(
     if record is None:
         raise HTTPException(status_code=404, detail="Medical record not found")
     return record
+
+
+@app.get("/medical_records/user/{user_id}", response_model=List[schemas.MedicalRecord])
+async def read_medical_records_by_user_id(
+    user_id: int, db: Session = Depends(get_db), token: str = Depends(oauth2_scheme)
+):
+    try:
+        payload = verify_token(token)
+    except HTTPException as e:
+        raise e
+    medical_records = crud.get_medical_records_by_user_id(db, user_id)
+    if not medical_records:
+        raise HTTPException(
+            status_code=404, detail="Medical records not found for this user"
+        )
+    return medical_records
 
 
 @app.get("/medical_records/patient/{patient_id}", response_model=schemas.MedicalRecord)
@@ -288,6 +307,23 @@ async def read_medical_records_by_patient_id(
             status_code=404, detail="Medical record not found for this patient"
         )
     return medical_record
+
+
+@app.post(
+    "/medical_records/",
+    response_model=schemas.MedicalRecord,
+    status_code=status.HTTP_201_CREATED,
+)
+async def create_medical_record(
+    medical_record: schemas.MedicalRecordCreate,
+    db: db_dependency,
+    token: str = Depends(oauth2_scheme),
+):
+    try:
+        payload = verify_token(token)
+    except HTTPException as e:
+        raise e
+    return crud.create_medical_record(db=db, medical_record=medical_record)
 
 
 @app.post("/ratings/")
@@ -417,6 +453,7 @@ async def read_appointment(
         raise HTTPException(status_code=404, detail="Appointment not found")
     return appointment
 
+
 @app.get("/appointments/user/{user_id}", response_model=List[schemas.Appointment])
 async def read_appointments_by_user_id(
     user_id: int, db: db_dependency, token: str = Depends(oauth2_scheme)
@@ -431,6 +468,7 @@ async def read_appointments_by_user_id(
             status_code=404, detail="Appointments not found for this user"
         )
     return appointments
+
 
 @app.get("/appointments/patient/{patient_id}", response_model=List[schemas.Appointment])
 async def read_appointments_by_patient_id(
@@ -448,7 +486,9 @@ async def read_appointments_by_patient_id(
     return appointments
 
 
-@app.get("/appointments/scheduled/patient/{patient_id}", response_model=schemas.Appointment)
+@app.get(
+    "/appointments/scheduled/patient/{patient_id}", response_model=schemas.Appointment
+)
 async def read_appointments_scheduled_by_patient_id(
     patient_id: int, db: db_dependency, token: str = Depends(oauth2_scheme)
 ):
@@ -462,6 +502,7 @@ async def read_appointments_scheduled_by_patient_id(
             status_code=404, detail="Scheduled appointment not found for this patient"
         )
     return appointment
+
 
 @app.patch("/set_status_cancelled/{appointment_id}", response_model=schemas.Appointment)
 async def set_status_cancelled(

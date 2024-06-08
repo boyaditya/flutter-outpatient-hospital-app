@@ -27,26 +27,8 @@ class ProfilDokter extends StatefulWidget {
 class _ProfilDokterState extends State<ProfilDokter> {
   late Future<List<DoctorScheduleModel>> futureSchedule;
 
-  // void initState() {
-  //   super.initState();
-  //   print('Doctor ID: ${widget.doctorId}'); // print the doctorId
-  //   futureSchedule = context
-  //       .read<DoctorScheduleCubit>()
-  //       .fetchDoctorScheduleByDoctorId(widget.doctorId);
-  //   futureSchedule.then((schedule) {
-  //     print('Schedule: $schedule'); // print the schedule
-  //     schedule.forEach((item) {
-  //       print(
-  //           'Day: ${item.day}, Time: ${item.time}'); // print the day and time of each item
-  //     });
-  //   }).catchError((error) {
-  //     print('Error: $error'); // print the error if any
-  //   });
-  // }
-
   @override
   Widget build(BuildContext context) {
-    // context.read<DoctorScheduleCubit>().getDoctorScheduleById(widget.doctorId);
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -56,9 +38,9 @@ class _ProfilDokterState extends State<ProfilDokter> {
       ),
       body: ListView(
         children: [
-          const Divider(
-            color: Colors.black,
-            thickness: 0.2,
+          Container(
+            height: 1, // Garis batas
+            color: Colors.grey[300],
           ),
           Padding(
             padding: const EdgeInsets.all(20.0),

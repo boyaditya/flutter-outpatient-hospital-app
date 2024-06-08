@@ -1,4 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
+import 'package:tubes/cubits/appointment_cubit.dart';
+import 'package:tubes/cubits/doctor_cubit.dart';
+import 'package:tubes/cubits/medical_record_cubit.dart';
+import 'package:tubes/cubits/patient_cubit.dart';
+import 'package:tubes/cubits/specialization_cubit.dart';
+import 'package:tubes/pages/rekam_medis/detail_rm.dart';
 
 class RekamMedis extends StatefulWidget {
   const RekamMedis({super.key});
@@ -8,129 +16,151 @@ class RekamMedis extends StatefulWidget {
 }
 
 class _RekamMedisState extends State<RekamMedis> {
-  String? _selectedDay;
-  String? _selectedPoli;
-  final List<Map<String, String>> _medicalRecords = [
-    {
-      'doctorName': 'dr. Medina Gozali',
-      'dateTime': '27 Januari 2024, 09:00 WIB',
-      'poli': 'Poli Umum',
-      'patientName': 'July',
-    },
-    {
-      'doctorName': 'dr. Medina Gozali',
-      'dateTime': '20 Januari 2024, 09:00 WIB',
-      'poli': 'Poli Umum',
-      'patientName': 'July',
-    },
-    {
-      'doctorName': 'dr. Medina Gozali',
-      'dateTime': '13 Januari 2024, 09:00 WIB',
-      'poli': 'Poli Umum',
-      'patientName': 'July',
-    },
-    // Tambahkan data rekam medis lainnya di sini
-  ];
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        title: const Text('Rekam Medis'),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.fromLTRB( 16.0, 0.0, 16.0, 0.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            const Divider(color: Colors.black, thickness: 0.2),
-            Expanded(
-              child: ListView.builder(
-                itemCount: _medicalRecords.length,
-                itemBuilder: (context, index) {
-                  return Card(
-                    color: Colors.blue[
-                        0], // Mengubah warna background Card menjadi putih
-                    elevation: 4, // Menambahkan sedikit bayangan pada Card
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(
-                          10), // Mengatur radius sudut Card
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            _medicalRecords[index]['doctorName']!,
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 14.0,
-                            ),
-                          ),
-                          const SizedBox(height: 8.0),
-                          Text(
-                            'Pasien: ${_medicalRecords[index]['patientName']!}',
-                            style: const TextStyle(
-                              fontSize: 12.0,
-                            ),
-                          ),
-                          const SizedBox(height: 8.0),
-                          Row(
+    return BlocBuilder<MedicalRecordCubit, List<MedicalRecordModel>>(
+      builder: (context, medicalRecords) {
+        if (medicalRecords.isEmpty) {
+          return Scaffold(
+            appBar: AppBar(
+              title: const Text('Rekam Medis'),
+            ),
+            body: Center(
+              child: Container(
+                padding: const EdgeInsets.symmetric(
+                  vertical: 8,
+                  horizontal: 12,
+                ),
+                decoration: BoxDecoration(
+                  color: Colors.yellow,
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: const Text(
+                  'Tidak ada rekam medis',
+                  style: TextStyle(
+                    fontSize: 13,
+                    color: Colors.black,
+                  ),
+                ),
+              ),
+            ),
+          );
+        } else {
+          return Scaffold(
+            appBar: AppBar(
+              title: const Text('Rekam Medis'),
+            ),
+            body: ListView(
+              children: [
+                Container(
+                  height: 1, // Garis batas
+                  color: Colors.grey[300],
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    children: medicalRecords.map((record) {
+                      final appointment = context
+                          .read<AppointmentCubit>()
+                          .getAppointmentById(record.appointmentId);
+                      final patient = context
+                          .read<PatientListCubit>()
+                          .getPatientById(appointment.patientId);
+                      final doctor = context
+                          .read<DoctorListCubit>()
+                          .getDoctorById(appointment.doctorId);
+                      final specialization = context
+                          .read<SpecializationListCubit>()
+                          .getSpecializationById(doctor.idSpecialization);
+                      final specializationTitle = specialization.title;
+                      return Card(
+                        color: Colors.blue[0],
+                        elevation: 4,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Container(
-                                width: 3.0,
-                                height: 50.0,
-                                color: Colors.grey,
+                              Text(
+                                'Profil Pasien: ${patient.name}',
+                                style: const TextStyle(
+                                  fontSize: 14.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
-                              const SizedBox(width: 8.0),
-                              Column(
+                              const SizedBox(height: 8.0),
+                              Row(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(
-                                    _medicalRecords[index]['dateTime']!,
+                                  Container(
+                                    width: 3.0,
+                                    height: 63.0,
+                                    color: Colors.grey,
                                   ),
-                                  Text(
-                                    _medicalRecords[index]['poli']!,
-                                  )
+                                  const SizedBox(width: 8.0),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        doctor.name,
+                                        style: const TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 14.0,
+                                        ),
+                                      ),
+                                      Text(specializationTitle),
+                                      Text(
+                                        "${DateFormat('EEEE, dd MMMM yyyy', 'id').format(DateTime.parse(appointment.date))}, ${appointment.time} WIB",
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 8.0),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  ElevatedButton(
+                                    onPressed: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              DetailRekamMedis(
+                                            medicalRecordId: record.id,
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: Colors.blue[700],
+                                      shape: const RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(15))),
+                                    ),
+                                    child: const Text(
+                                      'Lihat Detail',
+                                      style: TextStyle(color: Colors.white),
+                                    ),
+                                  ),
                                 ],
                               ),
                             ],
                           ),
-                          const SizedBox(height: 8.0),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              ElevatedButton(
-                                onPressed: () {
-                                  Navigator.pushNamed(context, '/detail_rm');
-                                  // Aksi tombol lihat detail
-                                },
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: Colors.blue[700],
-                                  shape: const RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(15))),
-                                ),
-                                child: const Text(
-                                  'Lihat Detail',
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                  );
-                },
-              ),
+                        ),
+                      );
+                    }).toList(),
+                  ),
+                ),
+              ],
             ),
-          ],
-        ),
-      ),
+          );
+        }
+      },
     );
   }
 }

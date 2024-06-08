@@ -3,6 +3,8 @@ import models, schemas
 import bcrypt
 from sqlalchemy import func
 from sqlalchemy.orm import joinedload
+from sqlalchemy import desc
+
 
 # SALT = b'$2b$12$0nFckzktMD0Fb16a8JsNA.'
 SALT = b"$2b$12$/bGt5NNwhngAxpF2Txdf5u"
@@ -84,6 +86,17 @@ def get_medical_record_by_id(db: Session, record_id: int):
     )
 
 
+def get_medical_records_by_user_id(db: Session, user_id: int):
+    return (
+        db.query(models.MedicalRecord)
+        .join(models.Appointment)
+        .join(models.Patient)
+        .filter(models.Patient.user_id == user_id)
+        .order_by(desc(models.MedicalRecord.id))
+        .all()
+    )
+
+
 def get_medical_record_by_patient_id(
     db: Session, patient_id: int
 ) -> models.MedicalRecord:
@@ -93,6 +106,20 @@ def get_medical_record_by_patient_id(
         .first()
     )
     return medical_record
+
+
+def create_medical_record(db: Session, medical_record: schemas.MedicalRecordCreate):
+    db_medical_record = models.MedicalRecord(
+        appointment_id=medical_record.appointment_id,
+        complaint=medical_record.complaint,
+        diagnosis=medical_record.diagnosis,
+        treatment=medical_record.treatment,
+        notes=medical_record.notes,
+    )
+    db.add(db_medical_record)
+    db.commit()
+    db.refresh(db_medical_record)
+    return db_medical_record
 
 
 def create_rating(db: Session, ratings: schemas.RatingCreate):
@@ -208,6 +235,9 @@ def get_appointments_by_user_id(db: Session, user_id: int):
         .join(models.Patient)
         .filter(models.Patient.user_id == user_id)
         .options(joinedload(models.Appointment.patient))
+        .order_by(
+            desc(models.Appointment.id)
+        )  # Sort by appointment id in descending order
         .all()
     )
 
