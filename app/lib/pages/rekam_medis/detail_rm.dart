@@ -36,6 +36,7 @@ class _DetailRekamMedisState extends State<DetailRekamMedis> {
             .read<SpecializationListCubit>()
             .getSpecializationById(doctor.idSpecialization);
         final specializationTitle = specialization.title;
+
         return Scaffold(
           appBar: AppBar(
             title: const Text('Detail Rekam Medis'),
@@ -52,21 +53,21 @@ class _DetailRekamMedisState extends State<DetailRekamMedis> {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          // Doctor profile picture
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(
-                                15.0), // Adjust the radius as needed
-                            child: Image.network(
-                              doctor.imgPath,
-                              height: 100, // Adjust the size as needed
-                              width: 100, // Adjust the size as needed
-                              fit: BoxFit.cover,
-                            ),
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        // Doctor profile picture
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(15.0), // Adjust the radius as needed
+                          child: Image.network(
+                            doctor.imgPath,
+                            height: 100, // Adjust the size as needed
+                            width: 100, // Adjust the size as needed
+                            fit: BoxFit.cover,
                           ),
-                          const SizedBox(width: 16.0),
-                          Column(
+                        ),
+                        const SizedBox(width: 16.0),
+                        Expanded(
+                          child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
@@ -86,21 +87,50 @@ class _DetailRekamMedisState extends State<DetailRekamMedis> {
                                     color: Colors.grey,
                                   ),
                                   const SizedBox(width: 8.0),
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        "${DateFormat('EEEE, dd MMMM yyyy', 'id').format(DateTime.parse(appointment.date))}, ${appointment.time} WIB",
-                                      ),
-                                      Text(specializationTitle)
-                                    ],
+                                  Flexible(
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          "${DateFormat('EEEE, dd MMMM yyyy', 'id').format(DateTime.parse(appointment.date))}, ${appointment.time} WIB",
+                                          style: TextStyle(
+                                            overflow: TextOverflow.visible,
+                                          ),
+                                        ),
+                                        Text(specializationTitle),
+                                      ],
+                                    ),
                                   ),
                                 ],
                               ),
                             ],
                           ),
-                        ]),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 15.0),
+                    const Text(
+                      'Informasi Pasien',
+                      style: TextStyle(
+                        fontSize: 22.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 5.0),
+                    const Text(
+                      'Nama',
+                      style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),
+                    ),
+                    Text('${patient.name}',
+                      style: const TextStyle(fontSize: 14.0),
+                    ),
+                    const Text(
+                      'Jenis Kelamin',
+                      style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),
+                    ),
+                    Text('${patient.gender}', 
+                      style: const TextStyle(fontSize: 14.0),
+                    ),
                     const SizedBox(height: 15.0),
                     const Text(
                       'Keluhan',

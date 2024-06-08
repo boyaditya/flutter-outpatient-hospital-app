@@ -61,15 +61,15 @@ class _HistoriJanjiTemuState extends State<HistoriJanjiTemu> {
                       width: 400,
                       padding: const EdgeInsets.all(20),
                       decoration: BoxDecoration(
-                        color: Color.fromRGBO(96, 192, 227, 1),
+                        color: const Color.fromRGBO(96, 192, 227, 1),
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child: Center(
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
-                            _buildText("Saya Sendiri", 0),
-                            _buildText("Orang Lain", 1),
+                            _buildText("Selesai", 0),
+                            _buildText("Dibatalkan", 1),
                           ],
                         ),
                       ),
@@ -80,7 +80,7 @@ class _HistoriJanjiTemuState extends State<HistoriJanjiTemu> {
                     left: 60,
                     right: 240,
                     child: AnimatedContainer(
-                      duration: Duration(milliseconds: 300),
+                      duration: const Duration(milliseconds: 300),
                       height: _selectedTabIndex == 0 ? 4 : 0,
                       color: Colors.blue,
                     ),
@@ -90,7 +90,7 @@ class _HistoriJanjiTemuState extends State<HistoriJanjiTemu> {
                     left: 240,
                     right: 50,
                     child: AnimatedContainer(
-                      duration: Duration(milliseconds: 300),
+                      duration: const Duration(milliseconds: 300),
                       height: _selectedTabIndex == 1 ? 4 : 0,
                       color: Colors.blue,
                     ),
@@ -110,6 +110,7 @@ class _HistoriJanjiTemuState extends State<HistoriJanjiTemu> {
                               "12 Juni 2024",
                               "Dr. John Doe",
                               "Spesialis Anak",
+                              true,
                             ),
                             const SizedBox(height: 20),
                             _buildAppointmentCard(
@@ -118,19 +119,30 @@ class _HistoriJanjiTemuState extends State<HistoriJanjiTemu> {
                               "15 Juni 2024",
                               "Dr. Jane Doe",
                               "Spesialis Umum",
+                              true,
                             ),
                           ],
                         )
-                      : const Center(
-                          child: Text(
-                            "Tidak ada data.",
-                            style: TextStyle(
-                              fontSize: 18,
-                              color: Color.fromARGB(255, 13, 73, 126),
-                              fontWeight: FontWeight.bold,
+                      : Column(
+                          children: [
+                            _buildAppointmentCard(
+                              context,
+                              "Budi",
+                              "12 Mei 2024",
+                              "Dr. Alex Smith",
+                              "Spesialis Jantung",
+                              false,
                             ),
-                            textAlign: TextAlign.center,
-                          ),
+                            const SizedBox(height: 20),
+                            _buildAppointmentCard(
+                              context,
+                              "Ayu",
+                              "19 Mei 2024",
+                              "Dr. Lisa Wong",
+                              "Spesialis Kulit",
+                              false,
+                            ),
+                          ],
                         ),
                 ),
               ),
@@ -141,7 +153,7 @@ class _HistoriJanjiTemuState extends State<HistoriJanjiTemu> {
     );
   }
 
-  Widget _buildAppointmentCard(BuildContext context, String patient, String date, String doctor, String specialization) {
+  Widget _buildAppointmentCard(BuildContext context, String patient, String date, String doctor, String specialization, bool showButton) {
     return TextButton(
       onPressed: () {
         // Aksi saat tombol ditekan
@@ -196,12 +208,13 @@ class _HistoriJanjiTemuState extends State<HistoriJanjiTemu> {
               textAlign: TextAlign.left,
             ),
             const SizedBox(height: 10),
-            ElevatedButton(
-              onPressed: () {
-                // Aksi saat tombol Lihat Rekam Medis ditekan
-              },
-              child: const Text("Lihat Rekam Medis"),
-            ),
+            if (showButton)
+              ElevatedButton(
+                onPressed: () {
+                  // Aksi saat tombol Lihat Rekam Medis ditekan
+                },
+                child: const Text("Lihat Rekam Medis"),
+              ),
           ],
         ),
       ),

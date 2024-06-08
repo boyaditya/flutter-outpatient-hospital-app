@@ -36,26 +36,34 @@ class _JanjiTemuSaya2State extends State<JanjiTemuSaya2> {
                   color: Colors.grey[300],
                 ),
                 Expanded(
-                  child: Center(
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                        vertical: 8,
-                        horizontal: 12,
-                      ),
-                      decoration: BoxDecoration(
-                        color: Colors.yellow,
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: const Text(
-                        'Tidak ada janji temu yang akan datang',
-                        style: TextStyle(
-                          fontSize: 13,
-                          color: Colors.black,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
+									child: Center(
+										child: Container(
+											padding: const EdgeInsets.symmetric(
+												vertical: 8,
+												horizontal: 12,
+											),
+											child: const Column(
+												mainAxisSize: MainAxisSize.min,
+												children: [
+													Icon(
+														Icons.block, // Ikon yang menunjukkan tidak ada data
+														color: Colors.grey,
+														size: 40,
+													),
+													SizedBox(height: 8), // Jarak antara ikon dan teks
+													Text(
+														'Tidak ada janji temu yang akan datang',
+														style: TextStyle(
+															fontSize: 13,
+															color: Colors.grey, // Ubah warna teks menjadi abu-abu
+														),
+														textAlign: TextAlign.center, // Agar teks berada di tengah
+													),
+												],
+											),
+										),
+									),
+								),
               ],
             ),
           );
