@@ -381,6 +381,30 @@ class _RincianJanjiTemuState extends State<RincianJanjiTemu> {
                           ],
                         ),
                       ),
+											const SizedBox(height: 20),
+                    const Text(
+                      "INFORMASI PENJAMIN",
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Colors.blue[50],
+                        boxShadow: const [
+                          BoxShadow(
+                            color: Colors.grey,
+                            blurRadius: 4.0,
+                            offset: Offset(-2, 2),
+                          ),
+                        ],
+                      ),
+                      width: double.infinity,
+                      padding: const EdgeInsets.all(20),
+                      child: const Text(
+                        "Private",
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                    ),
                       const SizedBox(height: 35),
                       if (widget.from != 'histori')
                         Column(
