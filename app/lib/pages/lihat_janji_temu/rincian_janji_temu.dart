@@ -92,7 +92,7 @@ class _RincianJanjiTemuState extends State<RincianJanjiTemu> {
               onPressed: () {
                 Navigator.of(context).pop(); // Close dialog
               },
-              child: const Text('No'),
+              child: const Text('Tidak'),
             ),
             TextButton(
               onPressed: () async {
@@ -110,7 +110,7 @@ class _RincianJanjiTemuState extends State<RincianJanjiTemu> {
                       context); // Show a success dialog after check-in
                 }
               },
-              child: const Text('Yes'),
+              child: const Text('Ya'),
             ),
           ],
         );
