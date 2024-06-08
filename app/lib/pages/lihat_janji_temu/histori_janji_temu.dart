@@ -18,7 +18,6 @@ class _HistoriJanjiTemuState extends State<HistoriJanjiTemu> {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.blue,
-        title: Text(widget.title),
       ),
       body: ListView(
         children: [
