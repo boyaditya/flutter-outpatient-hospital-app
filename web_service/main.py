@@ -71,6 +71,31 @@ async def create_user(user: schemas.UserCreate, db: db_dependency):
         raise HTTPException(status_code=400, detail="Email already registered")
     return crud.create_user(db=db, user=user)
 
+@app.post("/check_email")
+async def check_email(email: str, db: Session = Depends(get_db)):
+    user = crud.get_user_by_email(db, email)
+    return {"email_exists": user is not None}
+
+# @app.post("/reset_password")
+# async def reset_password(reset_request: schemas.ResetPasswordRequest, db: Session = Depends(get_db)):
+#     user = crud.get_user_by_email(db, reset_request.email)
+#     if not user:
+#         raise HTTPException(status_code=404, detail="User tidak ditemukan")
+
+#     crud.update_user_password(db, user.id, reset_request.new_password)
+
+#     return {"message": "Password berhasil diubah"}
+
+@app.put("/reset_password/{email}")
+async def reset_password(email: str, new_password: str, db: Session = Depends(get_db)):
+    user = crud.get_user_by_email(db, email)
+    if not user:
+        raise HTTPException(status_code=404, detail="User tidak ditemukan")
+
+    # Memperbarui password user
+    crud.update_user_password(db, user.id, new_password)
+
+    return {"message": "Password berhasil diubah"}
 
 # hasil adalah akses token
 @app.post("/login")  # ,response_model=schemas.Token

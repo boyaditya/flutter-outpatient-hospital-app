@@ -13,6 +13,24 @@ SALT = b"$2b$12$/bGt5NNwhngAxpF2Txdf5u"
 def get_user_by_email(db: Session, email: str):
     return db.query(models.User).filter(models.User.email == email).first()
 
+def update_user_password(db: Session, user_id: int, new_password: str):
+    hashed_password = hash_password(new_password)
+    db.query(models.User).filter(models.User.id == user_id).update(
+        {"hashed_password": hashed_password}
+    )
+    db.commit()
+
+def reset_user_password(db: Session, email: str, new_password: str):
+    user = get_user_by_email(db, email)
+    if not user:
+        raise HTTPException(status_code=404, detail="User tidak ditemukan")
+
+    hashed_password = hash_password(new_password)
+    db.query(models.User).filter(models.User.email == email).update(
+        {"hashed_password": hashed_password}
+    )
+    db.commit()
+
 
 def create_user(db: Session, user: schemas.UserCreate):
     hashed_password = hash_password(user.hashed_password)

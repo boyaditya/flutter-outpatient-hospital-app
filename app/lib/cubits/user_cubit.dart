@@ -134,4 +134,43 @@ class UserCubit extends Cubit<UserModel?> {
       throw Exception('Failed to load user');
     }
   }
+
+  // Future<bool> checkEmail(String email) async {
+  //   final response = await http.post(
+  //     Uri.parse('http://127.0.0.1:8000/check_email'),
+  //     headers: {
+  //       'Content-Type': 'application/json; charset=UTF-8',
+  //     },
+  //     body: jsonEncode({
+  //       'email': email,
+  //     }),
+  //   );
+
+  //   if (response.statusCode == 200) {
+  //     Map<String, dynamic> responseBody = jsonDecode(response.body);
+  //     return responseBody['email_exists'];
+  //   } else {
+  //     throw Exception('Failed to check email');
+  //   }
+  // }
+
+  // Future<void> resetPassword(String email, String newPassword) async {
+  //   final response = await http.post(
+  //     Uri.parse('http://127.0.0.1:8000/reset_password'),
+  //     headers: {
+  //       'Content-Type': 'application/json; charset=UTF-8',
+  //     },
+  //     body: jsonEncode({
+  //       'email': email,
+  //       'new_password': newPassword,
+  //     }),
+  //   );
+
+  //   if (response.statusCode == 200) {
+  //     // Password reset successful
+  //     print('Password reset successful');
+  //   } else {
+  //     throw Exception('Failed to reset password');
+  //   }
+  // }
 }
