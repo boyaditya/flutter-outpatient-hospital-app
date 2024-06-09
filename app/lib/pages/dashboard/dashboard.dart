@@ -209,17 +209,6 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   int _currentIndex = 0;
-
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   // Get the PatientListCubit instance
-  //   final patientListCubit =
-  //       BlocProvider.of<PatientListCubit>(context, listen: false);
-  //   // Call the fetchPatientsByUserId function
-  //   patientListCubit.fetchPatientsByUserId();
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
