@@ -30,6 +30,7 @@ class _CariDokterState extends State<CariDokter> {
     super.initState();
     context.read<DoctorListCubit>().fetchDoctors();
     context.read<DoctorScheduleCubit>().fetchDoctorSchedule();
+    context.read<SpecializationListCubit>().fetchSpecializations();
   }
 
   @override
@@ -112,47 +113,58 @@ class _CariDokterState extends State<CariDokter> {
                     style:
                         TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
                 const SizedBox(height: 20),
-                BlocBuilder<DoctorScheduleCubit, List<DoctorScheduleModel>>(
-                  builder: (context, schedules) {
-                    final filteredSchedules = schedules
-                        .where((schedule) => schedule.day == _selectedDay)
+                BlocBuilder<SpecializationListCubit, List<SpecializationModel>>(
+                  builder: (context, specializations) {
+                    final searchQuery = _controller.text.toLowerCase();
+                    final matchingSpecializations = specializations
+                        .where((spec) => spec.title.toLowerCase().contains(searchQuery))
                         .toList();
-                    final doctorIds = filteredSchedules
-                        .map((schedule) => schedule.doctorId)
-                        .toSet();
-                    return BlocBuilder<DoctorListCubit, List<DoctorModel>>(
-                      builder: (context, doctors) {
-                        final searchQuery = _controller.text.toLowerCase();
-                        final filteredDoctors = doctors
-                            .where((doctor) =>
-                                doctorIds.contains(doctor.id) &&
-                                doctor.name.toLowerCase().contains(searchQuery))
+
+                    return BlocBuilder<DoctorScheduleCubit, List<DoctorScheduleModel>>(
+                      builder: (context, schedules) {
+                        final filteredSchedules = schedules
+                            .where((schedule) => schedule.day == _selectedDay)
                             .toList();
-                        return Column(
-                          children: filteredDoctors.map((doctor) {
-                            final specialization = context
-                                .read<SpecializationListCubit>()
-                                .getSpecializationById(doctor.idSpecialization);
-                            final specializationTitle =
-                                specialization.title;
-                            return DoctorButton(
-                              icon: Icons.person,
-                              dokter: doctor.name,
-                              spesialis: specializationTitle,
-                              availability: 'Available',
-                              imagePath: doctor.imgPath,
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => ProfilDokter(
-                                        doctorId: doctor.id,
-                                        specialization: specializationTitle),
-                                  ),
+                        final doctorIds = filteredSchedules
+                            .map((schedule) => schedule.doctorId)
+                            .toSet();
+
+                        return BlocBuilder<DoctorListCubit, List<DoctorModel>>(
+                          builder: (context, doctors) {
+                            final filteredDoctors = doctors.where((doctor) {
+                              final isNameMatch = doctor.name.toLowerCase().contains(searchQuery);
+                              final isSpecializationMatch = matchingSpecializations
+                                  .any((spec) => spec.id == doctor.idSpecialization);
+                              return doctorIds.contains(doctor.id) && (isNameMatch || isSpecializationMatch);
+                            }).toList();
+
+                            return Column(
+                              children: filteredDoctors.map((doctor) {
+                                final specialization = specializations.firstWhere(
+                                  (spec) => spec.id == doctor.idSpecialization,
+                                  orElse: () => SpecializationModel(id: -1, title: 'Unknown', description: '', imgName: ''),
                                 );
-                              },
+                                final specializationTitle = specialization.title;
+                                return DoctorButton(
+                                  icon: Icons.person,
+                                  dokter: doctor.name,
+                                  spesialis: specializationTitle,
+                                  availability: 'Available',
+                                  imagePath: doctor.imgPath,
+                                  onPressed: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => ProfilDokter(
+                                            doctorId: doctor.id,
+                                            specialization: specializationTitle),
+                                      ),
+                                    );
+                                  },
+                                );
+                              }).toList(),
                             );
-                          }).toList(),
+                          },
                         );
                       },
                     );
