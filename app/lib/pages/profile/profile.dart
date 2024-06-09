@@ -1,16 +1,72 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tubes/cubits/patient_cubit.dart';
+import 'package:tubes/cubits/user_cubit.dart';
+import 'package:tubes/pages/login_forgot_reset/login.dart';
+import 'package:tubes/pages/onboarding/onboard2.dart';
 import 'package:tubes/pages/profile/histori_janji_temu.dart';
 import 'package:tubes/pages/profile/detail_profile.dart';
-import 'package:tubes/pages/profile/keluar.dart';
 import 'package:tubes/pages/profile/syarat_ketentuan.dart';
 import 'profil_pasien.dart';
 import 'berikan_penilaian.dart';
 import 'pusat_bantuan.dart';
 
-class ProfilScreen extends StatelessWidget {
+class ProfilScreen extends StatefulWidget {
   const ProfilScreen({super.key});
+
+  @override
+  State<ProfilScreen> createState() => _ProfilScreenState();
+}
+
+class _ProfilScreenState extends State<ProfilScreen> {
+  void _showConfirmationDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          content: const SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SizedBox(height: 30.0),
+                Icon(
+                  Icons.exit_to_app,
+                  size: 60.0,
+                  color: Colors.black,
+                ),
+                SizedBox(height: 8.0),
+                Text(
+                  'Apakah kamu yakin ingin keluar aplikasi ATHENA Hospital?',
+                  textAlign: TextAlign.center,
+                ),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // Tutup dialog
+              },
+              child: const Text('Tidak'),
+            ),
+            TextButton(
+              onPressed: () async {
+                await context.read<UserCubit>().logout();
+              
+                Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(builder: (context) => const OnBoarding2()),
+                  (route) => false,
+                );
+              },
+              child: const Text('Ya'),
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +98,8 @@ class ProfilScreen extends StatelessWidget {
                         );
                       },
                       child: Padding(
-                        padding: const EdgeInsets.fromLTRB(8.0, 16.0, 8.0, 16.0),
+                        padding:
+                            const EdgeInsets.fromLTRB(8.0, 16.0, 8.0, 16.0),
                         child: Column(
                           children: [
                             CircleAvatar(
@@ -107,7 +164,7 @@ class ProfilScreen extends StatelessWidget {
               );
             },
           ),
-					ListTile(
+          ListTile(
             leading: const Icon(Icons.history, color: Colors.blue, size: 40),
             title: const Text('Riwayat Janji Temu'),
             trailing: const Icon(Icons.chevron_right),
@@ -115,7 +172,7 @@ class ProfilScreen extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => const HistoriJanjiTemu(title: 'Histori Janji Temu',)),
+                    builder: (context) => const HistoriJanjiTemu()),
               );
             },
           ),
@@ -161,10 +218,7 @@ class ProfilScreen extends StatelessWidget {
             title: const Text('Keluar'),
             trailing: const Icon(Icons.chevron_right),
             onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => KeluarAplikasiScreen()),
-              );
+              _showConfirmationDialog(context);
             },
           ),
         ],

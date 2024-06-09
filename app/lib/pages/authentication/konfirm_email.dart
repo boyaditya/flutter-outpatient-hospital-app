@@ -1,4 +1,7 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
 import 'package:tubes/pages/registrasi_pasien/registrasi_pasien.dart';
 
 class KonfirmasiEmail extends StatefulWidget {
@@ -9,107 +12,169 @@ class KonfirmasiEmail extends StatefulWidget {
 }
 
 class _KonfirmasiEmailState extends State<KonfirmasiEmail> {
-  bool _isButtonEnabled = false;
+  bool _isOtpVerified = false;
+  int randomNumber = 10000;
+  bool _showNotification = false;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      random();
+    });
+  }
+
+  void random() {
+    setState(() {
+      Random random = new Random();
+      randomNumber = random.nextInt(100000);
+      _showNotification = true;
+    });
+
+    Future.delayed(const Duration(seconds: 10), () {
+      if (mounted) {
+        setState(() {
+          _showNotification = false;
+        });
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
-      body: ListView(
+      appBar: AppBar(
+        title: const Text('Konfirmasi Email'),
+        automaticallyImplyLeading: false,
+      ),
+      body: Stack(
         children: [
-          Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                const Text(
-                  'Konfirmasi Alamat Email',
-                  style: TextStyle(
-                    fontSize: 22.0,
-                    fontWeight: FontWeight.bold,
+          SafeArea(
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text("Konfirmasi Kode Verifikasi"),
+                  const SizedBox(height: 45),
+                  const SizedBox(height: 30),
+                  OtpTextField(
+                    numberOfFields: 5,
+                    borderColor: const Color(0xFF512DA8),
+                    showFieldAsBox: true,
+                    onCodeChanged: (String code) {
+                      // handle validation or checks here
+                    },
+                    onSubmit: (String verificationCode) {
+                      if (int.parse(verificationCode) == randomNumber) {
+                        showDialog(
+                            context: context,
+                            builder: (context) {
+                              return AlertDialog(
+                                title: const Text("Konfirmasi Kode Verifikasi Berhasil"),
+                                content: const Text(
+                                    'Silahkan lanjutkan ke proses selanjutnya'),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                      setState(() {
+                                        _isOtpVerified = true;
+                                      });
+                                    },
+                                    child: const Text('OK'),
+                                  ),
+                                ],
+                              );
+                            });
+                      } else {
+                        showDialog(
+                            context: context,
+                            builder: (context) {
+                              return AlertDialog(
+                                title: const Text("Konfirmasi Kode Verifikasi Gagal"),
+                                content: const Text('Silahkan coba lagi'),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                    child: const Text('OK'),
+                                  ),
+                                ],
+                              );
+                            });
+                      }
+                    }, // end onSubmit
                   ),
-                ),
-                const SizedBox(height: 16.0),
-                const Text(
-                  'Kami akan  mengirimkan kode ke alamat email Anda.',
-                  style: TextStyle(fontSize: 15.0),
-                ),
-                const SizedBox(height: 30.0),
-                const Text('kelompok7@gmail.com',
-                    style:
-                        TextStyle(fontSize: 26.0, fontWeight: FontWeight.bold)),
-                const SizedBox(height: 24.0),
-                const Text('Kode verifikasi'),
-                const SizedBox(height: 5.0),
-                TextField(
-                  onChanged: (value) {
-                    setState(() {
-                      _isButtonEnabled = value.isNotEmpty;
-                    });
-                  },
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
-                    hintText: 'Kode Verifikasi',
-                  ),
-                ),
-                const SizedBox(height: 12.0),
-                const SizedBox(height: 24.0),
-                GestureDetector(
-                  onTap: () {
-                    // Aksi yang akan dijalankan saat "Kirim Ulang Kode" diklik
-                    // Misalnya, memulai pengiriman ulang kode
-                  },
-                  child: const Align(
-                    alignment: Alignment.center,
-                    child: Text(
-                      'Kirim Ulang Kode',
-                      style: TextStyle(
-                        fontSize: 15.0,
-                        color: Colors.purple,
+                  const SizedBox(height: 30),
+                  if (_isOtpVerified)
+                    Container(
+                      width: MediaQuery.of(context).size.width * 0.8,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const RegistrationScreen()),
+                          );
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color(0xFF512DA8),
+                          foregroundColor: const Color(0xFFFFFFFF),
+                          padding: const EdgeInsets.symmetric(vertical: 15),
+                        ),
+                        child: const Text(
+                          'Selanjutnya',
+                          style: TextStyle(fontSize: 18),
+                        ),
                       ),
                     ),
-                  ),
-                ),
-                const Align(
-                  alignment: Alignment.center,
-                  child: Text(
-                    'Kirim Ulang dalam 59 Detik.',
-                    style: TextStyle(
-                      fontSize: 15.0,
-                      color: Colors.green,
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 200.0),
-                Center(
-                  child: ElevatedButton(
-                    onPressed: _isButtonEnabled
-                        ? () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const RegistrationScreen(),
-                              ),
-                            );
-                          }
-                        : null,
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: _isButtonEnabled
-                          ? Colors.blue[700]
-                          : Colors.grey,
-                      shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(8))),
-                      fixedSize: Size(MediaQuery.of(context).size.width,
-                          40), // 50% of screen width
-                    ),
-                    child: const Text('Selanjutnya',
-                        style: TextStyle(color: Colors.white)),
-                  ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
+          if (_showNotification)
+            Positioned(
+              top: 0,
+              left: 0,
+              right: 0,
+              child: SafeArea(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFF512DA8),
+                      borderRadius: BorderRadius.circular(10),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.25),
+                          spreadRadius: 2,
+                          blurRadius: 4,
+                          offset: const Offset(0, 2),
+                        ),
+                      ],
+                    ),
+                    child: Row(
+                      children: [
+                        const Icon(Icons.sms, color: Colors.white, size: 24),
+                        const SizedBox(width: 12),
+                        Text(
+                          'Kode Verifikasi Anda: $randomNumber',
+                          style: const TextStyle(fontSize: 18, color: Colors.white),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: random,
+        tooltip: 'Refresh Kode Verifikasi',
+        child: const Icon(Icons.refresh),
       ),
     );
   }

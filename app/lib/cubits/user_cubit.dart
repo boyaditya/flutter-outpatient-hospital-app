@@ -70,6 +70,9 @@ class UserCubit extends Cubit<UserModel?> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.remove('access_token');
     await prefs.remove('user_id');
+    await prefs.remove('user');
+    await prefs.remove('patient_id');
+    await prefs.remove('patients');
     emit(null);
   }
 

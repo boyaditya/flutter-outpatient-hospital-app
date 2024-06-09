@@ -10,9 +10,7 @@ import 'package:tubes/pages/lihat_janji_temu/rincian_janji_temu.dart';
 import 'package:tubes/pages/rekam_medis/detail_rm.dart';
 
 class HistoriJanjiTemu extends StatefulWidget {
-  const HistoriJanjiTemu({super.key, required this.title});
-
-  final String title;
+  const HistoriJanjiTemu({super.key});
 
   @override
   State<HistoriJanjiTemu> createState() => _HistoriJanjiTemuState();

@@ -56,7 +56,7 @@ class _ResetSuccessState extends State<ResetSuccess> {
                   Navigator.push(
 												context,
 												MaterialPageRoute(
-													builder: (context) => const Login(title: 'Login'),
+													builder: (context) => const Login(),
 												),
 											);
                 },

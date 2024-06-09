@@ -9,7 +9,7 @@ import 'package:tubes/pages/dashboard/dashboard.dart';
 import 'package:tubes/pages/login_forgot_reset/lupa_kata_sandi.dart';
 
 class Login extends StatefulWidget {
-  const Login({super.key, required String title});
+  const Login({super.key});
 
   @override
   _LoginState createState() => _LoginState();
@@ -71,8 +71,9 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(),
       body: Padding(
-        padding: const EdgeInsets.fromLTRB(38.0, 30.0, 38.0, 0),
+        padding: const EdgeInsets.fromLTRB(38.0, 0.0, 38.0, 0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
@@ -160,7 +161,7 @@ class _LoginState extends State<Login> {
                     style: TextStyle(color: Colors.blue)),
               ),
             ),
-            const SizedBox(height: 40.0),
+            const SizedBox(height: 25.0),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -217,8 +218,9 @@ class _LoginState extends State<Login> {
   void checkLoginStatus() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     int? savedUserId = prefs.getInt('user_id');
+    String? accessToken = prefs.getString('access_token');
 
-    if (savedUserId != null) {
+    if (savedUserId != null && accessToken != null) {
       // If user_id is saved in shared preferences, navigate to Dashboard directly
       if (mounted) {
         Navigator.pushReplacement(

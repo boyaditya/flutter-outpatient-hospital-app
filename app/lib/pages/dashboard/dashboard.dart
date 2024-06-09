@@ -10,6 +10,7 @@ import 'package:tubes/cubits/specialization_cubit.dart';
 import 'package:tubes/cubits/user_cubit.dart';
 import 'package:tubes/cubits/doctor_schedule_cubit.dart';
 import 'package:tubes/cubits/medical_record_cubit.dart';
+import 'package:tubes/pages/authentication/konfirm_email.dart';
 
 import 'package:tubes/pages/buat_janji_temu/cari_dokter.dart';
 import 'package:tubes/pages/infors/infors.dart';
@@ -55,7 +56,8 @@ class _DashboardState extends State<Dashboard> {
 
   Future<void> fetchData() async {
     await context.read<UserCubit>().fetchUserById();
-    await context.read<PatientListCubit>().fetchPatientsByUserId();
+    var patientListCubit = context.read<PatientListCubit>();
+    await patientListCubit.fetchPatientsByUserId();
     await context.read<AppointmentCubit>().fetchAppointmentsByUserId();
     await context.read<MedicalRecordCubit>().fetchMedicalRecordsByUserId();
 
@@ -64,6 +66,18 @@ class _DashboardState extends State<Dashboard> {
       context.read<SpecializationListCubit>().fetchSpecializations(),
       context.read<DoctorScheduleCubit>().fetchDoctorSchedule(),
     ]);
+
+    if (patientListCubit.state.isEmpty) {
+      // Handle the null case here. For example, show a message.
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const KonfirmasiEmail(),
+        ),
+      );
+    } else {
+      // Continue with your logic here.
+    }
   }
 
   @override

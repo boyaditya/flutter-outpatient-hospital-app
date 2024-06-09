@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tubes/pages/login_forgot_reset/login.dart';
 
 class SelamatDatang extends StatelessWidget {
@@ -33,21 +34,28 @@ class SelamatDatang extends StatelessWidget {
               ),
             ),
             const Text(
-              'Anda telah berhasil membuat akun',
+              'Anda telah berhasil membuat akun dan profil pasien',
               style: TextStyle(fontSize: 15),
             ),
             const SizedBox(height: 100.0),
             Center(
               child: ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const Login(
-                        title: 'Login',
+                onPressed: () async {
+                  final prefs = await SharedPreferences.getInstance();
+                  final accessToken = prefs.getString('access_token');
+
+                  if (accessToken != null) {
+                    Navigator.pop(context);
+                    Navigator.pop(context);
+                    Navigator.pop(context);
+                  } else {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const Login(),
                       ),
-                    ),
-                  );
+                    );
+                  }
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.blue[700],
