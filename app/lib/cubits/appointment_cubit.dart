@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -13,6 +14,7 @@ class AppointmentModel {
   final String status;
   final String timestamp;
   final int queueNumber;
+  static const int avgServiceTime = 15; // average service time in minutes
 
   AppointmentModel({
     required this.id,
@@ -25,6 +27,21 @@ class AppointmentModel {
     required this.timestamp,
     required this.queueNumber,
   });
+
+  DateTime estimateServiceTime() {
+    // Parse the start time from the `time` property
+    String startTimeString = time.split('-').first.trim().replaceAll('.', ':');
+    DateTime startTime = DateFormat('Hm').parse(startTimeString);
+
+    // Calculate the estimated waiting time
+    int estimatedMinutes = (queueNumber - 1) * avgServiceTime;
+
+    // Add the estimated waiting time to the start time
+    DateTime estimatedServiceTime =
+      startTime.add(Duration(minutes: estimatedMinutes));
+
+    return estimatedServiceTime;
+  }
 
   static AppointmentModel fromJson(Map<String, dynamic> item) {
     return AppointmentModel(

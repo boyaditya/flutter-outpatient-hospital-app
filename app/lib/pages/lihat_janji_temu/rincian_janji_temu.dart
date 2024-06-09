@@ -228,6 +228,13 @@ class _RincianJanjiTemuState extends State<RincianJanjiTemu> {
                     style: const TextStyle(
                         fontSize: 24, fontWeight: FontWeight.bold),
                   ),
+
+                  const SizedBox(height: 8),
+                  Text(
+                    'Perkiraan Waktu Dilayani: ${DateFormat('HH.mm').format(appointment.estimateServiceTime())} WIB',
+                    style: const TextStyle(
+                        fontSize: 18, fontWeight: FontWeight.bold),
+                  ),
                   const SizedBox(height: 8),
                   const Text(
                     'Pindai kode QR di Kios untuk Check In',
@@ -381,30 +388,65 @@ class _RincianJanjiTemuState extends State<RincianJanjiTemu> {
                           ],
                         ),
                       ),
-											const SizedBox(height: 20),
-                    const Text(
-                      "INFORMASI PENJAMIN",
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: Colors.blue[50],
-                        boxShadow: const [
-                          BoxShadow(
-                            color: Colors.grey,
-                            blurRadius: 4.0,
-                            offset: Offset(-2, 2),
-                          ),
-                        ],
-                      ),
-                      width: double.infinity,
-                      padding: const EdgeInsets.all(20),
-                      child: const Text(
-                        "Private",
+                      const SizedBox(height: 20),
+                      const Text(
+                        "INFORMASI PENJAMIN",
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
-                    ),
+                      const SizedBox(height: 10),
+                      Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: Colors.blue[50],
+                          boxShadow: const [
+                            BoxShadow(
+                              color: Colors.grey,
+                              blurRadius: 4.0,
+                              offset: Offset(-2, 2),
+                            ),
+                          ],
+                        ),
+                        width: double.infinity,
+                        padding: const EdgeInsets.all(20),
+                        child: Text(
+                          appointment.coverageType,
+                          style: const TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                      const Text(
+                        "DETAIL JANJI TEMU",
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      const SizedBox(height: 10),
+                      Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: Colors.blue[50],
+                          boxShadow: const [
+                            BoxShadow(
+                              color: Colors.grey,
+                              blurRadius: 4.0,
+                              offset: Offset(-2, 2),
+                            ),
+                          ],
+                        ),
+                        width: double.infinity,
+                        padding: const EdgeInsets.all(20),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            InfoItem(
+                              label: "KODE JANJI TEMU",
+                              value: 'JNTM${appointment.id}',
+                            ),
+                            InfoItem(
+                              label: "WAKTU DIBUAT JANJI TEMU",
+                              value: appointment.timestamp.replaceAll('T', ' '),
+                            ),
+                          ],
+                        ),
+                      ),
                       const SizedBox(height: 35),
                       if (widget.from != 'histori')
                         Column(
