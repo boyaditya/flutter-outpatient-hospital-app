@@ -124,7 +124,7 @@ def create_medical_record(db: Session, medical_record: schemas.MedicalRecordCrea
 
 def create_rating(db: Session, ratings: schemas.RatingCreate):
     db_ratings = models.Rating(
-        patient_id=ratings.patient_id,
+        user_id=ratings.user_id,
         rating=ratings.rating,
         comment=ratings.comment,
         category=ratings.category,

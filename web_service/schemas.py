@@ -118,7 +118,7 @@ class MedicalRecord(MedicalRecordBase):
 
 
 class RatingBase(BaseModel):
-    patient_id: int
+    user_id: int
     rating: float
     comment: str
     category: str

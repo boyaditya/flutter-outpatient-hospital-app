@@ -1,21 +1,44 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:tubes/cubits/rating_cubit.dart';
 
 class BerikanPenilaianScreen extends StatefulWidget {
+  const BerikanPenilaianScreen({super.key});
+
   @override
-  _BerikanPenilaianScreenState createState() => _BerikanPenilaianScreenState();
+  State<BerikanPenilaianScreen> createState() => _BerikanPenilaianScreenState();
 }
 
 class _BerikanPenilaianScreenState extends State<BerikanPenilaianScreen> {
   double _rating = 0;
-  TextEditingController _commentController = TextEditingController();
+  final TextEditingController _commentController = TextEditingController();
   String _selectedCategory = 'Aplikasi Seluler';
+
+  void showSuccessMessage(String message) {
+    final snackBar = SnackBar(
+      content: Text(message, style: const TextStyle(color: Colors.white)),
+      duration: const Duration(seconds: 2),
+      backgroundColor: Colors.green,
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+
+  void showErrorMessage(String message) {
+    final snackBar = SnackBar(
+      content: Text(message, style: const TextStyle(color: Colors.white)),
+      duration: const Duration(seconds: 2),
+      backgroundColor: Colors.red,
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Berikan Penilaian', style: TextStyle(fontWeight: FontWeight.bold)),
+        title: const Text('Berikan Penilaian',
+            style: TextStyle(fontWeight: FontWeight.bold)),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -48,14 +71,13 @@ class _BerikanPenilaianScreenState extends State<BerikanPenilaianScreen> {
                     onRatingUpdate: (rating) {
                       setState(() {
                         _rating = rating;
-                        print(_rating.toString());
                       });
                     },
                   ),
                 ),
                 const Divider(
-                  color: Colors.blue,  // Warna garis divider
-                  thickness: 2.0,       // Ketebalan garis divider
+                  color: Colors.blue, // Warna garis divider
+                  thickness: 2.0, // Ketebalan garis divider
                 ),
                 const SizedBox(height: 25.0),
                 const Text(
@@ -100,7 +122,7 @@ class _BerikanPenilaianScreenState extends State<BerikanPenilaianScreen> {
                 width: MediaQuery.of(context).size.width * 0.8,
                 child: ElevatedButton(
                   onPressed: () {
-                    // Tambahkan logika untuk mengirim data registrasi
+                    performAddRating(context);
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.blue,
@@ -117,5 +139,24 @@ class _BerikanPenilaianScreenState extends State<BerikanPenilaianScreen> {
         ),
       ),
     );
+  }
+
+  Future<void> performAddRating(BuildContext context) async {
+    try {
+      final rating = RatingModel(
+          id: 0,
+          userId: 0,
+          rating: _rating,
+          comment: _commentController.text,
+          category: _selectedCategory);
+
+      await context.read<RatingCubit>().addRating(rating);
+      showSuccessMessage('Penilaian berhasil dikirim');
+      Navigator.pop(context);
+    } catch (e) {
+      print(e);
+      showErrorMessage('Gagal mengirim penilaian');
+      // Handle the error
+    }
   }
 }

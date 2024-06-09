@@ -5,12 +5,14 @@ import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class RatingModel {
-  final int userId;
+  final int id;
+  int userId;
   final double rating;
   final String comment;
   final String category;
 
   RatingModel({
+    required this.id,
     required this.userId,
     required this.rating,
     required this.comment,
@@ -19,6 +21,7 @@ class RatingModel {
 
   static RatingModel fromJson(Map<String, dynamic> item) {
     return RatingModel(
+      id: item['id'] ?? 0,
       userId: item['user_id'] ?? 0,
       rating: item['rating'] ?? 0.0,
       comment: item['comment'] ?? '',
@@ -61,12 +64,14 @@ class RatingCubit extends Cubit<List<RatingModel>> {
     String? accessToken = prefs.getString('access_token');
     int? userId = prefs.getInt('user_id');
 
+    rating.userId = userId!;
+
     if (accessToken == null) {
       throw Exception('No access token found');
     }
 
     final response = await http.post(
-      Uri.parse('http://127.0.0.1:8000/ratings'),
+      Uri.parse('http://127.0.0.1:8000/ratings/'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
         'Authorization': 'Bearer $accessToken',
@@ -79,7 +84,7 @@ class RatingCubit extends Cubit<List<RatingModel>> {
       }),
     );
 
-    if (response.statusCode == 201) {
+    if (response.statusCode == 200) {
       RatingModel newRating = RatingModel.fromJson(json.decode(response.body));
       List<RatingModel> updatedRatings = List.from(state)..add(newRating);
       emit(updatedRatings);
