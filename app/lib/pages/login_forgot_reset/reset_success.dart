@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:tubes/pages/login_forgot_reset/login.dart';
+import 'package:tubes/pages/onboarding/onboard2.dart';
 
 class ResetSuccess extends StatefulWidget {
-  const ResetSuccess({super.key, required String title});
+  const ResetSuccess({super.key});
 
   @override
-  // ignore: library_private_types_in_public_api
-  _ResetSuccessState createState() => _ResetSuccessState();
+  State<ResetSuccess> createState() => _ResetSuccessState();
 }
 
 class _ResetSuccessState extends State<ResetSuccess> {
@@ -53,12 +52,12 @@ class _ResetSuccessState extends State<ResetSuccess> {
             Center(
               child: ElevatedButton(
                 onPressed: () {
-                  Navigator.push(
-												context,
-												MaterialPageRoute(
-													builder: (context) => const Login(),
-												),
-											);
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const OnBoarding2()),
+                    (route) => false,
+                  );
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.blue[700],
@@ -66,8 +65,8 @@ class _ResetSuccessState extends State<ResetSuccess> {
                       borderRadius: BorderRadius.all(Radius.circular(8))),
                   fixedSize: Size(MediaQuery.of(context).size.width, 40),
                 ),
-                child: const Text('Lanjut',
-                    style: TextStyle(color: Colors.white)),
+                child:
+                    const Text('Lanjut', style: TextStyle(color: Colors.white)),
               ),
             ),
           ],

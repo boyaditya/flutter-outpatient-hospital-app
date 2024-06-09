@@ -18,10 +18,6 @@ import 'package:tubes/pages/authentication/welcome_page.dart';
 import 'package:tubes/pages/infors/infors.dart';
 import 'package:tubes/pages/infors/spesialisasi.dart';
 import 'package:tubes/pages/buat_janji_temu/cari_dokter.dart';
-import 'package:tubes/pages/login_forgot_reset/lupa_kata_sandi.dart';
-import 'package:tubes/pages/login_forgot_reset/cek_email.dart';
-import 'package:tubes/pages/login_forgot_reset/kata_sandi_baru.dart';
-import 'package:tubes/pages/login_forgot_reset/reset_success.dart';
 import 'package:tubes/pages/registrasi_pasien/registrasi_pasien.dart';
 import 'package:tubes/pages/rekam_medis/rekam_medis.dart';
 import 'package:tubes/pages/onboarding/onboard1.dart';
@@ -92,13 +88,6 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => const OnBoarding2(),
-        '/lupa_kata_sandi': (context) =>
-            const LupaKataSandi(title: 'Lupa Kata Sandi'),
-        '/cek_email': (context) => const CekEmail(title: 'Cek Email'),
-        '/kata_sandi_baru': (context) =>
-            const KataSandiBaru(title: 'Kata Sandi Baru'),
-        '/reset_success': (context) =>
-            const ResetSuccess(title: 'Reset Success'),
         '/cari_dokter': (context) => const CariDokter(),
         '/buat_akun': (context) => const BuatAkun(),
         '/data_diri': (context) => const DataDiri(),

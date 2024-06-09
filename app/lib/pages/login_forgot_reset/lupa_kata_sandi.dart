@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tubes/cubits/user_cubit.dart';
 import 'package:tubes/pages/login_forgot_reset/cek_email.dart';
 
 class LupaKataSandi extends StatefulWidget {
-  const LupaKataSandi({super.key, required String title});
+  const LupaKataSandi({super.key});
 
   @override
-  // ignore: library_private_types_in_public_api
-  _LupaKataSandiState createState() => _LupaKataSandiState();
+  State<LupaKataSandi> createState() => _LupaKataSandiState();
 }
 
 class _LupaKataSandiState extends State<LupaKataSandi> {
@@ -23,6 +24,24 @@ class _LupaKataSandiState extends State<LupaKataSandi> {
         isButtonEnabled = emailController.text.isNotEmpty;
       });
     });
+  }
+
+  void showSuccessMessage(String message) {
+    final snackBar = SnackBar(
+      content: Text(message, style: const TextStyle(color: Colors.white)),
+      duration: const Duration(seconds: 2),
+      backgroundColor: Colors.green,
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+
+  void showErrorMessage(String message) {
+    final snackBar = SnackBar(
+      content: Text(message, style: const TextStyle(color: Colors.white)),
+      duration: const Duration(seconds: 2),
+      backgroundColor: Colors.red,
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
   @override
@@ -71,12 +90,7 @@ class _LupaKataSandiState extends State<LupaKataSandi> {
               child: ElevatedButton(
                 onPressed: isButtonEnabled
                     ? () {
-                        Navigator.push(
-												context,
-												MaterialPageRoute(
-													builder: (context) => const CekEmail(title: 'Cek Email'),
-												),
-											);
+                        performCheckEmail(context);
                       }
                     : null,
                 style: ElevatedButton.styleFrom(
@@ -93,5 +107,23 @@ class _LupaKataSandiState extends State<LupaKataSandi> {
         ),
       ),
     );
+  }
+
+  Future<void> performCheckEmail(BuildContext context) async {
+    bool isCheckEmail = await context.read<UserCubit>().fetchUserByEmail(
+          emailController.text,
+        );
+
+    if (isCheckEmail) {
+      showSuccessMessage('Email ditemukan');
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const CekEmail(),
+        ),
+      );
+    } else {
+      showErrorMessage('Email tidak ditemukan');
+    }
   }
 }

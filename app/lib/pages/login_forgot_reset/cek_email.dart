@@ -2,18 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:tubes/pages/login_forgot_reset/kata_sandi_baru.dart';
 
 class CekEmail extends StatefulWidget {
-  const CekEmail({super.key, required String title});
+  const CekEmail({super.key});
 
   @override
-  // ignore: library_private_types_in_public_api
-  _CekEmailState createState() => _CekEmailState();
+  State<CekEmail> createState() => _CekEmailState();
 }
 
 class _CekEmailState extends State<CekEmail> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+      ),
       body: Padding(
         padding: const EdgeInsets.all(38),
         child: Column(
@@ -53,11 +54,12 @@ class _CekEmailState extends State<CekEmail> {
               child: ElevatedButton(
                 onPressed: () {
                   Navigator.push(
-										context,
-										MaterialPageRoute(
-											builder: (context) => const KataSandiBaru(title: 'Kata Sandi Baru'),
-										),
-									);
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          const KataSandiBaru(),
+                    ),
+                  );
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.blue[700],

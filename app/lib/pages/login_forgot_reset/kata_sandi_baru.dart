@@ -1,50 +1,69 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tubes/cubits/user_cubit.dart';
 import 'package:tubes/pages/login_forgot_reset/reset_success.dart';
 
 class KataSandiBaru extends StatefulWidget {
-  const KataSandiBaru({super.key, required String title});
+  const KataSandiBaru({super.key});
 
   @override
-  // ignore: library_private_types_in_public_api
-  _KataSandiBaruState createState() => _KataSandiBaruState();
+  State<KataSandiBaru> createState() => _KataSandiBaruState();
 }
 
 class _KataSandiBaruState extends State<KataSandiBaru> {
-  bool _obscureText = true;
-  bool _obscureTextConfirm = true;
-
-  TextEditingController passwordController = TextEditingController();
-  TextEditingController confirmPasswordController = TextEditingController();
-
-  bool isButtonEnabled = false;
-
-  @override
-  void initState() {
-    super.initState();
-
-    passwordController.addListener(() {
-      setState(() {
-        isButtonEnabled = passwordController.text.isNotEmpty;
-      });
-    });
-
-    confirmPasswordController.addListener(() {
-      setState(() {
-        isButtonEnabled = confirmPasswordController.text.isNotEmpty;
-      });
-    });
-  }
+  String? _passwordError;
+  bool _obscurePasswordText = true;
+  bool _obscureConfirmationText = true;
+  bool _isPasswordEntered = false;
+  bool _isConfirmationEntered = false;
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _confirmationController = TextEditingController();
 
   void _togglePasswordVisibility() {
     setState(() {
-      _obscureText = !_obscureText;
+      _obscurePasswordText = !_obscurePasswordText;
     });
   }
 
-  void _togglePasswordVisibilityConfirm() {
+  void _toggleConfirmationVisibility() {
     setState(() {
-      _obscureTextConfirm = !_obscureTextConfirm;
+      _obscureConfirmationText = !_obscureConfirmationText;
     });
+  }
+
+  void _validatePasswords() {
+    final password = _passwordController.text;
+    final confirmation = _confirmationController.text;
+
+    if (password != confirmation) {
+      _passwordError = 'Kata sandi tidak cocok';
+    } else if (password.length < 8) {
+      _passwordError = 'Password harus terdiri dari minimal 8 karakter';
+    } else if (!RegExp(r'^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$')
+        .hasMatch(password)) {
+      _passwordError = 'Password harus mengandung huruf dan angka';
+    } else {
+      _passwordError = null;
+    }
+  }
+
+  void showSuccessMessage(String message) {
+    final snackBar = SnackBar(
+      content: Text(message, style: const TextStyle(color: Colors.white)),
+      duration: const Duration(seconds: 2),
+      backgroundColor: Colors.green,
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+
+  void showErrorMessage(String message) {
+    final snackBar = SnackBar(
+      content: Text(message, style: const TextStyle(color: Colors.white)),
+      duration: const Duration(seconds: 2),
+      backgroundColor: Colors.red,
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
   @override
@@ -66,7 +85,7 @@ class _KataSandiBaruState extends State<KataSandiBaru> {
             ),
             const SizedBox(height: 10.0),
             const Text(
-              'Kata sandi baru Anda harus berbeda dari kata sandi sebelumnya.',
+              'Password harus mengandung minimal 8 karakter termasuk huruf dan nomor.',
               style: TextStyle(
                 color: Colors.black,
                 fontSize: 12,
@@ -81,14 +100,22 @@ class _KataSandiBaruState extends State<KataSandiBaru> {
               ),
             ),
             TextField(
-              controller: passwordController,
-              obscureText: _obscureText,
+              controller: _passwordController,
+              obscureText: _obscurePasswordText,
+              onChanged: (value) {
+                setState(() {
+                  _isPasswordEntered = value.isNotEmpty;
+                  _validatePasswords();
+                });
+              },
               decoration: InputDecoration(
                 border: const OutlineInputBorder(),
                 hintText: 'Kata Sandi',
                 suffixIcon: IconButton(
                   icon: Icon(
-                    _obscureText ? Icons.visibility_off : Icons.visibility,
+                    _obscurePasswordText
+                        ? Icons.visibility_off
+                        : Icons.visibility,
                   ),
                   onPressed: _togglePasswordVisibility,
                 ),
@@ -103,18 +130,25 @@ class _KataSandiBaruState extends State<KataSandiBaru> {
               ),
             ),
             TextField(
-              controller: confirmPasswordController,
-              obscureText: _obscureTextConfirm,
+              controller: _confirmationController,
+              obscureText: _obscureConfirmationText,
+              onChanged: (value) {
+                setState(() {
+                  _isConfirmationEntered = value.isNotEmpty;
+                  _validatePasswords();
+                });
+              },
               decoration: InputDecoration(
                 border: const OutlineInputBorder(),
                 hintText: 'Konfirmasi Kata Sandi',
+                errorText: _passwordError,
                 suffixIcon: IconButton(
                   icon: Icon(
-                    _obscureTextConfirm
+                    _obscureConfirmationText
                         ? Icons.visibility_off
                         : Icons.visibility,
                   ),
-                  onPressed: _togglePasswordVisibilityConfirm,
+                  onPressed: _toggleConfirmationVisibility,
                 ),
               ),
             ),
@@ -122,29 +156,62 @@ class _KataSandiBaruState extends State<KataSandiBaru> {
             const SizedBox(height: 80.0),
             Center(
               child: ElevatedButton(
-                onPressed: isButtonEnabled
+                onPressed: _isPasswordEntered &&
+                        _isConfirmationEntered &&
+                        _passwordError == null
                     ? () {
-                        Navigator.push(
-												context,
-												MaterialPageRoute(
-													builder: (context) => const ResetSuccess(title: 'Reset Success'),
-												),
-											);
+                        performResetPassword();
                       }
                     : null,
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.blue[700],
+                  backgroundColor: _isPasswordEntered && _isConfirmationEntered
+                      ? Colors.blue[700]
+                      : Colors.grey, // Warna abu-abu jika input belum diisi
                   shape: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(8))),
-                  fixedSize: Size(MediaQuery.of(context).size.width, 40),
+                    borderRadius: BorderRadius.all(Radius.circular(8)),
+                  ),
+                  fixedSize: Size(
+                    MediaQuery.of(context).size.width,
+                    40,
+                  ), // Lebar 50% dari lebar layar
                 ),
-                child: const Text('Atur Ulang Kata Sandi',
-                    style: TextStyle(color: Colors.white)),
+                child: const Text(
+                  'Atur Ulang Kata Sandi',
+                  style: TextStyle(color: Colors.white),
+                ),
               ),
             ),
           ],
         ),
       ),
     );
+  }
+
+  Future<void> performResetPassword() async {
+    try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      String? email = await prefs.getString('email');
+
+      print(  _passwordController.text);
+      print(email);
+      await context.read<UserCubit>().resetPassword(
+            email!,
+            _passwordController.text,
+          );
+
+      if (!mounted) return;
+      showSuccessMessage('Kata sandi berhasil diatur ulang');
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const ResetSuccess(),
+        ),
+      );
+    } catch (e) {
+      if (!mounted) return;
+      // print(e);
+      showErrorMessage(' Terjadi kesalahan saat mengatur ulang kata sandi');
+      // Handle the error
+    }
   }
 }

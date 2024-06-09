@@ -135,42 +135,40 @@ class UserCubit extends Cubit<UserModel?> {
     }
   }
 
-  // Future<bool> checkEmail(String email) async {
-  //   final response = await http.post(
-  //     Uri.parse('http://127.0.0.1:8000/check_email'),
-  //     headers: {
-  //       'Content-Type': 'application/json; charset=UTF-8',
-  //     },
-  //     body: jsonEncode({
-  //       'email': email,
-  //     }),
-  //   );
+  Future<bool> fetchUserByEmail(String email) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
 
-  //   if (response.statusCode == 200) {
-  //     Map<String, dynamic> responseBody = jsonDecode(response.body);
-  //     return responseBody['email_exists'];
-  //   } else {
-  //     throw Exception('Failed to check email');
-  //   }
-  // }
+    final response = await http.get(
+      Uri.parse('http://127.0.0.1:8000/users/email/$email'),
+    );
 
-  // Future<void> resetPassword(String email, String newPassword) async {
-  //   final response = await http.post(
-  //     Uri.parse('http://127.0.0.1:8000/reset_password'),
-  //     headers: {
-  //       'Content-Type': 'application/json; charset=UTF-8',
-  //     },
-  //     body: jsonEncode({
-  //       'email': email,
-  //       'new_password': newPassword,
-  //     }),
-  //   );
+    if (response.statusCode == 200) {
+      await prefs.setString('email', email);
+      return true;
+    } else {
+      return false;
+    }
+  }
 
-  //   if (response.statusCode == 200) {
-  //     // Password reset successful
-  //     print('Password reset successful');
-  //   } else {
-  //     throw Exception('Failed to reset password');
-  //   }
-  // }
+  Future<void> resetPassword(String email, String newPassword) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final response = await http.patch(
+      Uri.parse('http://127.0.0.1:8000/users/reset_password/'),
+      headers: <String, String>{
+        'Content-Type': 'application/json',
+      },
+      body: jsonEncode({
+        'email': email, 
+        'hashed_password': newPassword,
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      print('Password reset successful');
+    } else {
+      throw Exception('Failed to reset password');
+    }
+
+    await prefs.remove('email');
+  }
 }

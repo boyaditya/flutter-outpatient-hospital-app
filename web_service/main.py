@@ -71,31 +71,27 @@ async def create_user(user: schemas.UserCreate, db: db_dependency):
         raise HTTPException(status_code=400, detail="Email already registered")
     return crud.create_user(db=db, user=user)
 
-@app.post("/check_email")
-async def check_email(email: str, db: Session = Depends(get_db)):
-    user = crud.get_user_by_email(db, email)
-    return {"email_exists": user is not None}
 
-# @app.post("/reset_password")
-# async def reset_password(reset_request: schemas.ResetPasswordRequest, db: Session = Depends(get_db)):
-#     user = crud.get_user_by_email(db, reset_request.email)
-#     if not user:
-#         raise HTTPException(status_code=404, detail="User tidak ditemukan")
-
-#     crud.update_user_password(db, user.id, reset_request.new_password)
-
-#     return {"message": "Password berhasil diubah"}
-
-@app.put("/reset_password/{email}")
-async def reset_password(email: str, new_password: str, db: Session = Depends(get_db)):
+@app.get("/users/email/{email}", response_model=schemas.User)
+async def read_user_by_email(email: str, db: db_dependency):
     user = crud.get_user_by_email(db, email)
     if not user:
-        raise HTTPException(status_code=404, detail="User tidak ditemukan")
+        raise HTTPException(status_code=404, detail="User not found")
+    return user
 
-    # Memperbarui password user
-    crud.update_user_password(db, user.id, new_password)
 
-    return {"message": "Password berhasil diubah"}
+@app.patch("/users/reset_password/")
+async def reset_password(user: schemas.UserCreate, db: db_dependency):
+    # Check if the user exists
+    user_db = crud.get_user_by_email(db, user.email)
+    if user_db is None:
+        raise HTTPException(status_code=404, detail="User not found")
+
+    # Update the user's password
+    crud.update_user_password(db, user)
+
+    return {"message": "Password updated successfully"}
+
 
 # hasil adalah akses token
 @app.post("/login")  # ,response_model=schemas.Token
@@ -122,15 +118,6 @@ async def read_doctors(db: db_dependency, token: str = Depends(oauth2_scheme)):
     except HTTPException as e:
         raise e
     return crud.get_doctors(db)
-
-
-# @app.get("/doctors/", response_model=List[schemas.Doctor])
-# async def read_doctors(db: db_dependency):
-#     # try:
-#     #     payload = verify_token(token)
-#     # except HTTPException as e:
-#     #     raise e
-#     return crud.get_doctors(db)
 
 
 @app.get("/doctors/{doctors_id}", response_model=schemas.Doctor)
@@ -182,26 +169,6 @@ async def read_doctor_image(
         return FileResponse(path_img + nama_image)
     except HTTPException as e:
         raise e
-
-
-# @app.get("/doctors/image/{doctor_id}")
-# async def read_doctor_image(
-#     doctor_id: int, db: db_dependency, token: str = Depends(oauth2_scheme)
-# ):
-#     try:
-#         payload = verify_token(token)
-#         # Di sini Anda bisa menambahkan pengecekan apakah pengguna memiliki hak akses tertentu
-#         doctor = crud.get_doctors_by_id(db, doctor_id)
-#         if not doctor:
-#             raise HTTPException(status_code=404, detail="Doctor not found")
-#         nama_image = doctor.img_name
-#         if not path.exists(path_img + nama_image):
-#             raise HTTPException(
-#                 status_code=404, detail="File dengan nama tersebut tidak ditemukan"
-#             )
-#         return FileResponse(path_img + nama_image)
-#     except HTTPException as e:
-#         raise e
 
 
 @app.get("/users/{user_id}", response_model=schemas.User)
@@ -409,9 +376,13 @@ async def read_patients(db: db_dependency, token: str = Depends(oauth2_scheme)):
         raise e
     return crud.get_patients(db)
 
+
 @app.put("/patients/{patient_id}", response_model=schemas.Patient)
 async def update_patient(
-    patient_id: int, patient: schemas.PatientCreate, db: db_dependency, token: str = Depends(oauth2_scheme)
+    patient_id: int,
+    patient: schemas.PatientCreate,
+    db: db_dependency,
+    token: str = Depends(oauth2_scheme),
 ):
     try:
         payload = verify_token(token)

@@ -14,13 +14,13 @@ class PeriksaJanjiTemu extends StatefulWidget {
   final String specialization;
 
   const PeriksaJanjiTemu({
-    Key? key,
+    super.key,
     required this.selectedDate,
     required this.scheduleTime,
     required this.patientId,
     required this.doctorId,
     required this.specialization,
-  }) : super(key: key);
+  });
 
   @override
   State<PeriksaJanjiTemu> createState() => _PeriksaJanjiTemuState();
@@ -55,196 +55,193 @@ class _PeriksaJanjiTemuState extends State<PeriksaJanjiTemu> {
 
   @override
   Widget build(BuildContext context) {
-    final patientListCubit = BlocProvider.of<PatientListCubit>(context);
-    final patient = patientListCubit.getPatientById(widget.patientId);
+    return BlocBuilder<PatientListCubit, List<PatientModel>>(
+        builder: (context, state) {
+      final patient =
+          state.firstWhere((element) => element.id == widget.patientId);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          'Periksa Janji Temu',
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-        ),
-      ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                "Silahkan periksa kembali detail janji temu untuk memastikan kesesuaian informasi sebelum Anda melakukan konfirmasi",
-                style: TextStyle(color: Colors.grey[600]),
-              ),
-              const SizedBox(height: 20),
-              const Text(
-                "INFORMASI PASIEN",
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 10),
-              Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: Colors.blue[50],
-                  boxShadow: const [
-                    BoxShadow(
-                      color: Colors.grey,
-                      blurRadius: 4.0,
-                      offset: Offset(-2, 2),
-                    ),
-                  ],
-                ),
-                width: double.infinity,
-                padding: const EdgeInsets.all(20),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    InfoItem(
-                      label: "NAMA LENGKAP",
-                      value: patient.name,
-                    ),
-                    InfoItem(
-                      label: "NOMOR INDUK KEPENDUDUKAN",
-                      value: patient.nik,
-                    ),
-                    InfoItem(
-                      label: "TANGGAL LAHIR",
-                      value: DateFormat('dd MMMM yyyy', 'id')
-                          .format(patient.dateOfBirth),
-                    ),
-                    InfoItem(
-                      label: "NOMOR TELEPON",
-                      value: patient.phone,
-                    ),
-                    InfoItem(
-                      label: "JENIS KELAMIN",
-                      value: patient.gender,
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 20),
-              const Text(
-                "INFORMASI JANJI TEMU",
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 10),
-              Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: Colors.blue[50],
-                  boxShadow: const [
-                    BoxShadow(
-                      color: Colors.grey,
-                      blurRadius: 4.0,
-                      offset: Offset(-2, 2),
-                    ),
-                  ],
-                ),
-                width: double.infinity,
-                padding: const EdgeInsets.all(20),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    InfoItem(
-                      label: "TANGGAL DAN WAKTU JANJI TEMU",
-                      value:
-                          "${DateFormat('EEEE, dd MMMM yyyy', 'id').format(DateTime.parse(widget.selectedDate))}, ${widget.scheduleTime}",
-                    ),
-                    BlocBuilder<DoctorListCubit, List<DoctorModel>>(
-                      builder: (context, state) {
-                        try {
-                          DoctorModel doctor = context
-                              .read<DoctorListCubit>()
-                              .getDoctorById(widget.doctorId);
-                          return InfoItem(
-                            label: "DOKTER",
-                            value: doctor.name,
-                          );
-                        } catch (e) {
-                          return Text(
-                              'Error: $e'); // show error message if an error occurred
-                        }
-                      },
-                    ),
-                    InfoItem(
-                      label: "SPESIALIS",
-                      value: widget.specialization,
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 20),
-              const Text(
-                "INFORMASI PENJAMIN",
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 10),
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 12),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const SizedBox(height: 8),
-                    DropdownButtonFormField<String>(
-                      value: penjaminValue,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                      ),
-                      isExpanded: true, // Make the dropdown expand to fit its content
-                      items: listPenjamin.map((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value),
-                        );
-                      }).toList(),
-                      onChanged: (String? newValue) {
-                        setState(() {
-                          penjaminValue = newValue!;
-                        });
-                      },
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 80),
-              ElevatedButton(
-                onPressed: () async {
-                  final navigator = Navigator.of(context);
+      final doctor = context
+          .read<DoctorListCubit>()
+          .state
+          .firstWhere((element) => element.id == widget.doctorId);
 
-                  int newAppointmentId = await performCreateAppointment();
-                  if (newAppointmentId != 0) {
-                    navigator.push(
-                      MaterialPageRoute(
-                        builder: (context) => RincianJanjiTemu(
-                          appointmentId: newAppointmentId,
-                          from: 'periksa_janji_temu',
-                        ),
-                      ),
-                    );
-                  }
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.blue,
-                  shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(8)),
-                  ),
-                  fixedSize: Size(
-                    MediaQuery.of(context).size.width,
-                    40,
-                  ),
-                ),
-                child: const Text(
-                  'Konfirmasi',
-                  style: TextStyle(color: Colors.white),
-                ),
-              ),
-            ],
+      return Scaffold(
+        appBar: AppBar(
+          title: const Text(
+            'Periksa Janji Temu',
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
           ),
         ),
-      ),
-    );
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "Silahkan periksa kembali detail janji temu untuk memastikan kesesuaian informasi sebelum Anda melakukan konfirmasi",
+                  style: TextStyle(color: Colors.grey[600]),
+                ),
+                const SizedBox(height: 20),
+                const Text(
+                  "INFORMASI PASIEN",
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(height: 10),
+                Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: Colors.blue[50],
+                    boxShadow: const [
+                      BoxShadow(
+                        color: Colors.grey,
+                        blurRadius: 4.0,
+                        offset: Offset(-2, 2),
+                      ),
+                    ],
+                  ),
+                  width: double.infinity,
+                  padding: const EdgeInsets.all(20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      InfoItem(
+                        label: "NAMA LENGKAP",
+                        value: patient.name,
+                      ),
+                      InfoItem(
+                        label: "NOMOR INDUK KEPENDUDUKAN",
+                        value: patient.nik,
+                      ),
+                      InfoItem(
+                        label: "TANGGAL LAHIR",
+                        value: DateFormat('dd MMMM yyyy', 'id')
+                            .format(patient.dateOfBirth),
+                      ),
+                      InfoItem(
+                        label: "NOMOR TELEPON",
+                        value: patient.phone,
+                      ),
+                      InfoItem(
+                        label: "JENIS KELAMIN",
+                        value: patient.gender,
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 20),
+                const Text(
+                  "INFORMASI JANJI TEMU",
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(height: 10),
+                Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: Colors.blue[50],
+                    boxShadow: const [
+                      BoxShadow(
+                        color: Colors.grey,
+                        blurRadius: 4.0,
+                        offset: Offset(-2, 2),
+                      ),
+                    ],
+                  ),
+                  width: double.infinity,
+                  padding: const EdgeInsets.all(20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      InfoItem(
+                        label: "TANGGAL DAN WAKTU JANJI TEMU",
+                        value:
+                            "${DateFormat('EEEE, dd MMMM yyyy', 'id').format(DateTime.parse(widget.selectedDate))}, ${widget.scheduleTime}",
+                      ),
+                      InfoItem(
+                        label: "DOKTER",
+                        value: doctor.name,
+                      ),
+                      InfoItem(
+                        label: "SPESIALIS",
+                        value: widget.specialization,
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 20),
+                const Text(
+                  "INFORMASI PENJAMIN",
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(height: 10),
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 12),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const SizedBox(height: 8),
+                      DropdownButtonFormField<String>(
+                        value: penjaminValue,
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ),
+                        isExpanded:
+                            true, // Make the dropdown expand to fit its content
+                        items: listPenjamin.map((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList(),
+                        onChanged: (String? newValue) {
+                          setState(() {
+                            penjaminValue = newValue!;
+                          });
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 80),
+                ElevatedButton(
+                  onPressed: () async {
+                    final navigator = Navigator.of(context);
+
+                    int newAppointmentId = await performCreateAppointment();
+                    if (newAppointmentId != 0) {
+                      navigator.push(
+                        MaterialPageRoute(
+                          builder: (context) => RincianJanjiTemu(
+                            appointmentId: newAppointmentId,
+                            from: 'periksa_janji_temu',
+                          ),
+                        ),
+                      );
+                    }
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.blue,
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(8)),
+                    ),
+                    fixedSize: Size(
+                      MediaQuery.of(context).size.width,
+                      40,
+                    ),
+                  ),
+                  child: const Text(
+                    'Konfirmasi',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      );
+    });
   }
 
   Future<int> performCreateAppointment() async {

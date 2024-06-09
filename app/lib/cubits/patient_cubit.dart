@@ -161,7 +161,7 @@ class PatientListCubit extends Cubit<List<PatientModel>> {
     }
   }
 
-  final Map<int, PatientModel> _patientCache = {};
+  List<PatientModel> _patientCache = [];
 
   Future<void> fetchPatientsByUserId() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -182,28 +182,67 @@ class PatientListCubit extends Cubit<List<PatientModel>> {
 
     if (response.statusCode == 200) {
       List<dynamic> body = jsonDecode(response.body);
-      List<PatientModel> patients =
-          body.map((dynamic item) => PatientModel.fromJson(item)).toList();
-
-      if (patients.isNotEmpty) {
-        await prefs.setInt('patient_id', patients[0].id);
-      }
-
-      for (var patient in patients) {
-        _patientCache[patient.id] = patient;
-      }
-
-      String patientsJson =
-          jsonEncode(patients.map((patient) => patient.toJson()).toList());
-      await prefs.setString('patients', patientsJson);
-
-      emit(patients);
+      setFromJson(body);
     } else {
       throw Exception('Failed to load patients');
     }
   }
 
-  PatientModel getPatientById(int id) {
-    return _patientCache[id]!;
+  void setFromJson(List<dynamic> json) {
+    List<PatientModel> patients =
+        json.map((dynamic item) => PatientModel.fromJson(item)).toList();
+
+    _patientCache = patients;
+    emit(patients);
   }
+
+  PatientModel getPatientById(int id) {
+    return _patientCache.firstWhere((patient) => patient.id == id);
+  }
+
+  // final Map<int, PatientModel> _patientCache = {};
+
+  // Future<void> fetchPatientsByUserId() async {
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   String? accessToken = prefs.getString('access_token');
+  //   int? userId = prefs.getInt('user_id');
+
+  //   if (accessToken == null) {
+  //     throw Exception('No access token found');
+  //   }
+
+  //   final response = await http.get(
+  //     Uri.parse('http://127.0.0.1:8000/patients/user/$userId'),
+  //     headers: <String, String>{
+  //       'Content-Type': 'application/json',
+  //       'Authorization': 'Bearer $accessToken',
+  //     },
+  //   );
+
+  //   if (response.statusCode == 200) {
+  //     List<dynamic> body = jsonDecode(response.body);
+  //     List<PatientModel> patients =
+  //         body.map((dynamic item) => PatientModel.fromJson(item)).toList();
+
+  //     if (patients.isNotEmpty) {
+  //       await prefs.setInt('patient_id', patients[0].id);
+  //     }
+
+  //     for (var patient in patients) {
+  //       _patientCache[patient.id] = patient;
+  //     }
+
+  //     String patientsJson =
+  //         jsonEncode(patients.map((patient) => patient.toJson()).toList());
+  //     await prefs.setString('patients', patientsJson);
+
+  //     emit(patients);
+  //   } else {
+  //     throw Exception('Failed to load patients');
+  //   }
+  // }
+
+  // PatientModel getPatientById(int id) {
+  //   return _patientCache[id]!;
+  // }
 }

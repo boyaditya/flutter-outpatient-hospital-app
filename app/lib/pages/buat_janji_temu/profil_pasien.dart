@@ -145,6 +145,7 @@ class _ProfilPasienState extends State<ProfilPasien> {
         child: ElevatedButton(
           onPressed: selectedPatient != null
               ? () {
+                print(selectedPatient!.id);
                   Navigator.push(
                     context,
                     MaterialPageRoute(
