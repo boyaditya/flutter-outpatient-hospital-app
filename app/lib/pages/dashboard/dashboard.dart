@@ -257,71 +257,91 @@ class _HomeState extends State<Home> {
                   IconButton(
                     icon: const Icon(Icons.notifications_active),
                     onPressed: () {
-                      // Action when notification icon is pressed
                     },
                   ),
                 ],
               ),
             ),
-            CarouselSlider(
-              options: CarouselOptions(
-                height: 200.0,
-                autoPlay: true,
-                autoPlayInterval: const Duration(seconds: 5),
-                autoPlayAnimationDuration: const Duration(milliseconds: 800),
-                autoPlayCurve: Curves.fastOutSlowIn,
-                pauseAutoPlayOnTouch: true,
-                enlargeCenterPage: true,
-                onPageChanged: (index, reason) {
-                  setState(() {
-                    _currentIndex = index;
-                  });
-                },
-              ),
-              items: [
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8.0),
-                    border: Border.all(
-                      color: Colors
-                          .grey, // Ganti dengan warna border yang diinginkan
-                      width:
-                          3.0, // Ganti dengan ketebalan border yang diinginkan
-                    ),
-                    image: const DecorationImage(
-                      image: AssetImage('assets/images/carousel/1.png'),
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8.0),
-                    border: Border.all(
-                      color: Colors.grey,
-                      width: 3.0,
-                    ),
-                    image: const DecorationImage(
-                      image: AssetImage('assets/images/carousel/2.png'),
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8.0),
-                    border: Border.all(
-                      color: Colors.grey,
-                      width: 3.0,
-                    ),
-                    image: const DecorationImage(
-                      image: AssetImage('assets/images/carousel/3.png'),
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
-              ],
-            ),
+           AspectRatio(
+								aspectRatio: 20 / 9, // Set aspect ratio sesuai dengan rasio asli gambar
+								child: CarouselSlider(
+									options: CarouselOptions(
+										autoPlay: true,
+										autoPlayInterval: const Duration(seconds: 5),
+										autoPlayAnimationDuration: const Duration(milliseconds: 800),
+										autoPlayCurve: Curves.fastOutSlowIn,
+										pauseAutoPlayOnTouch: true,
+										enlargeCenterPage: true,
+										onPageChanged: (index, reason) {
+											setState(() {
+												_currentIndex = index;
+											});
+										},
+									),
+									items: [
+										Container(
+											decoration: BoxDecoration(
+												borderRadius: BorderRadius.circular(8.0),
+												boxShadow: [
+													BoxShadow(
+														color: Colors.black.withOpacity(0.2),
+														spreadRadius: 3,
+														blurRadius: 5,
+														offset: Offset(0, 3),
+													),
+												],
+											),
+											child: ClipRRect(
+												borderRadius: BorderRadius.circular(8.0),
+												child: Image.asset(
+													'assets/images/carousel/1.png',
+													fit: BoxFit.cover, // Menggunakan BoxFit.cover untuk mengisi Container
+												),
+											),
+										),
+										Container(
+											decoration: BoxDecoration(
+												borderRadius: BorderRadius.circular(8.0),
+												boxShadow: [
+													BoxShadow(
+														color: Colors.black.withOpacity(0.2),
+														spreadRadius: 3,
+														blurRadius: 5,
+														offset: Offset(0, 3),
+													),
+												],
+											),
+											child: ClipRRect(
+												borderRadius: BorderRadius.circular(8.0),
+												child: Image.asset(
+													'assets/images/carousel/2.png',
+													fit: BoxFit.cover, // Menggunakan BoxFit.cover untuk mengisi Container
+												),
+											),
+										),
+										Container(
+											decoration: BoxDecoration(
+												borderRadius: BorderRadius.circular(8.0),
+												boxShadow: [
+													BoxShadow(
+														color: Colors.black.withOpacity(0.2),
+														spreadRadius: 3,
+														blurRadius: 5,
+														offset: Offset(0, 3),
+													),
+												],
+											),
+											child: ClipRRect(
+												borderRadius: BorderRadius.circular(8.0),
+												child: Image.asset(
+													'assets/images/carousel/3.png',
+													fit: BoxFit.cover, // Menggunakan BoxFit.cover untuk mengisi Container
+												),
+											),
+										),
+									],
+								),
+							),
             const SizedBox(height: 8.0),
             DotsIndicator(
               // DotsIndicator widget remains as it is
