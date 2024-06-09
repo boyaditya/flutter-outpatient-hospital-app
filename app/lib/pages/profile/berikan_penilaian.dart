@@ -48,6 +48,7 @@ class _BerikanPenilaianScreenState extends State<BerikanPenilaianScreen> {
                     onRatingUpdate: (rating) {
                       setState(() {
                         _rating = rating;
+                        print(_rating.toString());
                       });
                     },
                   ),

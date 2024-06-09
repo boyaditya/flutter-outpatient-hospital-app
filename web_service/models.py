@@ -50,7 +50,6 @@ class Patient(Base):
 
     appointments = relationship("Appointment", back_populates="patient")
     user = relationship("User", back_populates="patients")
-    ratings = relationship("Rating", back_populates="patient")
 
 
 class DoctorSchedule(Base):
@@ -81,12 +80,12 @@ class Rating(Base):
     __tablename__ = "ratings"
 
     id = Column(Integer, primary_key=True)
-    patient_id = Column(Integer, ForeignKey("patients.id"))
+    user_id = Column(Integer, ForeignKey("users.id"))
     rating = Column(Float)
     comment = Column(Text)
     category = Column(String(20))
 
-    patient = relationship("Patient", back_populates="ratings")
+    user = relationship("User", back_populates="ratings")
 
 
 class Specialization(Base):
@@ -108,3 +107,4 @@ class User(Base):
     hashed_password = Column(String(255))
 
     patients = relationship("Patient", back_populates="user")
+    ratings = relationship("Rating", back_populates="user")  # Added this line
