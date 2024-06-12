@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 // import 'package:tubes/pages/authentication/konfirm_telp.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tubes/cubits/patient_cubit.dart';
+import 'package:tubes/pages/dashboard/dashboard.dart';
 import 'package:tubes/utils/snackbar.dart';
 
 class TambahProfilPasien extends StatefulWidget {
@@ -263,7 +264,12 @@ class _TambahProfilPasienState extends State<TambahProfilPasien> {
       await context.read<PatientListCubit>().postPatient(patient);
       if (!mounted) return;
       showSuccessMessage(context, 'Tambah profil pasien berhasil!');
-      Navigator.pop(context);
+      Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(
+          builder: (context) => const Dashboard(initialIndex: 3),
+        ),
+        (Route<dynamic> route) => false,
+      );
     } catch (e) {
       if (!mounted) return;
       // print(e);

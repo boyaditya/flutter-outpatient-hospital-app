@@ -80,11 +80,11 @@ class _CariDokterState extends State<CariDokter> {
                 const SizedBox(height: 20),
                 Row(
                   children: [
-                    CustomButton(
-                        icon: Icons.filter_alt,
-                        text: "Filter",
-                        onPressed: () {}),
-                    const SizedBox(width: 10),
+                    // CustomButton(
+                    //     icon: Icons.filter_alt,
+                    //     text: "Filter",
+                    //     onPressed: () {}),
+                    // const SizedBox(width: 10),
                     Expanded(
                       child: SingleChildScrollView(
                         scrollDirection: Axis.horizontal,

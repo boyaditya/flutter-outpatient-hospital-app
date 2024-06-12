@@ -69,49 +69,49 @@ class _DetailSpesialisasiState extends State<DetailSpesialisasi> {
                         style: const TextStyle(fontSize: 14),
                       ),
                       const SizedBox(height: 20),
-                      const Text(
-                        'Kondisi yang Kami Tangani',
-                        style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.bold),
-                      ),
-                      const SizedBox(height: 10),
+                      // const Text(
+                      //   'Kondisi yang Kami Tangani',
+                      //   style: TextStyle(
+                      //       fontSize: 16, fontWeight: FontWeight.bold),
+                      // ),
+                      // const SizedBox(height: 10),
                     ],
                   ),
                 ),
                 // BulletList(
                 //   items: specialization.conditionsHandled,
                 // ),
-                const Padding(
-                  padding: EdgeInsets.all(16.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(height: 20),
-                      Text(
-                        'Perawatan & Layanan yang Kami Sediakan',
-                        style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.bold),
-                      ),
-                      SizedBox(height: 10),
-                    ],
-                  ),
-                ),
+                // const Padding(
+                //   padding: EdgeInsets.all(16.0),
+                //   child: Column(
+                //     crossAxisAlignment: CrossAxisAlignment.start,
+                //     children: [
+                //       SizedBox(height: 20),
+                //       Text(
+                //         'Perawatan & Layanan yang Kami Sediakan',
+                //         style: TextStyle(
+                //             fontSize: 16, fontWeight: FontWeight.bold),
+                //       ),
+                //       SizedBox(height: 10),
+                //     ],
+                //   ),
+                // ),
                 // BulletList(
                 //   items: specialization.treatmentsProvided,
                 // ),
-                const Padding(
-                  padding: EdgeInsets.all(16.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(height: 20),
-                      Text(
-                        '*Harap diperhatikan bahwa ini bukanlah daftar lengkap semua kondisi dan perawatan yang kami sediakan. Informasi ini dimaksudkan sebagai panduan kasar dan bukan sebagai saran medis.',
-                        style: TextStyle(fontSize: 12, color: Colors.grey),
-                      ),
-                    ],
-                  ),
-                ),
+                // const Padding(
+                //   padding: EdgeInsets.all(16.0),
+                //   child: Column(
+                //     crossAxisAlignment: CrossAxisAlignment.start,
+                //     children: [
+                //       SizedBox(height: 20),
+                //       Text(
+                //         '*Harap diperhatikan bahwa ini bukanlah daftar lengkap semua kondisi dan perawatan yang kami sediakan. Informasi ini dimaksudkan sebagai panduan kasar dan bukan sebagai saran medis.',
+                //         style: TextStyle(fontSize: 12, color: Colors.grey),
+                //       ),
+                //     ],
+                //   ),
+                // ),
                 const SizedBox(height: 16),
               ],
             ),
