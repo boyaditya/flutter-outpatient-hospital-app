@@ -49,7 +49,7 @@ class _ProfilPasienState extends State<ProfilPasien> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                       Padding(
+                      Padding(
                         padding: const EdgeInsets.fromLTRB(12, 10, 0, 10),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -57,8 +57,10 @@ class _ProfilPasienState extends State<ProfilPasien> {
                             Container(
                               padding: const EdgeInsets.all(16.0),
                               decoration: BoxDecoration(
-                                color: Colors.yellow[100], // Light yellow background
-                                borderRadius: BorderRadius.circular(8.0), // Rounded corners
+                                color: Colors
+                                    .yellow[100], // Light yellow background
+                                borderRadius: BorderRadius.circular(
+                                    8.0), // Rounded corners
                               ),
                               child: const Text(
                                 'Silahkan pilih profil pasien yang akan melakukan janji temu',
@@ -145,7 +147,7 @@ class _ProfilPasienState extends State<ProfilPasien> {
         child: ElevatedButton(
           onPressed: selectedPatient != null
               ? () {
-                print(selectedPatient!.id);
+                  print(selectedPatient!.id);
                   Navigator.push(
                     context,
                     MaterialPageRoute(

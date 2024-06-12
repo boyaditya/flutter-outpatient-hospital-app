@@ -6,7 +6,6 @@ from fastapi import Depends, Request, FastAPI, HTTPException, status
 # from fastapi.responses import FileResponser
 # from fastapi.security import OAuth2PasswordRequestForm, OAuth2PasswordBearer
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi import FastAPI
 
 from typing import Annotated, List
 from sqlalchemy.orm import Session
