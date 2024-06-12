@@ -254,11 +254,6 @@ class _HomeState extends State<Home> {
                       }
                     },
                   ),
-                  IconButton(
-                    icon: const Icon(Icons.notifications_active),
-                    onPressed: () {
-                    },
-                  ),
                 ],
               ),
             ),

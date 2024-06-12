@@ -7,6 +7,7 @@ import 'package:tubes/cubits/medical_record_cubit.dart';
 import 'package:tubes/cubits/patient_cubit.dart';
 import 'package:tubes/cubits/specialization_cubit.dart';
 import 'package:tubes/pages/dashboard/dashboard.dart';
+import 'package:tubes/pages/profile/pusat_bantuan.dart';
 
 class RincianJanjiTemu extends StatefulWidget {
   const RincianJanjiTemu(
@@ -156,10 +157,15 @@ class _RincianJanjiTemuState extends State<RincianJanjiTemu> {
         automaticallyImplyLeading: widget.from != 'periksa_janji_temu',
         actions: [
           IconButton(
+            icon: const Icon(Icons.help),
             onPressed: () {
               // Logika ketika tombol butuh bantuan diklik
+
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => PusatBantuan()),
+              );
             },
-            icon: const Icon(Icons.help),
           ),
           const Padding(
             padding: EdgeInsets.only(right: 16.0),

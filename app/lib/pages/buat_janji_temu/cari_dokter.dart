@@ -79,11 +79,11 @@ class _CariDokterState extends State<CariDokter> {
                 const SizedBox(height: 20),
                 Row(
                   children: [
-                    CustomButton(
-                        icon: Icons.filter_alt,
-                        text: "Filter",
-                        onPressed: () {}),
-                    const SizedBox(width: 10),
+                    // CustomButton(
+                    //     icon: Icons.filter_alt,
+                    //     text: "Filter",
+                    //     onPressed: () {}),
+                    // const SizedBox(width: 10),
                     Expanded(
                       child: SingleChildScrollView(
                         scrollDirection: Axis.horizontal,
@@ -117,10 +117,12 @@ class _CariDokterState extends State<CariDokter> {
                   builder: (context, specializations) {
                     final searchQuery = _controller.text.toLowerCase();
                     final matchingSpecializations = specializations
-                        .where((spec) => spec.title.toLowerCase().contains(searchQuery))
+                        .where((spec) =>
+                            spec.title.toLowerCase().contains(searchQuery))
                         .toList();
 
-                    return BlocBuilder<DoctorScheduleCubit, List<DoctorScheduleModel>>(
+                    return BlocBuilder<DoctorScheduleCubit,
+                        List<DoctorScheduleModel>>(
                       builder: (context, schedules) {
                         final filteredSchedules = schedules
                             .where((schedule) => schedule.day == _selectedDay)
@@ -132,19 +134,29 @@ class _CariDokterState extends State<CariDokter> {
                         return BlocBuilder<DoctorListCubit, List<DoctorModel>>(
                           builder: (context, doctors) {
                             final filteredDoctors = doctors.where((doctor) {
-                              final isNameMatch = doctor.name.toLowerCase().contains(searchQuery);
-                              final isSpecializationMatch = matchingSpecializations
-                                  .any((spec) => spec.id == doctor.idSpecialization);
-                              return doctorIds.contains(doctor.id) && (isNameMatch || isSpecializationMatch);
+                              final isNameMatch = doctor.name
+                                  .toLowerCase()
+                                  .contains(searchQuery);
+                              final isSpecializationMatch =
+                                  matchingSpecializations.any((spec) =>
+                                      spec.id == doctor.idSpecialization);
+                              return doctorIds.contains(doctor.id) &&
+                                  (isNameMatch || isSpecializationMatch);
                             }).toList();
 
                             return Column(
                               children: filteredDoctors.map((doctor) {
-                                final specialization = specializations.firstWhere(
+                                final specialization =
+                                    specializations.firstWhere(
                                   (spec) => spec.id == doctor.idSpecialization,
-                                  orElse: () => SpecializationModel(id: -1, title: 'Unknown', description: '', imgName: ''),
+                                  orElse: () => SpecializationModel(
+                                      id: -1,
+                                      title: 'Unknown',
+                                      description: '',
+                                      imgName: ''),
                                 );
-                                final specializationTitle = specialization.title;
+                                final specializationTitle =
+                                    specialization.title;
                                 return DoctorButton(
                                   icon: Icons.person,
                                   dokter: doctor.name,
@@ -157,7 +169,8 @@ class _CariDokterState extends State<CariDokter> {
                                       MaterialPageRoute(
                                         builder: (context) => ProfilDokter(
                                             doctorId: doctor.id,
-                                            specialization: specializationTitle),
+                                            specialization:
+                                                specializationTitle),
                                       ),
                                     );
                                   },

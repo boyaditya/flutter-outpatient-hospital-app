@@ -243,7 +243,7 @@ Widget _buildAppointmentCard(
                     );
                   },
                   child: const Text(
-                    "Detail Janji Temu",
+                    "Detail",
                   ),
                 ),
               ),
