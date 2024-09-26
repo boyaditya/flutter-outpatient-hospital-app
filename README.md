@@ -4,15 +4,15 @@ The application is specifically tailored for outpatient services at a hospital a
 FastAPI for the back-end, and MySQL as the database.
 
 ## ⚙ Features
-- User Registration: Patients can create an account.
-- Login: Secure authentication for returning users.
-- Forgot Password: Allows users to recover their accounts.
-- Doctor Information: View details such as the doctor’s expertise, education, and available times.
-- Doctor Booking: Schedule appointments with available doctors.
-- View Medical Records: Access to past consultations and medical history.
-- Add Other Patient Profiles: Manage multiple patient profiles under one account (e.g., for family members).
-- Update Patient Information: Edit personal information such as address, phone number, etc.
-- etc.
+- **User Registration:** Patients can create an account.
+- **Login:** Secure authentication for returning users.
+- **Forgot Password:** Allows users to recover their accounts.
+- **Doctor Information:** View details such as the doctor’s expertise, education, and available times.
+- **Doctor Booking:** Schedule appointments with available doctors.
+- **View Medical Records:** Access to past consultations and medical history.
+- **Add Other Patient Profiles:** Manage multiple patient profiles under one account (e.g., for family members).
+- **Update Patient Information:** Edit personal information name, phone number, etc.
+- **etc.**
 
 ## ✨ Requirements
 - Any Operating System (ie. MacOS X, Linux, Windows)
