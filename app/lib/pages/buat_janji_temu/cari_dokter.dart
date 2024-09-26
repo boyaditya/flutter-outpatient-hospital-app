@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 import 'package:tubes/cubits/doctor_cubit.dart';
 import 'package:tubes/cubits/doctor_schedule_cubit.dart';
 import 'package:tubes/cubits/specialization_cubit.dart';
@@ -14,9 +15,9 @@ class CariDokter extends StatefulWidget {
 
 class _CariDokterState extends State<CariDokter> {
   final TextEditingController _controller = TextEditingController();
-  String _selectedDay = 'Semua'; // default to Monday
+  String _selectedDay = 'Senin'; // default to Monday
   final List<String> _days = [
-    'Semua',
+    // 'Semua',
     'Senin',
     'Selasa',
     'Rabu',
@@ -131,7 +132,7 @@ class _CariDokterState extends State<CariDokter> {
                         final doctorIds = filteredSchedules
                             .map((schedule) => schedule.doctorId)
                             .toSet();
-
+                      
                         return BlocBuilder<DoctorListCubit, List<DoctorModel>>(
                           builder: (context, doctors) {
                             final filteredDoctors = doctors.where((doctor) {
@@ -141,8 +142,10 @@ class _CariDokterState extends State<CariDokter> {
                               final isSpecializationMatch =
                                   matchingSpecializations.any((spec) =>
                                       spec.id == doctor.idSpecialization);
-                              final isScheduleMatch = _selectedDay == 'Semua' ||
+                              final isScheduleMatch = _selectedDay == 'Senin' ||
                                   doctorIds.contains(doctor.id);
+
+                                
 
                               return isNameMatch &&
                                   isSpecializationMatch &&
@@ -168,6 +171,7 @@ class _CariDokterState extends State<CariDokter> {
                                   spesialis: specializationTitle,
                                   availability: 'Available',
                                   imagePath: doctor.imgPath,
+                                  selectedDay: _selectedDay,
                                   onPressed: () {
                                     Navigator.push(
                                       context,
@@ -236,6 +240,7 @@ class DoctorButton extends StatelessWidget {
   final String spesialis;
   final String availability;
   final String imagePath;
+  final String selectedDay;
   final VoidCallback onPressed;
 
   const DoctorButton({
@@ -246,59 +251,80 @@ class DoctorButton extends StatelessWidget {
     required this.availability,
     required this.imagePath,
     required this.onPressed,
+    required this.selectedDay,
   });
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-      onPressed: onPressed,
-      style: ElevatedButton.styleFrom(
-        foregroundColor: Colors.blue,
-        disabledForegroundColor: Colors.grey.withOpacity(0.38),
-        disabledBackgroundColor: Colors.grey.withOpacity(0.12),
-        padding: const EdgeInsets.all(6),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-        side: const BorderSide(color: Colors.grey, width: 0.3),
-      ),
-      child: Row(
-        children: <Widget>[
-          Container(
-            padding: const EdgeInsets.all(8),
-            child: CircleAvatar(
-                radius: 40, backgroundImage: NetworkImage(imagePath)),
+    String currentDay = DateFormat('EEEE').format(DateTime.now()).toLowerCase();
+    Map<String, String> daysMap = {
+      'senin': 'monday',
+      'selasa': 'tuesday',
+      'rabu': 'wednesday',
+      'kamis': 'thursday',
+      'jumat': 'friday',
+      'sabtu': 'saturday',
+      'minggu': 'sunday',
+    };
+    return Column(
+      children: [
+        ElevatedButton(
+          onPressed: onPressed,
+          style: ElevatedButton.styleFrom(
+            foregroundColor: Colors.blue,
+            disabledForegroundColor: Colors.grey.withOpacity(0.38),
+            disabledBackgroundColor: Colors.grey.withOpacity(0.12),
+            padding: const EdgeInsets.all(6),
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+            side: const BorderSide(color: Colors.grey, width: 0.3),
           ),
-          const SizedBox(width: 8),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(dokter,
-                    style: const TextStyle(
-                        fontSize: 13,
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold),
-                    overflow: TextOverflow.ellipsis),
-                const SizedBox(height: 6),
-                Text(spesialis,
-                    style: const TextStyle(fontSize: 11, color: Colors.black),
-                    overflow: TextOverflow.ellipsis),
-                const SizedBox(height: 4),
-                Row(
+          child: Row(
+            children: <Widget>[
+              Container(
+                padding: const EdgeInsets.all(8),
+                child: CircleAvatar(
+                    radius: 40, backgroundImage: NetworkImage(imagePath)),
+              ),
+              const SizedBox(width: 8),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Icon(Icons.check_circle,
-                        color: Colors.green, size: 20),
-                    const SizedBox(width: 4),
-                    Text(availability,
+                    Text(dokter,
+                        style: const TextStyle(
+                            fontSize: 13,
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold),
+                        overflow: TextOverflow.ellipsis),
+                    const SizedBox(height: 6),
+                    Text(spesialis,
                         style:
                             const TextStyle(fontSize: 11, color: Colors.black),
                         overflow: TextOverflow.ellipsis),
+                    const SizedBox(height: 4),
+                    if (daysMap[selectedDay.toLowerCase()] == currentDay)
+                      Row(
+                        children: [
+                          const Icon(Icons.check_circle,
+                              color: Colors.green, size: 20),
+                          const SizedBox(width: 4),
+                          Text(availability,
+                              style: const TextStyle(
+                                  fontSize: 11, color: Colors.black),
+                              overflow: TextOverflow.ellipsis),
+                        ],
+                      ),
                   ],
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
-        ],
-      ),
+        ),
+        const SizedBox(
+          height: 10,
+        )
+      ],
     );
   }
 }

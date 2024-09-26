@@ -26,7 +26,7 @@ class _KonfirmasiEmailState extends State<KonfirmasiEmail> {
 
   void random() {
     setState(() {
-      Random random = new Random();
+      Random random = Random();
       randomNumber = random.nextInt(100000);
       _showNotification = true;
     });
@@ -108,7 +108,7 @@ class _KonfirmasiEmailState extends State<KonfirmasiEmail> {
                   ),
                   const SizedBox(height: 30),
                   if (_isOtpVerified)
-                    Container(
+                    SizedBox(
                       width: MediaQuery.of(context).size.width * 0.8,
                       child: ElevatedButton(
                         onPressed: () {

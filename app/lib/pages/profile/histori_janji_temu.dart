@@ -152,6 +152,9 @@ class _HistoriJanjiTemuState extends State<HistoriJanjiTemu> {
                                 child: const Column(
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
+                                    SizedBox(
+                                      height: 100,
+                                    ),
                                     Icon(
                                       Icons
                                           .block, // Ikon yang menunjukkan tidak ada data

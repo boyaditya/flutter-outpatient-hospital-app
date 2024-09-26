@@ -14,8 +14,8 @@ class DataDiri extends StatefulWidget {
 
 class _DataDiriState extends State<DataDiri> {
   late DateTime _selectedDate;
-  TextEditingController _dateController = TextEditingController();
-  TextEditingController _nameController = TextEditingController();
+  final TextEditingController _dateController = TextEditingController();
+  final TextEditingController _nameController = TextEditingController();
   String? _selectedGender;
 
   bool _isButtonEnabled = false;
@@ -37,11 +37,7 @@ class _DataDiriState extends State<DataDiri> {
     if (picked != null) {
       setState(() {
         _selectedDate = picked;
-        _dateController.text = _selectedDate.day.toString().padLeft(2, '0') +
-            '/' +
-            _selectedDate.month.toString().padLeft(2, '0') +
-            '/' +
-            _selectedDate.year.toString();
+        _dateController.text = '${_selectedDate.day.toString().padLeft(2, '0')}/${_selectedDate.month.toString().padLeft(2, '0')}/${_selectedDate.year}';
         _checkFormCompletion();
       });
     }

@@ -93,7 +93,7 @@ class _DetailRekamMedisState extends State<DetailRekamMedis> {
                                       children: [
                                         Text(
                                           "${DateFormat('EEEE, dd MMMM yyyy', 'id').format(DateTime.parse(appointment.date))}, ${appointment.time} WIB",
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                             overflow: TextOverflow.visible,
                                           ),
                                         ),
@@ -121,14 +121,14 @@ class _DetailRekamMedisState extends State<DetailRekamMedis> {
                       'Nama',
                       style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),
                     ),
-                    Text('${patient.name}',
+                    Text(patient.name,
                       style: const TextStyle(fontSize: 14.0),
                     ),
                     const Text(
                       'Jenis Kelamin',
                       style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),
                     ),
-                    Text('${patient.gender}', 
+                    Text(patient.gender, 
                       style: const TextStyle(fontSize: 14.0),
                     ),
                     const SizedBox(height: 15.0),

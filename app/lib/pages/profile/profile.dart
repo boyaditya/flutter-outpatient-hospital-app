@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tubes/cubits/patient_cubit.dart';
 import 'package:tubes/cubits/user_cubit.dart';
-import 'package:tubes/pages/login_forgot_reset/login.dart';
 import 'package:tubes/pages/onboarding/onboard2.dart';
 import 'package:tubes/pages/profile/histori_janji_temu.dart';
 import 'package:tubes/pages/profile/detail_profile.dart';
@@ -184,7 +183,7 @@ class _ProfilScreenState extends State<ProfilScreen> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => BerikanPenilaianScreen()),
+                    builder: (context) => const BerikanPenilaianScreen()),
               );
             },
           ),
@@ -197,7 +196,7 @@ class _ProfilScreenState extends State<ProfilScreen> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => SyaratKetentuanScreen()),
+                    builder: (context) => const SyaratKetentuanScreen()),
               );
             },
           ),
@@ -208,7 +207,7 @@ class _ProfilScreenState extends State<ProfilScreen> {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => PusatBantuan()),
+                MaterialPageRoute(builder: (context) => const PusatBantuan()),
               );
             },
           ),

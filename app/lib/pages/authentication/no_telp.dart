@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tubes/pages/authentication/konfirm_telp.dart';
 
 class NoTelp extends StatefulWidget {
-  const NoTelp({Key? key}) : super(key: key);
+  const NoTelp({super.key});
 
   @override
   State<NoTelp> createState() => _NoTelpState();
@@ -38,7 +38,7 @@ class _NoTelpState extends State<NoTelp> {
                       _isButtonEnabled = value.isNotEmpty;
                     });
                   },
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     hintText: '085123456789',
                   ),

@@ -38,7 +38,7 @@ class _DashboardState extends State<Dashboard> {
     ),
     const JanjiTemuSaya2(),
     const RekamMedis(),
-    ProfilScreen(),
+    const ProfilScreen(),
   ];
 
   void _onItemTapped(int index) {
@@ -282,7 +282,7 @@ class _HomeState extends State<Home> {
 													color: Colors.black.withOpacity(0.2),
 													spreadRadius: 3,
 													blurRadius: 5,
-													offset: Offset(0, 5), // Mengatur offset untuk shadow atas dan bawah
+													offset: const Offset(0, 5), // Mengatur offset untuk shadow atas dan bawah
 												),
 											],
 										),
@@ -302,7 +302,7 @@ class _HomeState extends State<Home> {
 													color: Colors.black.withOpacity(0.2),
 													spreadRadius: 3,
 													blurRadius: 5,
-													offset: Offset(0, 5), // Mengatur offset untuk shadow atas dan bawah
+													offset: const Offset(0, 5), // Mengatur offset untuk shadow atas dan bawah
 												),
 											],
 										),
@@ -322,7 +322,7 @@ class _HomeState extends State<Home> {
 													color: Colors.black.withOpacity(0.2),
 													spreadRadius: 3,
 													blurRadius: 5,
-													offset: Offset(0, 5), // Mengatur offset untuk shadow atas dan bawah
+													offset: const Offset(0, 5), // Mengatur offset untuk shadow atas dan bawah
 												),
 											],
 										),

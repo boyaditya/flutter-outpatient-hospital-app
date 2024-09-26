@@ -175,7 +175,7 @@ class _PeriksaJanjiTemuState extends State<PeriksaJanjiTemu> {
                 ),
                 const SizedBox(height: 10),
                 Container(
-                  padding: EdgeInsets.symmetric(horizontal: 12),
+                  padding: const EdgeInsets.symmetric(horizontal: 12),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -274,10 +274,10 @@ class InfoItem extends StatelessWidget {
   final String value;
 
   const InfoItem({
-    Key? key,
+    super.key,
     required this.label,
     required this.value,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

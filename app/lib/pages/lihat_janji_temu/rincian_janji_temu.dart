@@ -163,7 +163,7 @@ class _RincianJanjiTemuState extends State<RincianJanjiTemu> {
 
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => PusatBantuan()),
+                MaterialPageRoute(builder: (context) => const PusatBantuan()),
               );
             },
           ),

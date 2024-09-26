@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class PusatBantuan extends StatelessWidget {
+  const PusatBantuan({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class HapusAkunScreen extends StatefulWidget {
+  const HapusAkunScreen({super.key});
+
   @override
   _HapusAkunScreenState createState() => _HapusAkunScreenState();
 }

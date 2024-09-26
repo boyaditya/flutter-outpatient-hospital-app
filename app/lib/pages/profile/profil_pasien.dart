@@ -61,20 +61,23 @@ class _ProfilPasienScreenState extends State<ProfilPasienScreen> {
                         ),
                       ),
                       if (patients.length == 1)
-                        const Column(
-                          children: [
-                            Icon(
-                              Icons.people,
-                              size: 30,
-                              color: Colors.grey,
-                            ),
-                            SizedBox(height: 8.0),
-                            Text(
-                              'Anda belum menambahkan profil untuk orang lain',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(color: Colors.grey),
-                            ),
-                          ],
+                        const Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              SizedBox(height: 100.0),
+                              Icon(
+                                Icons.people,
+                                size: 30,
+                                color: Colors.grey,
+                              ),
+                              Text(
+                                'Anda belum menambahkan profil untuk orang lain',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(color: Colors.grey),
+                              ),
+                            ],
+                          ),
                         )
                       else
                         ...patients.skip(1).map(

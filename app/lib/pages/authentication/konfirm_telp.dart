@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:tubes/pages/authentication/welcome_page.dart';
 
 class KonfirmasiTelp extends StatefulWidget {
-  const KonfirmasiTelp({Key? key}) : super(key: key);
+  const KonfirmasiTelp({super.key});
 
   @override
   State<KonfirmasiTelp> createState() => _KonfirmasiTelpState();
 }
 
 class _KonfirmasiTelpState extends State<KonfirmasiTelp> {
-  bool _obscureText = true;
-  TextEditingController _verificationCodeController = TextEditingController();
+  final bool _obscureText = true;
+  final TextEditingController _verificationCodeController = TextEditingController();
   bool _isVerificationCodeEntered = false;
 
   @override

@@ -133,7 +133,7 @@ class OnBoardingSlide extends StatelessWidget {
   final String title;
   final String description;
   final bool showSkipButton; 
-  const OnBoardingSlide({
+  const OnBoardingSlide({super.key, 
     required this.image,
     required this.title,
     required this.description,

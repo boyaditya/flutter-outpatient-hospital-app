@@ -103,20 +103,22 @@ class _ProfilPasienState extends State<ProfilPasien> {
                         ),
                       ),
                       if (patients.length == 1)
-                        const Column(
-                          children: [
-                            Icon(
-                              Icons.people,
-                              size: 30,
-                              color: Colors.grey,
-                            ),
-                            SizedBox(height: 8.0),
-                            Text(
-                              'Anda belum menambahkan profil untuk orang lain',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(color: Colors.grey),
-                            ),
-                          ],
+                        const Center(
+                          child: Column(
+                            children: [
+                              Icon(
+                                Icons.people,
+                                size: 30,
+                                color: Colors.grey,
+                              ),
+                              SizedBox(height: 8.0),
+                              Text(
+                                'Anda belum menambahkan profil untuk orang lain',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(color: Colors.grey),
+                              ),
+                            ],
+                          ),
                         )
                       else
                         ...patients.skip(1).map(
@@ -247,7 +249,7 @@ class PatientDetailButton extends StatelessWidget {
                 ),
                 const SizedBox(height: 2.0),
                 Text(
-                  DateFormat('dd MMM yyyy').format(patient.dateOfBirth),
+                  '${DateFormat('dd MMM yyyy').format(patient.dateOfBirth)} (${DateTime.now().year - patient.dateOfBirth.year} tahun)',
                   style: TextStyle(
                     color: hasActiveAppointment ? Colors.red : Colors.black,
                     fontSize: 14.0,

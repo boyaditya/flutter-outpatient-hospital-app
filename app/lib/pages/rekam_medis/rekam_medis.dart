@@ -135,7 +135,7 @@ class _RekamMedisState extends State<RekamMedis> {
                                       ),
                                       Text(specializationTitle),
                                       Text(
-                                        "${DateFormat('EEEE, dd MMMM yyyy', 'id').format(DateTime.parse(appointment.date))}, ${appointment.time} WIB",
+                                        "${DateFormat('EEEE, dd MMM yyyy', 'id').format(DateTime.parse(appointment.date))}, ${appointment.time} WIB",
                                       ),
                                     ],
                                   ),

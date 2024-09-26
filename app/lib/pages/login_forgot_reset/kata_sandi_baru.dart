@@ -190,7 +190,7 @@ class _KataSandiBaruState extends State<KataSandiBaru> {
   Future<void> performResetPassword() async {
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
-      String? email = await prefs.getString('email');
+      String? email = prefs.getString('email');
 
       print(  _passwordController.text);
       print(email);

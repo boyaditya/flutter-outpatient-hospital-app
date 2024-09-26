@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class SyaratKetentuanScreen extends StatelessWidget {
+  const SyaratKetentuanScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
