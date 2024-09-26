@@ -54,7 +54,7 @@ FastAPI for the back-end, and MySQL as the database.
 ![Capture28](https://github.com/user-attachments/assets/c307aa9e-3109-4a8a-87f7-9e819295a83a)
 ![Capture30](https://github.com/user-attachments/assets/2c9f4d64-e5f5-419b-b753-941455ad675a)
 
-✨ Requirements
+## ✨ Requirements
 - Any Operating System (ie. MacOS X, Linux, Windows)
 - Any IDE with Flutter SDK installed (ie. IntelliJ, Android Studio, VSCode etc)
 - A little knowledge of Dart and Flutter
@@ -62,5 +62,10 @@ FastAPI for the back-end, and MySQL as the database.
 ## 🤓 Author(s)
 @boyaditya
 
+## 🖐 Contributors
+Special thanks to @liazalfaj, @arulzkash, @rifasania, and @mhmmdysdn for their contributions to this project!
+
 ## 🔖 License
+This project is licensed under the Apache 2.0 License - see the [LICENSE](./LICENSE) file for details.
+
 
