@@ -61,10 +61,7 @@ FastAPI for the back-end, and MySQL as the database.
 
 
 ## 🤓 Author(s)
-@boyaditya
-
-## 🖐 Contributors
-Special thanks to @liazalfaj, @arulzkash, @rifasania, and @mhmmdysdn for their contributions to this project!
+@boyaditya, @liazalfaj, @arulzkash, @rifasania, and @mhmmdysdn
 
 ## 🔖 License
 This project is licensed under the Apache 2.0 License - see the [LICENSE](./LICENSE) file for details.
